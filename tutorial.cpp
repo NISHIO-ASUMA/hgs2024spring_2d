@@ -11,16 +11,11 @@
 #include "tutorial.h"
 //#include "player.h"
 #include "game.h"
-//#include "fade.h"
-//#include "enemy.h"
-//#include "bullet.h"
-//#include "background.h"
+#include "fade.h"
 //#include "effect.h"
 //#include "sound.h"
-//#include "tutorial2.h"
 //#include "particle.h"
-//#include "input.h"
-//#include "camera.h"
+#include "input.h"
 
 //******************************************
 // É}ÉNÉçíËã`
