@@ -99,6 +99,9 @@
     <ClCompile Include="edit.cpp">
       <Filter>ソース ファイル\editer</Filter>
     </ClCompile>
+    <ClCompile Include="time.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h">
@@ -148,6 +151,9 @@
     </ClInclude>
     <ClInclude Include="edit.h">
       <Filter>ヘッダー ファイル\editer</Filter>
+    </ClInclude>
+    <ClInclude Include="time.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
