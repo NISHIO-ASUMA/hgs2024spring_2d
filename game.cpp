@@ -78,6 +78,11 @@ void InitGame(void)
 
 	PlaySound(SOUND_LABEL_GAME);
 #endif
+
+	g_gameState = GAMESTATE_NORMAL;//通常状態に設定
+	g_nCounterGameState = 0;
+	g_bPause = false;//ポーズ解除
+
 }
 //===================
 // ゲームの終了

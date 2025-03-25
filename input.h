@@ -50,6 +50,7 @@ void UninitKeyboard(void);				// キーの終了
 void UpdateKeyboard(void);				// キーの更新
 bool GetKeyboardPress(int nkey);		// キーのプレス
 bool KeyboardTrigger(int nKey);			// キーのトリガー
+bool GetAnyKeyTrigger(void);			// キーどれでも
 bool KeyboardRelease(int nKey);			// キーのリリース
 bool KeyboardRepeat(int nKey);			// キーのリピート
 
@@ -58,6 +59,7 @@ void UninitJoypad(void);				// ジョイパッドの終了
 void UpdateJoypad(void);				// ジョイパッドの更新
 bool JoypadPress(JOYKEY key);			// ジョイパッドのプレス情報を取得
 bool JoypadTrigger(JOYKEY key);			// ジョイパッドのトリガー情報を取得
+bool GetAnyJoypadTrigger(void);			// ジョイパッドのトリガーどれでも
 bool JoypadRelease(JOYKEY key);			// キーのリリース
 bool JoypadRepeat(JOYKEY key);			// キーのリピート
 

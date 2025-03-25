@@ -39,8 +39,8 @@ typedef enum
 //******************************************
 const char* TITLE_TEX[TITLE_MAX] =
 {
-	"data\\TEXTURE\\title_tuto.png",
-	"data\\TEXTURE\\title_game.png",
+	"data\\TEXTURE\\Block000.png",
+	"data\\TEXTURE\\Block002.png",
 };
 
 //******************************************
@@ -86,7 +86,7 @@ void InitTitle(void)
 
 	// テクスチャの読み込み (タイトル背景)
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\Actiontitle.png",
+		"data\\TEXTURE\\Block001.png",
 		&g_pTextureTitleback);
 
 	// 選択肢テクスチャの読み込み
@@ -254,11 +254,13 @@ void UninitTitle(void)
 //==================
 void UpdateTitle(void)
 {
+	FADE fade = GetFade(); // 現在の状態
+
 	// 頂点情報のポインタ
 	VERTEX_2D* pVtx;				
 
-	if (KeyboardTrigger(DIK_RETURN))
-	{
+	if (fade == FADE_NONE && (GetAnyKeyTrigger() || GetAnyJoypadTrigger()))
+	{// キーがどれか押されたとき または　ジョイパッドボタンどれか押されたとき
 		// ゲーム画面へ
 		SetFade(MODE_GAME);
 	}

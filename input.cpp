@@ -54,7 +54,8 @@ BYTE g_aOldState[NUM_KEY_MAX];					// 過去の入力内容を保存
 XINPUT_STATE g_joyKeyState;						// ジョイパッドのプレス情報
 XINPUT_STATE g_OldKeyState;						// ジョイパッドのプレス情報(判定)
 XINPUT_STATE g_joyKeyStateTrigger;				// ジョイパッドのトリガー情報
-												   
+XINPUT_STATE g_joyKeyStateRelease;				//ジョイパッドのリリース情報
+
 Stick g_stick[STICK_TYPE_MAX];					// スティック構造体の情報
 												   
 bool g_Rstickrepeat;							// スティックのリピート
@@ -161,6 +162,20 @@ bool KeyboardTrigger(int nKey)
 	}
 	return Trigger;
 }
+//============================================
+// 何かしらのキーが新しく押されたかチェック
+//============================================
+bool GetAnyKeyTrigger(void)
+{
+	for (int i = 0; i < NUM_KEY_MAX; i++)
+	{
+		if ((g_aKeyState[i] & 0x80) && !(g_aOldState[i] & 0x80)) // 新しく押されたキーがある
+		{
+			return true;
+		}
+	}
+	return false;
+}
 //================================
 // キーボードを長押し(チャージ攻撃)
 //================================
@@ -217,21 +232,37 @@ void UninitJoypad(void)
 //==============================
 void UpdateJoypad(void)
 {
-	XINPUT_STATE joykeyState;			// 入力情報を取得
+	XINPUT_STATE joyKeyState;
 
-	//ジョイパッドの状態を取得
-	if (XInputGetState(0, &joykeyState) == ERROR_SUCCESS)
+	// 前フレームの状態を保存
+	g_OldKeyState = g_joyKeyState;
+
+	if (XInputGetState(0, &joyKeyState) == ERROR_SUCCESS)
 	{
-		WORD Button = joykeyState.Gamepad.wButtons;				// 押したときの入力情報
-		WORD OldButton = g_joyKeyState.Gamepad.wButtons;		// 1F前の入力情報
+		WORD Button = joyKeyState.Gamepad.wButtons;
+		WORD OldButton = g_joyKeyState.Gamepad.wButtons;
 
-		g_joyKeyStateTrigger.Gamepad.wButtons = Button &~OldButton;
+		// 新しく押されたボタンの判定
+		g_joyKeyStateTrigger.Gamepad.wButtons = (Button & ~OldButton);
+		g_joyKeyStateRelease.Gamepad.wButtons = (OldButton & ~Button);
 
-		g_joyKeyState = joykeyState;							// ジョイパッドのプレス情報を保存(格納)
+		// L2・R2 のトリガー処理
+		g_joyKeyStateTrigger.Gamepad.bLeftTrigger =
+			(joyKeyState.Gamepad.bLeftTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD) &&
+			!(g_OldKeyState.Gamepad.bLeftTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD);
+
+		g_joyKeyStateTrigger.Gamepad.bRightTrigger =
+			(joyKeyState.Gamepad.bRightTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD) &&
+			!(g_OldKeyState.Gamepad.bRightTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD);
+
+		g_joyKeyState = joyKeyState; // 最新の状態を保存
 	}
-
-	// 更新処理
-	UpdateStick();
+	else
+	{
+		memset(&g_joyKeyState, 0, sizeof(XINPUT_STATE));
+		memset(&g_joyKeyStateTrigger, 0, sizeof(XINPUT_STATE));
+		memset(&g_joyKeyStateRelease, 0, sizeof(XINPUT_STATE));
+	}
 }
 //==============================
 // プレス情報を取得
@@ -246,6 +277,19 @@ bool JoypadPress(JOYKEY key)
 bool JoypadTrigger(JOYKEY key)
 {
 	return (g_joyKeyStateTrigger.Gamepad.wButtons & (0x01 << key)) ? true : false;
+}
+//===============================================
+// 何かしらのボタンが新しく押されたか（トリガー）
+//===============================================
+bool GetAnyJoypadTrigger()
+{
+	if (g_joyKeyStateTrigger.Gamepad.wButtons != 0 ||
+		g_joyKeyStateTrigger.Gamepad.bLeftTrigger ||
+		g_joyKeyStateTrigger.Gamepad.bRightTrigger)
+	{
+		return true;
+	}
+	return false;
 }
 //==========================
 // パッドのリリース処理
