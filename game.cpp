@@ -12,25 +12,17 @@
 //#include "Player.h"
 #include "background.h"
 #include "input.h"
-//#include "bullet.h"
-//#include "explosion.h"
-//#include "enemy.h"
 #include "fade.h"
 #include "score.h"
-//#include "item.h"
 #include "title.h"
-//#include "effect.h"
-//#include "pause.h"
-//#include "edit.h"
 #include "ranking.h"
 #include "rankscore.h"
-//#include "particle.h"
-//#include "Timer.h"
-//#include "sound.h"
 #include "block.h"
 #include "pause.h"
-//#include "stage.h"
-//#include "exit.h"
+
+//***********************************************
+// マクロ定義
+//***********************************************
 
 //***********************************************
 // グローバル変数宣言
