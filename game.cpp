@@ -61,16 +61,11 @@ void InitGame(void)
 
 	InitParticle();			//パーティクル
 
-
 	InitTimer();			//タイマー
 
 	InitPlayerLifeBar();	//ライフバー
 
 	InitBlock();					//ブロックの初期化
-
-	InitBoss();						// ボスの初期化
-
-	LoadEdit();						// 配置情報の読み込み
 
 	PlaySound(SOUND_LABEL_GAME);
 #endif
@@ -85,13 +80,14 @@ void InitGame(void)
 //===================
 void UninitGame(void)
 {
+	SaveScore();			// スコアを保存
+
 	UninitBlock();			// ブロックの州終了
 
 	UninitPause();			// ポーズの終了
 #if 0
 	StopSound();
 
-	SaveScore();			//スコアを保存
 
 	UninitBackground();		//背景
 
@@ -118,8 +114,6 @@ void UninitGame(void)
 	UninitPlayerLifeBar();	//ライフバー
 
 	UninitBlock();			//ブロック
-
-	UninitBoss();			// ボスの終了
 #endif
 }
 //===================
@@ -166,27 +160,6 @@ void UpdateGame(void)
 
 	// 敵の取得
 	int nNum = GetNumEnemy();
-
-	// タイマーを取得
-	int nTime = GetTimer();
-
-	// スイッチの取得
-	bool bPush = GetPush();
-
-	// 青スイッチの取得
-	bool bPushSwitch = GetPushSwitch();
-
-	// 出口の取得
-	bool bExit = GetExit();
-
-	// ボスの取得
-	BOSS* pBoss = GetBoss();
-
-	if (pBoss->bUse == false)
-	{
-		// 出口の位置
-		SetExit(D3DXVECTOR3(4940.0f, 620.0f, 0.0f));
-	}
 
 	if ((pPlayer->bDisp == false || nTime <= 0 || bExit == true) && g_gameState != GAMESTATE_NONE)
 	{
@@ -235,8 +208,6 @@ void UpdateGame(void)
 	else 
 	{
 		//ポーズ中で無ければ
-		UpdateCamera(pPlayer->pos);
-
 		UpdateBackground();			//背景
 
 		UpdatePlayer();				//プレイヤー
@@ -258,10 +229,6 @@ void UpdateGame(void)
 		UpdateTimer();				//タイマー
 
 		UpdatePlayerLifeBar();	//ライフバー
-
-		UpdateBlock();				//　ブロック
-
-		UpdateBoss();				// ボスの更新
 	}
 #endif
 }
@@ -275,24 +242,17 @@ void DrawGame(void)
 	if (g_bPause == true)
 	{// ポーズ中
 		DrawPause();		// ポーズの描画
-
 	}
 
 #if 0
 	//背景
 	DrawBackground();
 
-	//ブロック
-	DrawBlock();
-
 	//アイテム
 	DrawItem();
 
 	//弾
 	DrawBullet();
-
-	// ボスの描画
-	DrawBoss();
 
 	//プレイヤー
 	DrawPlayer();
