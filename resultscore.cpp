@@ -44,7 +44,7 @@ void InitResultScore(void)
 
 	// テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\score000.png",
+		"data\\TEXTURE\\score001.png",
 		&g_pTextureResultScore);
 
 	// 頂点バッファの生成
@@ -65,10 +65,10 @@ void InitResultScore(void)
 		g_aResult[nCnt].bUse = true;		// 使用している状態
 
 		// 頂点座標の設定
-		pVtx[0].pos = D3DXVECTOR3(545.0f + nCnt * 50.0f, 200.0f, 0.0f);
-		pVtx[1].pos = D3DXVECTOR3(545.0f + nCnt * 50.0f + 50.0f, 200.0f, 0.0f);
-		pVtx[2].pos = D3DXVECTOR3(545.0f + nCnt * 50.0f, 300.0f, 0.0f);
-		pVtx[3].pos = D3DXVECTOR3(545.0f + nCnt * 50.0f + 50.0f, 300.0f, 0.0f);
+		pVtx[0].pos = D3DXVECTOR3(640.0f + nCnt * 50.0f, 350.0f, 0.0f);
+		pVtx[1].pos = D3DXVECTOR3(640.0f + nCnt * 50.0f + 50.0f, 450.0f, 0.0f);
+		pVtx[2].pos = D3DXVECTOR3(640.0f + nCnt * 50.0f, 350.0f, 0.0f);
+		pVtx[3].pos = D3DXVECTOR3(640.0f + nCnt * 50.0f + 50.0f, 450.0f, 0.0f);
 
 		//r hwの設定(1.0fで固定)
 		pVtx[0].rhw = 1.0f;
@@ -96,7 +96,7 @@ void InitResultScore(void)
 	g_pVtxBuffResultScore->Unlock();
 
 	 LoadScore();			// スコアを読み込む
-	 SetResultScore();	// リザルトスコアの設定
+	 SetResultScore();	    // リザルトスコアの設定
 }
 //===========================
 // リザルトスコアの終了処理

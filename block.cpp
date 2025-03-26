@@ -249,6 +249,12 @@ void SetBlock(D3DXVECTOR3 pos,int nType,float fWidth,float fHeight)
 			pVtx[2].pos = D3DXVECTOR3(pos.x - fWidth, pos.y + fHeight,0.0f);	// 3つ目の頂点情報
 			pVtx[3].pos = D3DXVECTOR3(pos.x + fWidth, pos.y + fHeight,0.0f);	// 4つ目の頂点情報
 
+			if (nType != BLOCKTYPE_MOVEBLOCK)
+			{
+				// インクリメント
+				g_nCntblock++;
+			}
+
 			break;
 		}
 		// 頂点情報分ずらす
@@ -540,9 +546,6 @@ void LoadBlockText()
 					{// END_SETPOLYGONを読み取ったら
 						// ブロックに情報を代入する
 						SetBlock(pos, nType, fWidth, fHeight);
-
-						// インクリメント
-						g_nCntblock++;
 					}
 				}
 			}
