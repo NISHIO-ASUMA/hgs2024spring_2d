@@ -22,8 +22,7 @@
 #define MAX_LIFEBARSIZE_Y (20)		// 高さ
 									   
 #define MAX_TOP_POS       (20)		// 上に行ける最大Y座標
-#define MAX_RIGHT_POS     (1260)	// 右に行ける最大X座標
-#define MAX_UNDER_POS     (700)		// 上に行ける最大Y座標
+#define MAX_UNDER_POS     (700)		// 下に行ける最大Y座標
 
 //グローバル変数
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffplayer = NULL;		// 頂点バッファのポインタ
@@ -243,102 +242,24 @@ void DrawPlayer(void)
 void GetKeyPlayer(void)
 {
 	VERTEX_2D* pVtx;		// 頂点情報のポインタ
-	static float fData = SPLIT_U;
-	static float fData2 = 0.0f;
 
 	// Aキーを押したら
 	if (GetKeyboardPress(DIK_A) == true)
 	{
-		fData = SPLIT_U;
 		// A単体の処理
 		g_aPlayer.move.x -= 2.0f;
-
-		if(GetKeyboardPress(DIK_W) == true)
-		{
-			// AとWキーを押したら
-			g_aPlayer.move.y -= 2.0f;
-		}
-		else if (GetKeyboardPress(DIK_S) == true)
-		{
-			// AとSを押したら
-			g_aPlayer.move.y += 2.0f;
-		}
 	}
 	// Dを押したら
 	else if (GetKeyboardPress(DIK_D) == true)
 	{
-		fData = -SPLIT_U;
-
 		// D単体の処理
 		g_aPlayer.move.x += 2.0f;
-
-		if (GetKeyboardPress(DIK_S) == true)
-		{
-			// DとSが押された
-			g_aPlayer.move.y += 2.0f;
-
-		}
-		else if (GetKeyboardPress(DIK_W) == true)
-		{
-			// DとWが押された
-			g_aPlayer.move.y -= 2.0f;
-
-		}
-	}
-	// Sを押したら
-	else if (GetKeyboardPress(DIK_S) == true)
-	{
-		g_aPlayer.move.y += 2.0f;
-	}
-	// Wを押したら
-	else if (GetKeyboardPress(DIK_W) == true)
-	{
-		g_aPlayer.move.y -= 2.0f;
-	}
-	//if (KeyboardTrigger(DIK_SPACE) == true)
-	//{
-	//	// PlaySound(SOUND_LABEL_PLAYERBULLET);
-
-	//	// 弾の設定
-	//	SetBullet(g_aPlayer.pos, D3DXVECTOR3(sinf(g_aPlayer.rot.z + D3DX_PI) * 10.0f, cosf(g_aPlayer.rot.z + D3DX_PI) * 10.0f, 0.0f), g_aPlayer.rot, 30.0f, 30.0f, 70, BULLETTYPE_PLAYER);
-
-	//}
-	
-	if (KeyboardTrigger(DIK_E) == true && KeyboardTrigger(DIK_Q) == true)
-	{
-		// 正面に向くようにリセット
-		g_aPlayer.rot.z = 0.0f;
-	}
-	else if (KeyboardTrigger(DIK_E) == true)
-	{
-		// 回転(右)
-		g_aPlayer.rot.z = g_aPlayer.rot.z - (D3DX_PI * 0.5f);
-	}
-	else if (KeyboardTrigger(DIK_Q) == true)
-	{
-		// 回転(左)
-		g_aPlayer.rot.z = g_aPlayer.rot.z + (D3DX_PI * 0.5f);
 	}
 
-	if (KeyboardTrigger(DIK_UP))
+	if (KeyboardTrigger(DIK_UP) || KeyboardTrigger(DIK_RETURN))
 	{// 上矢印キー
 		// 弾の設定
 		SetBullet(g_aPlayer.pos, D3DXVECTOR3(sinf(g_aPlayer.rot.z + D3DX_PI) * 10.0f, cosf(g_aPlayer.rot.z + D3DX_PI) * 10.0f, 0.0f), g_aPlayer.rot, 30.0f, 30.0f, 70, BULLETTYPE_PLAYER);
-	}
-	else if (KeyboardTrigger(DIK_DOWN))
-	{// 下矢印キー
-		// 弾の設定
-		SetBullet(g_aPlayer.pos, D3DXVECTOR3(-sinf(g_aPlayer.rot.z + D3DX_PI) * 10.0f, -cosf(g_aPlayer.rot.z + D3DX_PI) * 10.0f, 0.0f), g_aPlayer.rot, 30.0f, 30.0f, 70, BULLETTYPE_PLAYER);
-	}
-	else if (KeyboardTrigger(DIK_LEFT))
-	{// 左矢印キー
-		// 弾の設定
-		SetBullet(g_aPlayer.pos, D3DXVECTOR3(sinf(g_aPlayer.rot.z - D3DX_PI * 0.5f) * 10.0f, cosf(g_aPlayer.rot.z - D3DX_PI * 0.5f) * 10.0f, 0.0f), g_aPlayer.rot, 30.0f, 30.0f, 70, BULLETTYPE_PLAYER);
-	}
-	else if (KeyboardTrigger(DIK_RIGHT))
-	{// 右矢印キー
-		// 弾の設定
-		SetBullet(g_aPlayer.pos, D3DXVECTOR3(sinf(g_aPlayer.rot.z + D3DX_PI * 0.5f) * 10.0f, -cosf(g_aPlayer.rot.z - D3DX_PI * 0.5f) * 10.0f, 0.0f), g_aPlayer.rot, 30.0f, 30.0f, 70, BULLETTYPE_PLAYER);
 	}
 
 	// 位置を更新
@@ -358,21 +279,6 @@ void GetKeyPlayer(void)
 		g_aPlayer.pos.x = MAX_LEFT_POS;
 		g_aPlayer.move.x = 0.0f;
 	}
-
-	//下壁
-	if (g_aPlayer.pos.y >= MAX_UNDER_POS)
-	{
-		g_aPlayer.pos.y = MAX_UNDER_POS;
-		g_aPlayer.move.y = 0.0f;
-	}
-
-	//上壁
-	else if (g_aPlayer.pos.y <= MAX_TOP_POS)
-	{
-		g_aPlayer.pos.y = MAX_TOP_POS;
-		g_aPlayer.move.y = 0.0f;
-	}
-
 
 	// 移動量の更新(減衰させる)
 	g_aPlayer.move.x += (0.0f - g_aPlayer.move.x) * 0.25f;
@@ -421,39 +327,7 @@ void GetJoypadPlayer(void)
 {
 	VERTEX_2D* pVtx;			// 頂点情報のポイタ
 
-	if (JoypadPress(JOYKEY_UP) == true)
-	{
-		// 上キー単体の処理
-		g_aPlayer.move.y -= 2.0f;
-
-		if (JoypadPress(JOYKEY_LEFT) == true)
-		{
-			// 上キーと左キーが押された
-			g_aPlayer.move.x -= 2.0f;
-		}
-		else if (JoypadPress(JOYKEY_RIGHT) == true)
-		{
-			// 上キーと右キーが押された
-			g_aPlayer.move.x += 2.0f;
-		}
-	}
-	else if (JoypadPress(JOYKEY_DOWN) == true)
-	{
-		// 下キー単体の処理
-		g_aPlayer.move.y += 2.0f;
-
-		if (JoypadPress(JOYKEY_LEFT) == true)
-		{
-			// 下キーと左キーが押された
-			g_aPlayer.move.x -= 2.0f;
-		}
-		else if (JoypadPress(JOYKEY_RIGHT) == true)
-		{
-			// 下キーと右キーが押された
-			g_aPlayer.move.x += 2.0f;
-		}
-	}
-	else if (JoypadPress(JOYKEY_LEFT) == true)
+	if (JoypadPress(JOYKEY_LEFT) == true)
 	{
 		// 左キーが押された
 		g_aPlayer.move.x -= 2.0f;
@@ -467,23 +341,23 @@ void GetJoypadPlayer(void)
 	if (JoypadTrigger(JOYKEY_B) == true)
 	{// Bボタンを押した
 		// 弾の設定
-		SetBullet(g_aPlayer.pos, D3DXVECTOR3(sinf(g_aPlayer.rot.z + D3DX_PI * 0.5f) * 10.0f, -cosf(g_aPlayer.rot.z - D3DX_PI * 0.5f) * 10.0f, 0.0f), g_aPlayer.rot, 30.0f, 30.0f, 70, BULLETTYPE_PLAYER);
-	}
-	else if (JoypadTrigger(JOYKEY_X) == true)
-	{// Xボタンを押した
-		// 弾の設定
-		SetBullet(g_aPlayer.pos, D3DXVECTOR3(sinf(g_aPlayer.rot.z - D3DX_PI * 0.5f) * 10.0f, cosf(g_aPlayer.rot.z - D3DX_PI * 0.5f) * 10.0f, 0.0f), g_aPlayer.rot, 30.0f, 30.0f, 70, BULLETTYPE_PLAYER);
-	}
-	else if (JoypadTrigger(JOYKEY_Y) == true)
-	{// Yボタンを押した
-		// 弾の設定
 		SetBullet(g_aPlayer.pos, D3DXVECTOR3(sinf(g_aPlayer.rot.z + D3DX_PI) * 10.0f, cosf(g_aPlayer.rot.z + D3DX_PI) * 10.0f, 0.0f), g_aPlayer.rot, 30.0f, 30.0f, 70, BULLETTYPE_PLAYER);
 	}
-	else if (JoypadTrigger(JOYKEY_A) == true)
-	{// Aボタン
-		// 弾の設定
-		SetBullet(g_aPlayer.pos, D3DXVECTOR3(-sinf(g_aPlayer.rot.z + D3DX_PI) * 10.0f, -cosf(g_aPlayer.rot.z + D3DX_PI) * 10.0f, 0.0f), g_aPlayer.rot, 30.0f, 30.0f, 70, BULLETTYPE_PLAYER);
-	}
+	//else if (JoypadTrigger(JOYKEY_X) == true)
+	//{// Xボタンを押した
+	//	 弾の設定
+	//	SetBullet(g_aPlayer.pos, D3DXVECTOR3(sinf(g_aPlayer.rot.z - D3DX_PI * 0.5f) * 10.0f, cosf(g_aPlayer.rot.z - D3DX_PI * 0.5f) * 10.0f, 0.0f), g_aPlayer.rot, 30.0f, 30.0f, 70, BULLETTYPE_PLAYER);
+	//}
+	//else if (JoypadTrigger(JOYKEY_Y) == true)
+	//{// Yボタンを押した
+	//	 弾の設定
+	//	SetBullet(g_aPlayer.pos, D3DXVECTOR3(sinf(g_aPlayer.rot.z + D3DX_PI) * 10.0f, cosf(g_aPlayer.rot.z + D3DX_PI) * 10.0f, 0.0f), g_aPlayer.rot, 30.0f, 30.0f, 70, BULLETTYPE_PLAYER);
+	//}
+	//else if (JoypadTrigger(JOYKEY_A) == true)
+	//{// Aボタン
+	//	 弾の設定
+	//	SetBullet(g_aPlayer.pos, D3DXVECTOR3(-sinf(g_aPlayer.rot.z + D3DX_PI) * 10.0f, -cosf(g_aPlayer.rot.z + D3DX_PI) * 10.0f, 0.0f), g_aPlayer.rot, 30.0f, 30.0f, 70, BULLETTYPE_PLAYER);
+	//}
 
 
 	// 位置を更新
@@ -554,17 +428,6 @@ void StickState(void)
 			// 左移動
 			g_aPlayer.move.x -= 2.0f;
 		}
-		if (pStick->Gamepad.sThumbLY > 10922)
-		{
-			// 上移動
-			g_aPlayer.move.y -= 2.0f;
-		}
-		if (pStick->Gamepad.sThumbLY < -10922)
-		{
-			// 左移動
-			g_aPlayer.move.y += 2.0f;
-		}
-
 	}
 
 	// 位置を更新
