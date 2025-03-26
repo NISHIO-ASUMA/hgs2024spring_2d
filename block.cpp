@@ -135,12 +135,36 @@ void UpdateBlock(void)
 	for (int nCnt = 0; nCnt < MAX_BLOCK; nCnt++)
 	{
 		if (g_aBlock[nCnt].nType == BLOCKTYPE_MOVEBLOCK)
-		{
+		{// タイプが動くブロックなら
+			// 縦の移動量を0にする
+			g_aBlock[nCnt].move.y = 0.0f;
+
 			// 左右に動く
+			if (g_aBlock[nCnt].bRight == true)
+			{
+				// 右移動がtrue
+				g_aBlock[nCnt].move.x = 5.0f;
 
+				if (g_aBlock[nCnt].pos.x >= SCREEN_WIDTH - g_aBlock[nCnt].fWidth)
+				{
+					g_aBlock[nCnt].bRight = false;
+				}
+			}
+			else
+			{
+				g_aBlock[nCnt].move.x = -5.0f;
+				
+				if (g_aBlock[nCnt].pos.x <= g_aBlock[nCnt].fWidth)
+				{// 横幅が端についた
+					g_aBlock[nCnt].bRight = true;
+				}
 
-
+			}
 		}
+
+		// 移動量の減衰
+		g_aBlock[nCnt].move.x += (0.0f - g_aBlock[nCnt].move.x) * 0.25f;
+		g_aBlock[nCnt].move.y += (0.0f - g_aBlock[nCnt].move.y) * 0.25f;
 
 		// 移動量の更新
 		g_aBlock[nCnt].pos.x += g_aBlock[nCnt].move.x;
