@@ -60,9 +60,6 @@ void InitGame(void)
 	LoadBlockText();		// 配置したブロック情報の読み込み
 
 #if 0
-
-	InitItem();				//アイテム
-
 	InitEffect();			//エフェクト
 
 	InitParticle();			//パーティクル
