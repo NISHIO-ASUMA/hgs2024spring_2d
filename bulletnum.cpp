@@ -16,8 +16,10 @@ typedef struct
 
 //グローバル変数
 LPDIRECT3DTEXTURE9 g_pTextureBulletNum = NULL;//テクスチャへのポインタ
+LPDIRECT3DTEXTURE9 g_pTextureBulletNum2 = NULL;//テクスチャへのポインタ
 
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffBulletNum = NULL;//頂点バッファへのポインタ
+LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffBulletNum2 = NULL;//頂点バッファへのポインタ
 
 D3DXVECTOR3 g_posBulletNum;	// 残弾数の位置
 BulletNum g_aBulletNum[MAX_DIGIT];
@@ -41,6 +43,10 @@ void InitBulletNum(void)
 		"data\\TEXTURE\\time001.png",
 		&g_pTextureBulletNum);
 
+	//テクスチャの読み込み
+	D3DXCreateTextureFromFile(pDevice,
+		"data\\TEXTURE\\bulletnum.png",
+		&g_pTextureBulletNum2);
 
 	g_posBulletNum = D3DXVECTOR3(0.0f, 0.0f, 0.0f);//位置を初期化する(始まりの位置)
 
@@ -53,6 +59,14 @@ void InitBulletNum(void)
 		&g_pVtxBuffBulletNum,
 		NULL);
 
+	//頂点バッファの生成
+	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4,
+		D3DUSAGE_WRITEONLY,
+		FVF_VERTEX_2D,
+		D3DPOOL_MANAGED,
+		&g_pVtxBuffBulletNum2,
+		NULL);
+
 	VERTEX_2D* pVtx;
 
 	//頂点バッファをロックし、頂点情報へのポインタを取得
@@ -63,10 +77,10 @@ void InitBulletNum(void)
 		g_aBulletNum[nCnt].bUse = true;
 
 		//頂点座標の設定
-		pVtx[0].pos = D3DXVECTOR3(1110.0f + nCnt * 35.0f, 580.0f, 0.0f);
-		pVtx[1].pos = D3DXVECTOR3(1110.0f + nCnt * 35.0f + 35.0f, 580.0f, 0.0f);
-		pVtx[2].pos = D3DXVECTOR3(1110.0f + nCnt * 35.0f, 660.0f, 0.0f);
-		pVtx[3].pos = D3DXVECTOR3(1110.0f + nCnt * 35.0f + 35.0f, 660.0f, 0.0f);
+		pVtx[0].pos = D3DXVECTOR3(1110.0f + nCnt * 35.0f, 610.0f, 0.0f);
+		pVtx[1].pos = D3DXVECTOR3(1110.0f + nCnt * 35.0f + 35.0f, 610.0f, 0.0f);
+		pVtx[2].pos = D3DXVECTOR3(1110.0f + nCnt * 35.0f, 680.0f, 0.0f);
+		pVtx[3].pos = D3DXVECTOR3(1110.0f + nCnt * 35.0f + 35.0f, 680.0f, 0.0f);
 
 		//rhwの設定
 		pVtx[0].rhw = 1.0f;
@@ -92,6 +106,36 @@ void InitBulletNum(void)
 	//頂点バッファをアンロックする
 	g_pVtxBuffBulletNum->Unlock();
 
+	//頂点バッファをロックし、頂点情報へのポインタを取得
+	g_pVtxBuffBulletNum2->Lock(0, 0, (void**)&pVtx, 0);
+
+	//頂点座標の設定
+	pVtx[0].pos = D3DXVECTOR3(900.0f, 630.0f, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(1100.0f, 630.0f, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(900.0f, 680.0f, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(1100.0f, 680.0f, 0.0f);
+
+	//rhwの設定
+	pVtx[0].rhw = 1.0f;
+	pVtx[1].rhw = 1.0f;
+	pVtx[2].rhw = 1.0f;
+	pVtx[3].rhw = 1.0f;
+
+	//頂点カラーの設定
+	pVtx[0].col = D3DCOLOR_RGBA(255, 255, 255, 255);
+	pVtx[1].col = D3DCOLOR_RGBA(255, 255, 255, 255);
+	pVtx[2].col = D3DCOLOR_RGBA(255, 255, 255, 255);
+	pVtx[3].col = D3DCOLOR_RGBA(255, 255, 255, 255);
+
+	//テクスチャ座標の設定
+	pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
+	pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
+	pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
+	pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
+
+	//頂点バッファをアンロックする
+	g_pVtxBuffBulletNum2->Unlock();
+
 	SetBulletNum(10);
 }
 //=============================
@@ -106,12 +150,27 @@ void UninitBulletNum(void)
 		g_pTextureBulletNum = NULL;
 	}
 
+	//テクスチャの破棄
+	if (g_pTextureBulletNum2 != NULL)
+	{
+		g_pTextureBulletNum2->Release();
+		g_pTextureBulletNum2 = NULL;
+	}
+
 	//頂点バッファの破棄
 	if (g_pVtxBuffBulletNum != NULL)
 	{
 		g_pVtxBuffBulletNum->Release();
 		g_pVtxBuffBulletNum = NULL;
 	}
+
+	//頂点バッファの破棄
+	if (g_pVtxBuffBulletNum2 != NULL)
+	{
+		g_pVtxBuffBulletNum2->Release();
+		g_pVtxBuffBulletNum2 = NULL;
+	}
+
 }
 //=============================
 // 残弾数の更新処理
@@ -157,6 +216,19 @@ void DrawBulletNum(void)
 			pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, nCnt * 4, 2);
 		}
 	}
+
+	//頂点バッファをデータストリームに設定
+	pDevice->SetStreamSource(0, g_pVtxBuffBulletNum2, 0, sizeof(VERTEX_2D));
+
+	//頂点フォーマットの設定
+	pDevice->SetFVF(FVF_VERTEX_2D);
+
+	//テクスチャの設定
+	pDevice->SetTexture(0, g_pTextureBulletNum2);
+
+	//ポリゴンの描画
+	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
+
 }
 //=============================
 // 残弾数の設定処理
