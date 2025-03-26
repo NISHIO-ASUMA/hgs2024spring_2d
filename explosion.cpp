@@ -9,7 +9,7 @@
 #include "player.h"
 #include "explosion.h"
 
-//マクロ定義s
+//マクロ定義
 #define MAX_EXPLOSION (128)//爆発の最大数
 
 //爆発造体の定義
@@ -38,12 +38,10 @@ void InitExplosion(void)
 	//デバイスの取得
 	pDevice = GetDevice();
 
-
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
 		"data\\TEXTURE\\explosion100.png",
 		&g_pTextureExplosion);
-
 
 	//爆発の情報の初期化
 	for (nCntExplosion = 0; nCntExplosion < MAX_EXPLOSION; nCntExplosion++)
@@ -62,7 +60,6 @@ void InitExplosion(void)
 		D3DPOOL_MANAGED,
 		&g_pVtxBuffExplosion,
 		NULL);
-
 
 	VERTEX_2D* pVtx;
 

@@ -163,13 +163,6 @@ void UpdateBullet(void)
 
 	for (int nCntBullet = 0; nCntBullet < MAX_BULLET; nCntBullet++)
 	{
-		//if (!g_aBullet[nCntBullet].bUse)
-		//{
-		//	// Žg—pó‘Ô‚¶‚á‚È‚©‚Á‚½‚ç
-		//	pVtx += 4; // 4‚Â•ªi‚ß‚é
-		//	continue;
-		//}
-
 		if (g_aBullet[nCntBullet].bUse)
 		{
 			if (g_aBullet[nCntBullet].type == BULLETTYPE_PLAYER)
