@@ -59,7 +59,7 @@ typedef struct
 static const char* BLOCK_TEXTURE[BLOCKTYPE_MAX] =
 {
 	"data\\TEXTURE\\Block_bullet.png",		// 弾ブロック
-	"data\\TEXTURE\\Block001.png",			// 壁ブロック
+	"data\\TEXTURE\\Block000.png",			// 壁ブロック
 	"data\\TEXTURE\\Block_normal.png",		// ノーマルブロック
 	"data\\TEXTURE\\Block_vertical.png",	// 縦消しブロック
 	"data\\TEXTURE\\Block_horizontal.png",	// 横消しブロック

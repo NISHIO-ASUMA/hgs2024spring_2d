@@ -21,6 +21,7 @@ void UpdateBulletNum(void);
 void DrawBulletNum(void);
 
 void SetBulletNum(int nBulletNum);
+void AddBulletNum(int nBulletNum);
 void DecBulletNum(int nBulletNum);
 int DigitNum(int nBulletNum);
 int GetBulletNum(void);

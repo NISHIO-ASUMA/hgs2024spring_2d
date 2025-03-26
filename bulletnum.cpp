@@ -136,7 +136,7 @@ void InitBulletNum(void)
 	//頂点バッファをアンロックする
 	g_pVtxBuffBulletNum2->Unlock();
 
-	SetBulletNum(10);
+	SetBulletNum(20);
 }
 //=============================
 // 残弾数の終了処理
@@ -277,6 +277,60 @@ void SetBulletNum(int nBulletNum)
 	//頂点バッファをアンロックする
 	g_pVtxBuffBulletNum->Unlock();
 
+}
+//=============================
+// 残弾数の加算処理
+//=============================
+void AddBulletNum(int nBulletNum)
+{
+
+	VERTEX_2D* pVtx;
+
+	int aPosTexU[MAX_DIGIT] = {};
+
+	int aData = TEN;//10
+	int aData2 = ONE;//1
+
+	int digitNum = 0;
+	int nCnt;
+
+	g_nBulletNum += nBulletNum;
+
+	//頂点バッファをロックし、頂点情報へのポインタを取得
+	g_pVtxBuffBulletNum->Lock(0, 0, (void**)&pVtx, 0);
+
+	if (g_nBulletNum <= 0)
+	{
+		g_nBulletNum = 0;
+	}
+
+	//桁ごとに分割する
+	for (nCnt = 0; nCnt < MAX_DIGIT; nCnt++)
+	{
+
+		if (nCnt == 0)
+		{
+			aPosTexU[0] = g_nBulletNum / aData;
+		}
+		else
+		{
+			aPosTexU[nCnt] = g_nBulletNum % aData / aData2;
+			aData = aData / 10;
+			aData2 = aData2 / 10;
+		}
+
+		//テクスチャ座標の設定
+		pVtx[0].tex = D3DXVECTOR2(0.0f + (0.1f * aPosTexU[nCnt]), 0.0f);
+		pVtx[1].tex = D3DXVECTOR2(0.1f + (0.1f * aPosTexU[nCnt]), 0.0f);
+		pVtx[2].tex = D3DXVECTOR2(0.0f + (0.1f * aPosTexU[nCnt]), 1.0f);
+		pVtx[3].tex = D3DXVECTOR2(0.1f + (0.1f * aPosTexU[nCnt]), 1.0f);
+
+		pVtx += 4;
+
+	}
+
+	//頂点バッファをアンロックする
+	g_pVtxBuffBulletNum->Unlock();
 }
 //=============================
 // 残弾数の減算処理
