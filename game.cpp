@@ -134,8 +134,6 @@ void UpdateGame(void)
 	{
 		UpdateBlock();		// ブロックの更新
 
-		//UpdateTime();		// タイムの更新
-
 		UpdateBullet();		// 弾の更新処理
 		
 		UpdatePlayer();		// プレイヤーの更新処理
