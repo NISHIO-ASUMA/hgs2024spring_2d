@@ -21,6 +21,7 @@
 #include "ranking.h"
 #include "fade.h"
 #include "edit.h"
+#include "sound.h"
 
 //******************************************
 // グローバル変数宣言
@@ -351,8 +352,8 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 		return E_FAIL;
 	}
 
-	//サウンド初期化
-	// InitSound(hWnd);
+	// サウンド初期化
+	InitSound(hWnd);
 
 	//モードの設定
 	SetMode(g_mode);
@@ -380,8 +381,8 @@ void Uninit(void)
 	//フェードの終了
 	UninitFade();
 
-	////サウンドの終了
-	//UninitSound();
+	//サウンドの終了
+	UninitSound();
 
 	// デバッグ表示用のフォントの破棄
 	if (g_pFont != NULL)
