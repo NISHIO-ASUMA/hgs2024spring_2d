@@ -23,11 +23,8 @@
 #include "bullet.h"
 #include "explosion.h"
 #include "item.h"
-<<<<<<< HEAD
 #include "bulletnum.h"
-=======
 #include "sound.h"
->>>>>>> f0c5aff38f1d17b672e6c4cc3da0ced1c69ddbcd
 
 //***********************************************
 // É}ÉNÉçíËã`
