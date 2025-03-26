@@ -72,6 +72,7 @@ bool CollisionBlockOn(D3DXVECTOR3* pPos, D3DXVECTOR3* pPosOld, D3DXVECTOR3* pMov
 Block* GetBlockInfo(void);		// ブロック情報
 int GetBlock(void);				// ブロック数の取得
 void LoadBlockText(void);		// 配置情報の読み込み処理
+void HitBlock(int nCntBlock, int nDamage); // ヒット処理
 
 #endif
 

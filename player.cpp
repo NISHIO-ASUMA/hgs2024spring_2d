@@ -10,6 +10,7 @@
 // #include "bullet.h"
 // #include "explosion.h"
 #include "fade.h"
+#include "bullet.h"
 //#include "effect.h"
 //#include "particle.h"
 //#include "sound.h"
@@ -20,10 +21,10 @@
 #define MAX_LIFEBARSIZE_X (400)		// 横幅
 #define MAX_LIFEBARSIZE_Y (20)		// 高さ
 									   
-#define MAX_UNDER_POS	  (720)		// 下に行ける最大Y座標
+#define MAX_UNDER_POS	  (700)		// 下に行ける最大Y座標
 #define MAX_TOP_POS       (20)		// 上に行ける最大Y座標
 #define MAX_RIGHT_POS     (1260)	// 右に行ける最大X座標
-#define MAX_LEFT_POS      (20)     // 左に行ける最大X座標
+#define MAX_LEFT_POS      (20)      // 左に行ける最大X座標
 
 //グローバル変数
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffplayer = NULL;		// 頂点バッファのポインタ
@@ -295,14 +296,14 @@ void GetKeyPlayer(void)
 	{
 		g_aPlayer.move.y -= 2.0f;
 	}
-	if (KeyboardTrigger(DIK_SPACE) == true)
-	{
-		// PlaySound(SOUND_LABEL_PLAYERBULLET);
+	//if (KeyboardTrigger(DIK_SPACE) == true)
+	//{
+	//	// PlaySound(SOUND_LABEL_PLAYERBULLET);
 
-		//弾の設定
-		// SetBullet(g_aPlayer.pos, D3DXVECTOR3(sinf(g_aPlayer.rot.z + D3DX_PI) * 10.0f, cosf(g_aPlayer.rot.z + D3DX_PI) * 10.0f, 0.0f), g_aPlayer.rot, 30.0f, 30.0f, 70, BULLETTYPE_PLAYER);
+	//	// 弾の設定
+	//	SetBullet(g_aPlayer.pos, D3DXVECTOR3(sinf(g_aPlayer.rot.z + D3DX_PI) * 10.0f, cosf(g_aPlayer.rot.z + D3DX_PI) * 10.0f, 0.0f), g_aPlayer.rot, 30.0f, 30.0f, 70, BULLETTYPE_PLAYER);
 
-	}
+	//}
 	
 	if (KeyboardTrigger(DIK_E) == true && KeyboardTrigger(DIK_Q) == true)
 	{
@@ -320,11 +321,26 @@ void GetKeyPlayer(void)
 		g_aPlayer.rot.z = g_aPlayer.rot.z + (D3DX_PI * 0.5f);
 	}
 
-	//// ヒット状態
-	//if (g_aPlayer.bHit == true)
-	//{
-	//	g_aPlayer.nCntAnimState++;	//カウンターを加算
-	//}
+	if (KeyboardTrigger(DIK_UP))
+	{// 上矢印キー
+		// 弾の設定
+		SetBullet(g_aPlayer.pos, D3DXVECTOR3(sinf(g_aPlayer.rot.z + D3DX_PI) * 10.0f, cosf(g_aPlayer.rot.z + D3DX_PI) * 10.0f, 0.0f), g_aPlayer.rot, 30.0f, 30.0f, 70, BULLETTYPE_PLAYER);
+	}
+	else if (KeyboardTrigger(DIK_DOWN))
+	{// 下矢印キー
+		// 弾の設定
+		SetBullet(g_aPlayer.pos, D3DXVECTOR3(-sinf(g_aPlayer.rot.z + D3DX_PI) * 10.0f, -cosf(g_aPlayer.rot.z + D3DX_PI) * 10.0f, 0.0f), g_aPlayer.rot, 30.0f, 30.0f, 70, BULLETTYPE_PLAYER);
+	}
+	else if (KeyboardTrigger(DIK_LEFT))
+	{// 左矢印キー
+		// 弾の設定
+		SetBullet(g_aPlayer.pos, D3DXVECTOR3(sinf(g_aPlayer.rot.z - D3DX_PI * 0.5f) * 10.0f, cosf(g_aPlayer.rot.z - D3DX_PI * 0.5f) * 10.0f, 0.0f), g_aPlayer.rot, 30.0f, 30.0f, 70, BULLETTYPE_PLAYER);
+	}
+	else if (KeyboardTrigger(DIK_RIGHT))
+	{// 右矢印キー
+		// 弾の設定
+		SetBullet(g_aPlayer.pos, D3DXVECTOR3(sinf(g_aPlayer.rot.z + D3DX_PI * 0.5f) * 10.0f, -cosf(g_aPlayer.rot.z - D3DX_PI * 0.5f) * 10.0f, 0.0f), g_aPlayer.rot, 30.0f, 30.0f, 70, BULLETTYPE_PLAYER);
+	}
 
 	// 位置を更新
 	g_aPlayer.pos.x += g_aPlayer.move.x;
@@ -344,19 +360,19 @@ void GetKeyPlayer(void)
 		g_aPlayer.move.x = 0.0f;
 	}
 
-	////下壁
-	//if (g_aPlayer.pos.y >= MAX_UNDER_POS)
-	//{
-	//	g_aPlayer.pos.y = MAX_UNDER_POS;
-	//	g_aPlayer.move.y = 0.0f;
-	//}
+	//下壁
+	if (g_aPlayer.pos.y >= MAX_UNDER_POS)
+	{
+		g_aPlayer.pos.y = MAX_UNDER_POS;
+		g_aPlayer.move.y = 0.0f;
+	}
 
-	////上壁
-	//else if (g_aPlayer.pos.y <= MAX_TOP_POS)
-	//{
-	//	g_aPlayer.pos.y = MAX_TOP_POS;
-	//	g_aPlayer.move.y = 0.0f;
-	//}
+	//上壁
+	else if (g_aPlayer.pos.y <= MAX_TOP_POS)
+	{
+		g_aPlayer.pos.y = MAX_TOP_POS;
+		g_aPlayer.move.y = 0.0f;
+	}
 
 
 	// 移動量の更新(減衰させる)
@@ -450,19 +466,26 @@ void GetJoypadPlayer(void)
 	}
 
 	if (JoypadTrigger(JOYKEY_B) == true)
-	{
-
-		// PlaySound(SOUND_LABEL_PLAYERBULLET);
-
-		// SetBullet(g_aPlayer.pos, D3DXVECTOR3(sinf(g_aPlayer.rot.z + D3DX_PI) * 10.0f, cosf(g_aPlayer.rot.z + D3DX_PI) * 10.0f, 0.0f), g_aPlayer.rot, 30.0f, 30.0f, 70, BULLETTYPE_PLAYER);
-
+	{// Bボタンを押した
+		// 弾の設定
+		SetBullet(g_aPlayer.pos, D3DXVECTOR3(sinf(g_aPlayer.rot.z + D3DX_PI * 0.5f) * 10.0f, -cosf(g_aPlayer.rot.z - D3DX_PI * 0.5f) * 10.0f, 0.0f), g_aPlayer.rot, 30.0f, 30.0f, 70, BULLETTYPE_PLAYER);
+	}
+	else if (JoypadTrigger(JOYKEY_X) == true)
+	{// Xボタンを押した
+		// 弾の設定
+		SetBullet(g_aPlayer.pos, D3DXVECTOR3(sinf(g_aPlayer.rot.z - D3DX_PI * 0.5f) * 10.0f, cosf(g_aPlayer.rot.z - D3DX_PI * 0.5f) * 10.0f, 0.0f), g_aPlayer.rot, 30.0f, 30.0f, 70, BULLETTYPE_PLAYER);
+	}
+	else if (JoypadTrigger(JOYKEY_Y) == true)
+	{// Yボタンを押した
+		// 弾の設定
+		SetBullet(g_aPlayer.pos, D3DXVECTOR3(sinf(g_aPlayer.rot.z + D3DX_PI) * 10.0f, cosf(g_aPlayer.rot.z + D3DX_PI) * 10.0f, 0.0f), g_aPlayer.rot, 30.0f, 30.0f, 70, BULLETTYPE_PLAYER);
+	}
+	else if (JoypadTrigger(JOYKEY_A) == true)
+	{// Aボタン
+		// 弾の設定
+		SetBullet(g_aPlayer.pos, D3DXVECTOR3(-sinf(g_aPlayer.rot.z + D3DX_PI) * 10.0f, -cosf(g_aPlayer.rot.z + D3DX_PI) * 10.0f, 0.0f), g_aPlayer.rot, 30.0f, 30.0f, 70, BULLETTYPE_PLAYER);
 	}
 
-	//// ヒット状態
-	//if (g_aPlayer.bHit == true)
-	//{
-	//	g_aPlayer.nCntAnimState++;	//カウンターを加算
-	//}
 
 	// 位置を更新
 	g_aPlayer.pos.x += g_aPlayer.move.x;

@@ -146,6 +146,7 @@
   <ItemGroup>
     <ClCompile Include="background.cpp" />
     <ClCompile Include="block.cpp" />
+    <ClCompile Include="bullet.cpp" />
     <ClCompile Include="edit.cpp" />
     <ClCompile Include="fade.cpp" />
     <ClCompile Include="game.cpp" />
@@ -166,6 +167,7 @@
   <ItemGroup>
     <ClInclude Include="background.h" />
     <ClInclude Include="block.h" />
+    <ClInclude Include="bullet.h" />
     <ClInclude Include="edit.h" />
     <ClInclude Include="fade.h" />
     <ClInclude Include="game.h" />

@@ -17,11 +17,9 @@
 //#include "particle.h"
 //#include "sound.h"
 
-
 //************************************
 // マクロ定義
 //***********************************
-#define BULLET_TEX (2)				// テクスチャ数
 #define MAX_BULLET (128)			// 弾の最大数
 #define MAX_BULLETSIZE_X (25.0f)	// 弾のサイズ
 #define MAX_BULLETSIZE_Y (25.0f)	// 弾のサイズ
@@ -29,20 +27,20 @@
 //弾構造体の定義
 typedef struct
 {
-	D3DXVECTOR3 pos;			//位置
-	D3DXVECTOR3 move;			//移動量
-	D3DXVECTOR3 rot;			//z軸
-	int nLife;					//弾の寿命
-	bool bUse;					//使用しているかどうか
-	BULLETTYPE type;			//弾の種類
-	float fAngle;				//角度
-	float fLength;				//対角線の長さ
-	int nBulletType;			//弾の種類
+	D3DXVECTOR3 pos;			// 位置
+	D3DXVECTOR3 move;			// 移動量
+	D3DXVECTOR3 rot;			// z軸
+	int nLife;					// 弾の寿命
+	bool bUse;					// 使用しているかどうか
+	BULLETTYPE type;			// 弾の種類
+	float fAngle;				// 角度
+	float fLength;				// 対角線の長さ
+	int nBulletType;			// 弾の種類
 }Bullet;
 
 //グローバル変数
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffBullet = NULL;        //頂点バッファのポインタ
-LPDIRECT3DTEXTURE9 g_pTextureBullet[BULLET_TEX] = {};   //テクスチャのポインタ
+LPDIRECT3DTEXTURE9 g_pTextureBullet[BULLETTYPE_MAX] = {};   //テクスチャのポインタ
 Bullet g_aBullet[MAX_BULLET];							//弾の情報
 
 //=========================
@@ -53,27 +51,24 @@ void InitBullet(void)
 	// デバイスへのポインタ
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();	
 
+	for (int nCnt = 0; nCnt < BULLETTYPE_MAX; nCnt++)
+	{
 		//テクスチャの読み込み
-	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\bullet002.png",
-		&g_pTextureBullet[0]);
-
-	//テクスチャの読み込み
-	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\bullet001.png",
-		&g_pTextureBullet[1]);
-
+		D3DXCreateTextureFromFile(pDevice,
+			BULLET_TEXTURE[nCnt],
+			&g_pTextureBullet[nCnt]);
+	}
 
 	// 弾情報の初期化
 	for (int nCntBullet = 0; nCntBullet < MAX_BULLET; nCntBullet++)
 	{
-		g_aBullet[nCntBullet].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//座標
-		g_aBullet[nCntBullet].move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//移動量
-		g_aBullet[nCntBullet].nLife = 100;								//体力
-		g_aBullet[nCntBullet].bUse = false;								//使用してない状態にする
-		BULLETTYPE type = {};											//タイプ
-		g_aBullet[nCntBullet].rot = D3DXVECTOR3(0.0f,0.0f,0.0f);		//角度
-		g_aBullet[nCntBullet].nBulletType = 0;							//弾の種類
+		g_aBullet[nCntBullet].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		// 座標
+		g_aBullet[nCntBullet].move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		// 移動量
+		g_aBullet[nCntBullet].nLife = 100;								// 体力
+		g_aBullet[nCntBullet].bUse = false;								// 使用してない状態にする
+		BULLETTYPE type = {};											// タイプ
+		g_aBullet[nCntBullet].rot = D3DXVECTOR3(0.0f,0.0f,0.0f);		// 角度
+		g_aBullet[nCntBullet].nBulletType = 0;							// 弾の種類
 
 		//対角線の長さを算出
 		g_aBullet[nCntBullet].fLength = sqrtf((MAX_BULLETSIZE_X * MAX_BULLETSIZE_X) + (MAX_BULLETSIZE_Y * MAX_BULLETSIZE_Y)) / 2.0f;
@@ -135,7 +130,7 @@ void UninitBullet(void)
 	// StopSound();	// サウンドの停止
 
 	// テクスチャの破棄
-	for (int nCnt = 0; nCnt < BULLET_TEX; nCnt++)
+	for (int nCnt = 0; nCnt < BULLETTYPE_MAX; nCnt++)
 	{
 		if (g_pTextureBullet[nCnt] != NULL)
 		{
@@ -160,7 +155,7 @@ void UpdateBullet(void)
 {
 	VERTEX_2D* pVtx ; // 頂点情報のポインタ
 
-	//プレイヤーの取得
+	// プレイヤーの取得
 	Player* pPlayer = GetPlayer();
 
 	// 頂点バッファをロックし,頂点情報へのポインタを取得
@@ -168,89 +163,88 @@ void UpdateBullet(void)
 
 	for (int nCntBullet = 0; nCntBullet < MAX_BULLET; nCntBullet++)
 	{
-
-		if (g_aBullet[nCntBullet].bUse == true)
+		if (!g_aBullet[nCntBullet].bUse)
 		{
-			//弾が使用されている
-			if (g_aBullet[nCntBullet].type == BULLETTYPE_PLAYER)
-			{
-				for (int nCntEnemy = 0; nCntEnemy < MAX_BLOCK; nCntEnemy++)
-				{
- 					if (GetBlockInfo()->bUse == true)
-					{
-						// プレイヤーが使用されている
-						if (g_aBullet[nCntBullet].pos.x <= GetBlockInfo()->pos.x + 50.0f &&	// 一旦直値
-							g_aBullet[nCntBullet].pos.y >= GetBlockInfo()->pos.y - 50.0f &&
-							g_aBullet[nCntBullet].pos.x >= GetBlockInfo()->pos.x - 50.0f &&
-							g_aBullet[nCntBullet].pos.y <= GetBlockInfo()->pos.y + 50.0f)
-						{
-							// SetParticle(g_aBullet[nCntBullet].pos, D3DXCOLOR(1.0f, 0.0f, 0.4f, 1.0f));
-							// ブロックにヒット
-							if (GetMode() == MODE_GAME)
-							{
-								// TODO : ブロックに当たる処理
-
-
-
-							}
-						}
-					}
-
-				}
-			}
-			else if (g_aBullet[nCntBullet].type == BULLETTYPE_BLOCK)
-			{// 種類がブロック
-				if (pPlayer->bDisp == true &&pPlayer->state == PLAYERSTATE_NORMAL)
-				{
-					// プレイヤーの使用
-					if (
-						g_aBullet[nCntBullet].pos.x <= pPlayer->pos.x + 50.0f && 
-						g_aBullet[nCntBullet].pos.x >= pPlayer->pos.x - 50.0f &&
-						g_aBullet[nCntBullet].pos.y <= pPlayer->pos.y + 50.0f &&
-						g_aBullet[nCntBullet].pos.y >= pPlayer->pos.y - 50.0f
-						)											
-					{
-
-						// ブロックにダメージ判定
-						// HitBlock(1);
-
-						// PlaySound(SOUND_LABEL_EXPLOSION);
-
-						// SetExplosion(g_aBullet[nCntBullet].pos, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
-					}
-				}
-			}
-				
-			// 弾の位置更新処理
-			g_aBullet[nCntBullet].pos.x += g_aBullet[nCntBullet].move.x;
-			g_aBullet[nCntBullet].pos.y += g_aBullet[nCntBullet].move.y;
-
-			// 頂点座標の更新
-			pVtx[0].pos.x = g_aBullet[nCntBullet].pos.x + sinf(g_aBullet[nCntBullet].rot.z + (-D3DX_PI + g_aBullet[nCntBullet].fAngle)) * g_aBullet[nCntBullet].fLength;
-			pVtx[0].pos.y = g_aBullet[nCntBullet].pos.y + cosf(g_aBullet[nCntBullet].rot.z + (-D3DX_PI + g_aBullet[nCntBullet].fAngle)) * g_aBullet[nCntBullet].fLength;
-			pVtx[0].pos.z = 0.0f;
-
-			pVtx[1].pos.x = g_aBullet[nCntBullet].pos.x + sinf(g_aBullet[nCntBullet].rot.z + (D3DX_PI - g_aBullet[nCntBullet].fAngle)) * g_aBullet[nCntBullet].fLength;
-			pVtx[1].pos.y = g_aBullet[nCntBullet].pos.y + cosf(g_aBullet[nCntBullet].rot.z + (D3DX_PI - g_aBullet[nCntBullet].fAngle)) * g_aBullet[nCntBullet].fLength;
-			pVtx[1].pos.z = 0.0f;
-
-			pVtx[2].pos.x = g_aBullet[nCntBullet].pos.x + sinf(g_aBullet[nCntBullet].rot.z + (0.0f - g_aBullet[nCntBullet].fAngle)) * g_aBullet[nCntBullet].fLength;
-			pVtx[2].pos.y = g_aBullet[nCntBullet].pos.y + cosf(g_aBullet[nCntBullet].rot.z + (0.0f - g_aBullet[nCntBullet].fAngle)) * g_aBullet[nCntBullet].fLength;
-			pVtx[2].pos.z = 0.0f;																									  
-																																	  
-			pVtx[3].pos.x = g_aBullet[nCntBullet].pos.x + sinf(g_aBullet[nCntBullet].rot.z + (0.0f + g_aBullet[nCntBullet].fAngle)) * g_aBullet[nCntBullet].fLength;
-			pVtx[3].pos.y = g_aBullet[nCntBullet].pos.y + cosf(g_aBullet[nCntBullet].rot.z + (0.0f + g_aBullet[nCntBullet].fAngle)) * g_aBullet[nCntBullet].fLength;
-			pVtx[3].pos.z = 0.0f;
-
-
-			g_aBullet[nCntBullet].nLife--;//体力を減らす
-
-			if (g_aBullet[nCntBullet].nLife <= 0)//寿命尽きる
-			{
-				g_aBullet[nCntBullet].bUse = false;//未使用状態
-			}
+			// 使用状態じゃなかったら
+			pVtx += 4; // 4つ分進める
+			continue;
 		}
 
+		if (g_aBullet[nCntBullet].type == BULLETTYPE_PLAYER)
+		{// 種類がプレイヤー
+			for (int nCntEnemy = 0; nCntEnemy < MAX_BLOCK; nCntEnemy++)
+			{
+ 				if (GetBlockInfo()->bUse == true)
+				{
+					// プレイヤーが使用されている
+					if (g_aBullet[nCntBullet].pos.x <= GetBlockInfo()->pos.x + 50.0f &&	// 一旦直値
+						g_aBullet[nCntBullet].pos.y >= GetBlockInfo()->pos.y - 50.0f &&
+						g_aBullet[nCntBullet].pos.x >= GetBlockInfo()->pos.x - 50.0f &&
+						g_aBullet[nCntBullet].pos.y <= GetBlockInfo()->pos.y + 50.0f)
+					{
+						// SetParticle(g_aBullet[nCntBullet].pos, D3DXCOLOR(1.0f, 0.0f, 0.4f, 1.0f));
+						// ブロックにヒット
+						if (GetMode() == MODE_GAME)
+						{
+							// TODO : ブロックに当たる処理
+							HitBlock(nCntBullet, 1);
+						}
+					}
+				}
+
+			}
+		}
+		else if (g_aBullet[nCntBullet].type == BULLETTYPE_BLOCK)
+		{// 種類がブロック
+			if (pPlayer->bDisp == true && pPlayer->state == PLAYERSTATE_NORMAL)
+			{
+				// プレイヤーの使用
+				if (
+					g_aBullet[nCntBullet].pos.x <= pPlayer->pos.x + 50.0f && 
+					g_aBullet[nCntBullet].pos.x >= pPlayer->pos.x - 50.0f &&
+					g_aBullet[nCntBullet].pos.y <= pPlayer->pos.y + 50.0f &&
+					g_aBullet[nCntBullet].pos.y >= pPlayer->pos.y - 50.0f
+					)											
+				{
+
+					// ブロックにダメージ判定
+					HitBlock(nCntBullet,1);
+
+					// PlaySound(SOUND_LABEL_EXPLOSION);
+
+					// SetExplosion(g_aBullet[nCntBullet].pos, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+				}
+			}
+		}
+				
+		// 弾の位置更新処理
+		g_aBullet[nCntBullet].pos.x += g_aBullet[nCntBullet].move.x;
+		g_aBullet[nCntBullet].pos.y += g_aBullet[nCntBullet].move.y;
+
+		// 頂点座標の更新
+		pVtx[0].pos.x = g_aBullet[nCntBullet].pos.x + sinf(g_aBullet[nCntBullet].rot.z + (-D3DX_PI + g_aBullet[nCntBullet].fAngle)) * g_aBullet[nCntBullet].fLength;
+		pVtx[0].pos.y = g_aBullet[nCntBullet].pos.y + cosf(g_aBullet[nCntBullet].rot.z + (-D3DX_PI + g_aBullet[nCntBullet].fAngle)) * g_aBullet[nCntBullet].fLength;
+		pVtx[0].pos.z = 0.0f;
+
+		pVtx[1].pos.x = g_aBullet[nCntBullet].pos.x + sinf(g_aBullet[nCntBullet].rot.z + (D3DX_PI - g_aBullet[nCntBullet].fAngle)) * g_aBullet[nCntBullet].fLength;
+		pVtx[1].pos.y = g_aBullet[nCntBullet].pos.y + cosf(g_aBullet[nCntBullet].rot.z + (D3DX_PI - g_aBullet[nCntBullet].fAngle)) * g_aBullet[nCntBullet].fLength;
+		pVtx[1].pos.z = 0.0f;
+
+		pVtx[2].pos.x = g_aBullet[nCntBullet].pos.x + sinf(g_aBullet[nCntBullet].rot.z + (0.0f - g_aBullet[nCntBullet].fAngle)) * g_aBullet[nCntBullet].fLength;
+		pVtx[2].pos.y = g_aBullet[nCntBullet].pos.y + cosf(g_aBullet[nCntBullet].rot.z + (0.0f - g_aBullet[nCntBullet].fAngle)) * g_aBullet[nCntBullet].fLength;
+		pVtx[2].pos.z = 0.0f;																									  
+																																	  
+		pVtx[3].pos.x = g_aBullet[nCntBullet].pos.x + sinf(g_aBullet[nCntBullet].rot.z + (0.0f + g_aBullet[nCntBullet].fAngle)) * g_aBullet[nCntBullet].fLength;
+		pVtx[3].pos.y = g_aBullet[nCntBullet].pos.y + cosf(g_aBullet[nCntBullet].rot.z + (0.0f + g_aBullet[nCntBullet].fAngle)) * g_aBullet[nCntBullet].fLength;
+		pVtx[3].pos.z = 0.0f;
+
+		g_aBullet[nCntBullet].nLife--;//体力を減らす
+
+		if (g_aBullet[nCntBullet].nLife <= 0)//寿命尽きる
+		{
+			g_aBullet[nCntBullet].bUse = false;//未使用状態
+		}
+		
 		pVtx += 4; // 4つ分進める
 	}
 	// 頂点バッファをアンロック
@@ -276,22 +270,15 @@ void DrawBullet(void)
 	for (int nCntBullet = 0; nCntBullet < MAX_BULLET; nCntBullet++)
 	{
 		//弾が使用されている
-		if (g_aBullet[nCntBullet].bUse == true)
+		if (g_aBullet[nCntBullet].bUse)
 		{
-			if (g_aBullet[nCntBullet].type == BULLETTYPE_PLAYER)
-			{
-				//テクスチャの設定
-				pDevice->SetTexture(0, g_pTextureBullet[0]);
+			int nType = g_aBullet[nCntBullet].type;
 
-			}
-			//else if (g_aBullet[nCntBullet].type == BULLETTYPE_ENEMY)
-			//{
-			//	//テクスチャの設定
-			//	pDevice->SetTexture(0, g_pTextureBullet[1]);
-			//}
+			//テクスチャの設定
+			pDevice->SetTexture(0, g_pTextureBullet[nType]);
 
 			//ポリゴンの描画
-			pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, nCntBullet * 4, 2);//プレイヤーの始点(0番目～3番目)
+			pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, nCntBullet * 4, 2); // プレイヤーの始点(0番目～3番目)
 
 		}
 	}
@@ -301,7 +288,7 @@ void DrawBullet(void)
 //============================
 void SetBullet(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, float fWidth, float fHeight, int nLife, BULLETTYPE type)
 {
-	VERTEX_2D* pVtx;//頂点情報のポインタ
+	VERTEX_2D* pVtx; // 頂点情報のポインタ
 
 	//頂点バッファをロックし,頂点情報へのポインタを取得
  	g_pVtxBuffBullet->Lock(0, 0, (void**)&pVtx, 0);
