@@ -188,6 +188,12 @@ void UpdateGame(void)
 		//PlaySound(SOUND_LABLE_EXIT);
 	}
 
+	if (GetBlock() <= 0)
+	{
+		// ステージのブロックを全部消したら
+		LoadBlockText();
+	}
+
 	switch(g_gameState)
 	{
 	case GAMESTATE_NORMAL://通常状態

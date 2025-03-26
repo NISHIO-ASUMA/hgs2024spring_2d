@@ -79,6 +79,8 @@ Block* GetBlockInfo(void);		// ブロック情報
 int GetBlock(void);				// ブロック数の取得
 void LoadBlockText(void);		// 配置情報の読み込み処理
 void HitBlock(int nCntBlock, int nDamage); // ヒット処理
+bool GetFinish(void);			// 終了判定の取得
+int GetWave(void);				// ウェーブ取得
 
 #endif
 

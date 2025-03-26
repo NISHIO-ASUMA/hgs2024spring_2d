@@ -20,8 +20,12 @@ LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffBlock = NULL;         // ’¸“_ƒoƒbƒtƒ@‚Ìƒ|ƒCƒ“ƒ
 LPDIRECT3DTEXTURE9 g_pTextureBlock[BLOCKTYPE_MAX] = {};	// ƒeƒNƒXƒ`ƒƒ‚Ìƒ|ƒCƒ“ƒ^
 Block g_aBlock[MAX_BLOCK];								// ƒuƒƒbƒN‚Ìî•ñ
 int g_nCntblock;										// ƒuƒƒbƒN‚Ìæ“¾
-
-void InitStruct();
+int g_nWave;											// ƒEƒF[ƒuƒJƒEƒ“ƒg
+bool g_bFinish = false;
+//**************************
+// ƒvƒƒgƒ^ƒCƒvéŒ¾
+//**************************
+void InitStruct();    // \‘¢‘Ì‰Šú‰»î•ñ
 
 //=========================
 // ƒuƒƒbƒN‚Ì‰Šú‰»ˆ—
@@ -43,6 +47,8 @@ void InitBlock(void)
 	InitStruct();
 
 	g_nCntblock = 0;
+	g_nWave = 0;
+	g_bFinish = false;
 
 	// ’¸“_ƒoƒbƒtƒ@‚Ì¶¬
 	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4 * MAX_BLOCK,
@@ -242,7 +248,7 @@ bool CollisionBlockOn(D3DXVECTOR3* pPos, D3DXVECTOR3* pPosOld, D3DXVECTOR3* pMov
 				fBlockUp <= pPos->y))
 			{
 				Check = true;
-				// pPlayer->bLanding = true;		// ’…’n”»’è(ã‚©‚ç‰º‚É—ˆ‚é‚¾‚¯’…’n‚µ‚Ä‚¢‚é)
+				// pPlayer->bLanding = true;	// ’…’n”»’è(ã‚©‚ç‰º‚É—ˆ‚é‚¾‚¯’…’n‚µ‚Ä‚¢‚é)
 				pPos->y = fBlockUp;				// ƒuƒƒbƒN‚Ìã‚ÌˆÊ’u‚ÉƒvƒŒƒCƒ„[‚ğ‡‚í‚¹‚é
 				pMove->y = 0.0f;	            // c‚ÌˆÚ“®—Ê‚ğ‚È‚­‚·
 			}
@@ -367,12 +373,48 @@ int GetBlock()
 //===================================
 void LoadBlockText()
 {
-#if 1
 	// ƒtƒ@ƒCƒ‹ƒ|ƒCƒ“ƒ^‚ÌéŒ¾
 	FILE* pFile;
 
-	// ƒtƒ@ƒCƒ‹‚ğŠJ‚­
-	pFile = fopen("data\\TEXT\\SetBlock.txt", "r");
+	//ƒEƒF[ƒuŠÖŒW
+	switch (g_nWave)
+	{
+
+	case 0:
+		//‰ŠúƒEƒFƒu
+		//ƒtƒ@ƒCƒ‹ŠJ‚­
+		pFile = fopen("data\\TEXT\\SetBlock.txt", "r");
+		break;
+
+	case 1:
+
+		//ƒtƒ@ƒCƒ‹ŠJ‚­
+		pFile = fopen("data\\TEXT\\SetBlock001.txt", "r");
+		break;
+
+	case 2:
+		//ƒtƒ@ƒCƒ‹‚ğŠJ‚­
+		pFile = fopen("data\\TEXT\\SetBlock002.txt", "r");
+
+		break;
+
+	case 3:
+		//ƒtƒ@ƒCƒ‹‚ğŠJ‚­
+		pFile = fopen("data\\TEXT\\SetBlock003.txt", "r");
+
+		break;
+
+	case 4:
+		//ƒtƒ@ƒCƒ‹‚ğŠJ‚­
+		pFile = fopen("data\\TEXT\\SetBlock004.txt", "r");
+
+		break;
+
+	default:
+		pFile = NULL;
+		g_bFinish = true;	//ƒEƒF[ƒu‚ÌI—¹
+		break;
+	}
 
 	if (pFile != NULL)
 	{// ƒtƒ@ƒCƒ‹‚ªŠJ‚¯‚½‚ç
@@ -462,6 +504,13 @@ void LoadBlockText()
 				break;
 			}
 		}
+
+		// ƒtƒ@ƒCƒ‹‚ğ•Â‚¶‚é
+		fclose(pFile);
+
+		//ƒEƒF[ƒu‚ÌƒJƒEƒ“ƒgƒAƒbƒv
+		g_nWave++;
+
 	}
 	else
 	{
@@ -471,11 +520,25 @@ void LoadBlockText()
 		return;
 	}
 
-	// ƒtƒ@ƒCƒ‹‚ğ•Â‚¶‚é
-	fclose(pFile);
-#endif
-}
 
+}
+//======================
+// ƒEƒF[ƒu‚Ì’l‚ğ•Ô‚·
+//======================
+int GetWave(void)
+{
+	return g_nWave;
+}
+//=========================
+// ƒEƒF[ƒu‚ÌI—¹”»’è‚ğ•Ô‚·
+//=========================
+bool GetFinish(void)
+{
+	return g_bFinish;
+}
+//====================
+// \‘¢‘Ì‰Šú‰»ŠÖ”
+//====================
 void InitStruct()
 {
 	// ƒuƒƒbƒNî•ñ‚Ì‰Šú‰»
