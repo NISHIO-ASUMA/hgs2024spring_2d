@@ -43,10 +43,10 @@ void InitPlayer(void)
 	// 頂点情報のポインタ
 	VERTEX_2D* pVtx;		
 
-	//// テクスチャ2の読み込み
-	//D3DXCreateTextureFromFile(pDevice,
-	//	"data\\TEXTURE\\Player001.png",
-	//	&g_pTextureplayer);
+	// テクスチャ2の読み込み
+	D3DXCreateTextureFromFile(pDevice,
+		"data\\TEXTURE\\player.png",
+		&g_pTextureplayer);
 
 	// 構造体変数の初期化
 	g_aPlayer.pos =  D3DXVECTOR3(640.0f,450.0f,0.0f);		// 位置の初期化

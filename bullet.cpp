@@ -163,86 +163,90 @@ void UpdateBullet(void)
 
 	for (int nCntBullet = 0; nCntBullet < MAX_BULLET; nCntBullet++)
 	{
-		if (!g_aBullet[nCntBullet].bUse)
-		{
-			// 使用状態じゃなかったら
-			pVtx += 4; // 4つ分進める
-			continue;
-		}
+		//if (!g_aBullet[nCntBullet].bUse)
+		//{
+		//	// 使用状態じゃなかったら
+		//	pVtx += 4; // 4つ分進める
+		//	continue;
+		//}
 
-		if (g_aBullet[nCntBullet].type == BULLETTYPE_PLAYER)
-		{// 種類がプレイヤー
-			for (int nCntEnemy = 0; nCntEnemy < MAX_BLOCK; nCntEnemy++)
-			{
- 				if (GetBlockInfo()->bUse == true)
+		if (g_aBullet[nCntBullet].bUse)
+		{
+			if (g_aBullet[nCntBullet].type == BULLETTYPE_PLAYER)
+			{// 種類がプレイヤー
+				// ブロックの取得
+				Block* pBlock = GetBlockInfo();
+
+				for (int nCntEnemy = 0; nCntEnemy < MAX_BLOCK; nCntEnemy++, pBlock++)
 				{
-					// プレイヤーが使用されている
-					if (g_aBullet[nCntBullet].pos.x <= GetBlockInfo()->pos.x + 50.0f &&	// 一旦直値
-						g_aBullet[nCntBullet].pos.y >= GetBlockInfo()->pos.y - 50.0f &&
-						g_aBullet[nCntBullet].pos.x >= GetBlockInfo()->pos.x - 50.0f &&
-						g_aBullet[nCntBullet].pos.y <= GetBlockInfo()->pos.y + 50.0f)
+					if (pBlock->bUse == true)
 					{
-						// SetParticle(g_aBullet[nCntBullet].pos, D3DXCOLOR(1.0f, 0.0f, 0.4f, 1.0f));
-						// ブロックにヒット
-						if (GetMode() == MODE_GAME)
+						// プレイヤーが使用されている
+						if (
+							g_aBullet[nCntBullet].pos.x >= pBlock->pos.x - 30.0f &&
+							g_aBullet[nCntBullet].pos.x <= pBlock->pos.x + 30.0f &&	// 一旦直値
+							g_aBullet[nCntBullet].pos.y >= pBlock->pos.y - 30.0f &&
+							g_aBullet[nCntBullet].pos.y <= pBlock->pos.y + 30.0f)
 						{
 							// TODO : ブロックに当たる処理
-							HitBlock(nCntBullet, 1);
+							HitBlock(nCntEnemy, 1);
+
+							g_aBullet[nCntBullet].bUse = false;
 						}
 					}
 				}
-
 			}
-		}
-		else if (g_aBullet[nCntBullet].type == BULLETTYPE_BLOCK)
-		{// 種類がブロック
-			if (pPlayer->bDisp == true && pPlayer->state == PLAYERSTATE_NORMAL)
-			{
-				// プレイヤーの使用
-				if (
-					g_aBullet[nCntBullet].pos.x <= pPlayer->pos.x + 50.0f && 
-					g_aBullet[nCntBullet].pos.x >= pPlayer->pos.x - 50.0f &&
-					g_aBullet[nCntBullet].pos.y <= pPlayer->pos.y + 50.0f &&
-					g_aBullet[nCntBullet].pos.y >= pPlayer->pos.y - 50.0f
-					)											
+			else if (g_aBullet[nCntBullet].type == BULLETTYPE_BLOCK)
+			{// 種類がブロック
+
+				// ブロックの取得
+				Block* pBlock = GetBlockInfo();
+
+				for (int nCntEnemy = 0; nCntEnemy < MAX_BLOCK; nCntEnemy++, pBlock++)
 				{
-
-					// ブロックにダメージ判定
-					HitBlock(nCntBullet,1);
-
-					// PlaySound(SOUND_LABEL_EXPLOSION);
-
-					// SetExplosion(g_aBullet[nCntBullet].pos, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+					if (pBlock->bUse == true)
+					{
+						// プレイヤーが使用されている
+						if (
+							g_aBullet[nCntBullet].pos.x >= pBlock->pos.x - 30.0f &&
+							g_aBullet[nCntBullet].pos.x <= pBlock->pos.x + 30.0f &&	// 一旦直値
+							g_aBullet[nCntBullet].pos.y >= pBlock->pos.y - 30.0f &&
+							g_aBullet[nCntBullet].pos.y <= pBlock->pos.y + 30.0f)
+						{
+							// TODO : ブロックに当たる処理
+							HitBlock(nCntEnemy, 1);
+						}
+					}
 				}
 			}
-		}
-				
-		// 弾の位置更新処理
-		g_aBullet[nCntBullet].pos.x += g_aBullet[nCntBullet].move.x;
-		g_aBullet[nCntBullet].pos.y += g_aBullet[nCntBullet].move.y;
 
-		// 頂点座標の更新
-		pVtx[0].pos.x = g_aBullet[nCntBullet].pos.x + sinf(g_aBullet[nCntBullet].rot.z + (-D3DX_PI + g_aBullet[nCntBullet].fAngle)) * g_aBullet[nCntBullet].fLength;
-		pVtx[0].pos.y = g_aBullet[nCntBullet].pos.y + cosf(g_aBullet[nCntBullet].rot.z + (-D3DX_PI + g_aBullet[nCntBullet].fAngle)) * g_aBullet[nCntBullet].fLength;
-		pVtx[0].pos.z = 0.0f;
+			// 弾の位置更新処理
+			g_aBullet[nCntBullet].pos.x += g_aBullet[nCntBullet].move.x;
+			g_aBullet[nCntBullet].pos.y += g_aBullet[nCntBullet].move.y;
 
-		pVtx[1].pos.x = g_aBullet[nCntBullet].pos.x + sinf(g_aBullet[nCntBullet].rot.z + (D3DX_PI - g_aBullet[nCntBullet].fAngle)) * g_aBullet[nCntBullet].fLength;
-		pVtx[1].pos.y = g_aBullet[nCntBullet].pos.y + cosf(g_aBullet[nCntBullet].rot.z + (D3DX_PI - g_aBullet[nCntBullet].fAngle)) * g_aBullet[nCntBullet].fLength;
-		pVtx[1].pos.z = 0.0f;
+			// 頂点座標の更新
+			pVtx[0].pos.x = g_aBullet[nCntBullet].pos.x + sinf(g_aBullet[nCntBullet].rot.z + (-D3DX_PI + g_aBullet[nCntBullet].fAngle)) * g_aBullet[nCntBullet].fLength;
+			pVtx[0].pos.y = g_aBullet[nCntBullet].pos.y + cosf(g_aBullet[nCntBullet].rot.z + (-D3DX_PI + g_aBullet[nCntBullet].fAngle)) * g_aBullet[nCntBullet].fLength;
+			pVtx[0].pos.z = 0.0f;
 
-		pVtx[2].pos.x = g_aBullet[nCntBullet].pos.x + sinf(g_aBullet[nCntBullet].rot.z + (0.0f - g_aBullet[nCntBullet].fAngle)) * g_aBullet[nCntBullet].fLength;
-		pVtx[2].pos.y = g_aBullet[nCntBullet].pos.y + cosf(g_aBullet[nCntBullet].rot.z + (0.0f - g_aBullet[nCntBullet].fAngle)) * g_aBullet[nCntBullet].fLength;
-		pVtx[2].pos.z = 0.0f;																									  
-																																	  
-		pVtx[3].pos.x = g_aBullet[nCntBullet].pos.x + sinf(g_aBullet[nCntBullet].rot.z + (0.0f + g_aBullet[nCntBullet].fAngle)) * g_aBullet[nCntBullet].fLength;
-		pVtx[3].pos.y = g_aBullet[nCntBullet].pos.y + cosf(g_aBullet[nCntBullet].rot.z + (0.0f + g_aBullet[nCntBullet].fAngle)) * g_aBullet[nCntBullet].fLength;
-		pVtx[3].pos.z = 0.0f;
+			pVtx[1].pos.x = g_aBullet[nCntBullet].pos.x + sinf(g_aBullet[nCntBullet].rot.z + (D3DX_PI - g_aBullet[nCntBullet].fAngle)) * g_aBullet[nCntBullet].fLength;
+			pVtx[1].pos.y = g_aBullet[nCntBullet].pos.y + cosf(g_aBullet[nCntBullet].rot.z + (D3DX_PI - g_aBullet[nCntBullet].fAngle)) * g_aBullet[nCntBullet].fLength;
+			pVtx[1].pos.z = 0.0f;
 
-		g_aBullet[nCntBullet].nLife--;//体力を減らす
+			pVtx[2].pos.x = g_aBullet[nCntBullet].pos.x + sinf(g_aBullet[nCntBullet].rot.z + (0.0f - g_aBullet[nCntBullet].fAngle)) * g_aBullet[nCntBullet].fLength;
+			pVtx[2].pos.y = g_aBullet[nCntBullet].pos.y + cosf(g_aBullet[nCntBullet].rot.z + (0.0f - g_aBullet[nCntBullet].fAngle)) * g_aBullet[nCntBullet].fLength;
+			pVtx[2].pos.z = 0.0f;
 
-		if (g_aBullet[nCntBullet].nLife <= 0)//寿命尽きる
-		{
-			g_aBullet[nCntBullet].bUse = false;//未使用状態
+			pVtx[3].pos.x = g_aBullet[nCntBullet].pos.x + sinf(g_aBullet[nCntBullet].rot.z + (0.0f + g_aBullet[nCntBullet].fAngle)) * g_aBullet[nCntBullet].fLength;
+			pVtx[3].pos.y = g_aBullet[nCntBullet].pos.y + cosf(g_aBullet[nCntBullet].rot.z + (0.0f + g_aBullet[nCntBullet].fAngle)) * g_aBullet[nCntBullet].fLength;
+			pVtx[3].pos.z = 0.0f;
+
+			g_aBullet[nCntBullet].nLife--;//体力を減らす
+
+			if (g_aBullet[nCntBullet].nLife <= 0)//寿命尽きる
+			{
+				g_aBullet[nCntBullet].bUse = false;//未使用状態
+			}
 		}
 		
 		pVtx += 4; // 4つ分進める

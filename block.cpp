@@ -505,5 +505,7 @@ void HitBlock(int nCntBlock, int nDamage)
 	if (g_aBlock[nCntBlock].nLife <= 0)
 	{
 		g_aBlock[nCntBlock].bUse = false;
+
+		g_nCntblock--; // ƒfƒNƒŠƒƒ“ƒg
 	}
 }
