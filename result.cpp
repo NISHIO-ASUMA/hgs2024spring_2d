@@ -34,93 +34,11 @@ int g_aCount;											// カウント
 void InitResult(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();		// デバイスへのポインタ
-#if 0
-	// プレイヤーの取得
-	Player* pPlayer = GetPlayer();
 
-	// タイマー情報を取得
-	int nTime = GetTimer();
-	
-	// アイテムの判定を取得
-	bool bGet = bItemGetting();
-
-	bool bExit = GetExit();
-
-	// リザルトに応じた数字を代入
-	int nData = GetNumber();
-
-	//テクスチャファイルパス
-	const char* TextureName = NULL;
-
-	if (pPlayer->bDisp == true && bExit == true)
-	{
-		PlaySound(SOUND_LABEL_RESULT1);
-
-		if (pBoss->bUse == false)
-		{
-			// アイテム数によって変更
-			if ((pItem->bUse == true)
-				&& pItem->nType == ITEMTYPE_CURRY)
-			{
-				TextureName = "data\\TEXTURE\\result05.png";
-			}
-
-			switch (nData)
-			{
-			case 0:
-				TextureName = "data\\TEXTURE\\result05.png";
-				break;
-			case 1:
-				TextureName = "data\\TEXTURE\\result01.png";
-				break;
-			case 2:
-				TextureName = "data\\TEXTURE\\resulto3.png";
-				break;
-			case 3:
-				TextureName = "data\\TEXTURE\\result06.png";
-				break;
-			case 4:
-				TextureName = "data\\TEXTURE\\result04.png";
-				break;
-			default:
-				break;
-			}
-		}
-		else
-		{
-			PlaySound(SOUND_LABEL_RESULT1);
-
-			switch (nData)
-			{
-			case 0:
-				TextureName = "data\\TEXTURE\\blue.png";
-				break;
-			case 4:
-				TextureName = "data\\TEXTURE\\result04.png";
-				break;
-			default:
-				break;
-			}
-		}
-	}
-	else if (pPlayer->bDisp == false)
-	{
-		TextureName = "data\\TEXTURE\\result02.png";
-
-		PlaySound(SOUND_LABEL_RESULT2);
-	}
-	else if (nTime <= 0)
-	{
-		TextureName = "data\\TEXTURE\\gameover.png";
-		PlaySound(SOUND_LABEL_RESULT2);
-
-	}
-#endif
-
-	//// ゲームオーバー
-	//D3DXCreateTextureFromFile(pDevice,
-	//	TextureName,
-	//	&g_pTextureResult);
+	// テクスチャ
+	D3DXCreateTextureFromFile(pDevice,
+		"data\\TEXTURE\\result.png",
+		&g_pTextureResult);
 
 	// 初期化
 	g_aCount = 0;
