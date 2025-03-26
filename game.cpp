@@ -47,7 +47,7 @@ void InitGame(void)
 
 	InitPause();			// ポーズの初期化
 
-	InitTime();				// タイムの初期化
+	//InitTime();				// タイムの初期化
 
 	InitBullet();			// 弾の初期化
 
@@ -91,7 +91,7 @@ void UninitGame(void)
 
 	UninitPause();			// ポーズの終了
 
-	UninitTime();			// タイムの終了処理
+	//UninitTime();			// タイムの終了処理
 
 	UninitPlayer();			// プレイヤーの終了処理	
 
@@ -134,7 +134,7 @@ void UpdateGame(void)
 	{
 		UpdateBlock();		// ブロックの更新
 
-		UpdateTime();		// タイムの更新
+		//UpdateTime();		// タイムの更新
 
 		UpdateBullet();		// 弾の更新処理
 		
@@ -147,7 +147,8 @@ void UpdateGame(void)
 		UpdateBulletNum();	// 残弾数の更新
 	}
 
-	if ((GetTimeEnd() == true || GetFinish() == true || GetBulletNum() <= 0) && g_gameState != GAMESTATE_NONE)
+	if ((GetFinish() == true  || GetBulletNum() <= 0)
+		&& g_gameState != GAMESTATE_NONE)
 	{
 		g_gameState = GAMESTATE_END;  //終了状態
 
@@ -220,7 +221,7 @@ void DrawGame(void)
 
 	DrawBlock();			// ブロックの描画
 
-	DrawTime();				// タイムの描画
+	//DrawTime();				// タイムの描画
 
 	DrawBullet();			// 弾の描画処理
 

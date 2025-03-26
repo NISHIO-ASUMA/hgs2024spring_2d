@@ -254,7 +254,7 @@ void UpdateTime(void)
 
 	nCntTimeSecond++;
 
-	if (g_bTimeEnd == false)
+	if (GetFinish() == false)
 	{
 		if (nCntTimeSecond >= 60)			// 1•b‚²‚Æ‚Éˆ—
 		{
@@ -423,7 +423,7 @@ int GetTimeSeconds(void)
 //=============================
 // ŠÔØ‚ê‚Ìæ“¾
 //=============================
-bool GetTimeEnd(void)
+int GetTimeEnd(void)
 {
 	return g_bTimeEnd;
 }

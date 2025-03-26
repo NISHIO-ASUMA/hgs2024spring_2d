@@ -144,7 +144,7 @@ void UpdateBlock(void)
 			if (g_aBlock[nCnt].bRight == true)
 			{
 				// 右移動がtrue
-				g_aBlock[nCnt].move.x = 5.0f;
+				g_aBlock[nCnt].move.x = 7.0f;
 
 				if (g_aBlock[nCnt].pos.x >= SCREEN_WIDTH - g_aBlock[nCnt].fWidth)
 				{
@@ -153,7 +153,7 @@ void UpdateBlock(void)
 			}
 			else
 			{
-				g_aBlock[nCnt].move.x = -5.0f;
+				g_aBlock[nCnt].move.x = -7.0f;
 				
 				if (g_aBlock[nCnt].pos.x <= g_aBlock[nCnt].fWidth)
 				{// 横幅が端についた
@@ -449,7 +449,7 @@ void LoadBlockText()
 	case 2:
 		//ファイルを開く
 		pFile = fopen("data\\TEXT\\SetBlock002.txt", "r");
-
+		SetBlock(D3DXVECTOR3(30.0f, 560.0f, 0.0f), BLOCKTYPE_MOVEBLOCK, 100.0f, 15.0f);
 		break;
 
 	case 3:

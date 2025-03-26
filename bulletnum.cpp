@@ -136,7 +136,7 @@ void InitBulletNum(void)
 	//頂点バッファをアンロックする
 	g_pVtxBuffBulletNum2->Unlock();
 
-	SetBulletNum(7);
+	SetBulletNum(10);
 }
 //=============================
 // 残弾数の終了処理
