@@ -38,6 +38,7 @@ void InitBlock(void)
 			&g_pTextureBlock[nTex]);
 	}
 
+	// 構造体初期化情報
 	InitStruct();
 
 	g_nCntblock = 0;
@@ -59,10 +60,10 @@ void InitBlock(void)
 	for (int nCntBlock = 0; nCntBlock < MAX_BLOCK; nCntBlock++)
 	{
 		// 頂点座標の設定
-		pVtx[0].pos = D3DXVECTOR3(0.0f,0.0f,0.0f);	//1つ目の頂点情報
-		pVtx[1].pos = D3DXVECTOR3(0.0f,0.0f,0.0f);	//2つ目の頂点情報
-		pVtx[2].pos = D3DXVECTOR3(0.0f,0.0f,0.0f);	//3つ目の頂点情報
-		pVtx[3].pos = D3DXVECTOR3(0.0f,0.0f,0.0f);	//4つ目の頂点情報
+		pVtx[0].pos = D3DXVECTOR3(0.0f,0.0f,0.0f);	// 1つ目の頂点情報
+		pVtx[1].pos = D3DXVECTOR3(0.0f,0.0f,0.0f);	// 2つ目の頂点情報
+		pVtx[2].pos = D3DXVECTOR3(0.0f,0.0f,0.0f);	// 3つ目の頂点情報
+		pVtx[3].pos = D3DXVECTOR3(0.0f,0.0f,0.0f);	// 4つ目の頂点情報
 
 		// rhwの設定(1.0fで固定)
 		pVtx[0].rhw = 1.0f;
@@ -125,10 +126,10 @@ void UpdateBlock(void)
 	for (int nCnt = 0; nCnt < MAX_BLOCK; nCnt++)
 	{
 		//頂点座標の設定
-		pVtx[0].pos = D3DXVECTOR3(g_aBlock[nCnt].pos.x - (g_aBlock[nCnt].fWidth / 2), g_aBlock[nCnt].pos.y - (g_aBlock[nCnt].fHeight / 2), g_aBlock[nCnt].pos.z);	//1つ目の頂点情報
-		pVtx[1].pos = D3DXVECTOR3(g_aBlock[nCnt].pos.x + (g_aBlock[nCnt].fWidth / 2), g_aBlock[nCnt].pos.y - (g_aBlock[nCnt].fHeight / 2), g_aBlock[nCnt].pos.z);	//2つ目の頂点情報
-		pVtx[2].pos = D3DXVECTOR3(g_aBlock[nCnt].pos.x - (g_aBlock[nCnt].fWidth / 2), g_aBlock[nCnt].pos.y + (g_aBlock[nCnt].fHeight / 2), g_aBlock[nCnt].pos.z);	//3つ目の頂点情報
-		pVtx[3].pos = D3DXVECTOR3(g_aBlock[nCnt].pos.x + (g_aBlock[nCnt].fWidth / 2), g_aBlock[nCnt].pos.y + (g_aBlock[nCnt].fHeight / 2), g_aBlock[nCnt].pos.z);	//4つ目の頂点情報
+		pVtx[0].pos = D3DXVECTOR3(g_aBlock[nCnt].pos.x - (g_aBlock[nCnt].fWidth * 0.5f), g_aBlock[nCnt].pos.y - (g_aBlock[nCnt].fHeight * 0.5f),0.0f);	// 1つ目の頂点情報
+		pVtx[1].pos = D3DXVECTOR3(g_aBlock[nCnt].pos.x + (g_aBlock[nCnt].fWidth * 0.5f), g_aBlock[nCnt].pos.y - (g_aBlock[nCnt].fHeight * 0.5f),0.0f);	// 2つ目の頂点情報
+		pVtx[2].pos = D3DXVECTOR3(g_aBlock[nCnt].pos.x - (g_aBlock[nCnt].fWidth * 0.5f), g_aBlock[nCnt].pos.y + (g_aBlock[nCnt].fHeight * 0.5f),0.0f);	// 3つ目の頂点情報
+		pVtx[3].pos = D3DXVECTOR3(g_aBlock[nCnt].pos.x + (g_aBlock[nCnt].fWidth * 0.5f), g_aBlock[nCnt].pos.y + (g_aBlock[nCnt].fHeight * 0.5f),0.0f);	// 4つ目の頂点情報
 
 		// 頂点情報分ずらす
 		pVtx += 4;
