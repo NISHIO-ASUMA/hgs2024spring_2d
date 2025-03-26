@@ -114,11 +114,8 @@
     <ClCompile Include="item.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-<<<<<<< HEAD
     <ClCompile Include="bulletnum.cpp">
-=======
     <ClCompile Include="sound.cpp">
->>>>>>> f0c5aff38f1d17b672e6c4cc3da0ced1c69ddbcd
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -186,11 +183,8 @@
     <ClInclude Include="item.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-<<<<<<< HEAD
     <ClInclude Include="bulletnum.h">
-=======
     <ClInclude Include="sound.h">
->>>>>>> f0c5aff38f1d17b672e6c4cc3da0ced1c69ddbcd
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
