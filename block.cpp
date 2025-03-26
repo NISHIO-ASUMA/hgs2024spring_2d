@@ -463,6 +463,18 @@ void LoadBlockText()
 
 		break;
 
+	case 5:
+		//ファイルを開く
+		pFile = fopen("data\\TEXT\\SetBlock005.txt", "r");
+		SetBlock(D3DXVECTOR3(1150.0f, 200.0f, 0.0f), BLOCKTYPE_MOVEBLOCK, 100.0f, 15.0f);
+		break;
+
+	case 6:
+		//ファイルを開く
+		pFile = fopen("data\\TEXT\\SetBlock006.txt", "r");
+
+		break;
+
 	default:
 		pFile = NULL;
 		g_bFinish = true;	//ウェーブの終了
