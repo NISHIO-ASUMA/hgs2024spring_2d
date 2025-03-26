@@ -13,6 +13,7 @@
 #include "bullet.h"
 #include "bulletnum.h"
 #include "time.h"
+#include "sound.h"
 //#include "effect.h"
 //#include "particle.h"
 //#include "sound.h"
@@ -119,7 +120,8 @@ void InitPlayer(void)
 //======================
 void UninitPlayer(void)
 {
-	// StopSound();
+	// 音楽停止
+	StopSound();
 
 	// テクスチャの破棄
 	if (g_pTextureplayer != NULL)
@@ -267,6 +269,9 @@ void GetKeyPlayer(void)
 		// 弾の設定
 		SetBullet(g_aPlayer.pos, D3DXVECTOR3(sinf(g_aPlayer.rot.z + D3DX_PI) * 10.0f, cosf(g_aPlayer.rot.z + D3DX_PI) * 10.0f, 0.0f), g_aPlayer.rot, 30.0f, 30.0f, 70, BULLETTYPE_PLAYER);
 		DecBulletNum(1);
+
+		// 音楽再生
+		PlaySound(SOUND_LABEL_PLAYERBULLET_SE);
 	}
 
 	// 位置を更新
