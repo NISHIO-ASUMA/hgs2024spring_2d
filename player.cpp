@@ -49,7 +49,7 @@ void InitPlayer(void)
 		&g_pTextureplayer);
 
 	// \‘¢‘Ì•Ï”‚Ì‰Šú‰»
-	g_aPlayer.pos =  D3DXVECTOR3(640.0f,450.0f,0.0f);		// ˆÊ’u‚Ì‰Šú‰»
+	g_aPlayer.pos =  D3DXVECTOR3(640.0f,630.0f,0.0f);		// ˆÊ’u‚Ì‰Šú‰»
 	g_aPlayer.move = D3DXVECTOR3(0.0f,0.0f,0.0f);			// ˆÚ“®—Ê‚Ì‰Šú‰»
 	g_aPlayer.rot =  D3DXVECTOR3(0.0f, 0.0f, 0.0f);			// Œü‚«‚Ì‰Šú‰»
 	g_aPlayer.nLife = 100;									// ‘Ì—Í
