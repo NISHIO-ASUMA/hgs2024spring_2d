@@ -43,6 +43,8 @@ int g_nCntWaveTimeCount = 0;				// 読み込みウェーブカウント
 //=====================
 void InitGame(void)
 {
+	InitBackground();		// 背景の初期化
+
 	InitBlock();			// ブロックの初期化
 
 	InitPause();			// ポーズの初期化
@@ -90,6 +92,8 @@ void UninitGame(void)
 	UninitBlock();			// ブロックの終了
 
 	UninitPause();			// ポーズの終了
+
+	UninitBackground();
 
 	//UninitTime();			// タイムの終了処理
 
@@ -212,6 +216,8 @@ void UpdateGame(void)
 //===================
 void DrawGame(void)
 {
+	DrawBackground();
+
 	DrawBlock();			// ブロックの描画
 
 	//DrawTime();				// タイムの描画

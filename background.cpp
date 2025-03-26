@@ -27,7 +27,7 @@ void InitBackground(void)
 
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\bg.png",
+		"data\\TEXTURE\\fu.jpg",
 		&g_apTextureBackground);
 
 	//頂点バッファの生成
