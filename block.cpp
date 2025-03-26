@@ -142,34 +142,32 @@ void UpdateBlock(void)
 				g_aBlock[nCnt].pos.x = MAX_RIGHT_POS;
 				//g_aBlock[nCnt].move.x = 0.0f;
 				g_aBlock[nCnt].bRight = true;	// 右端に着いた
+				g_aBlock[nCnt].move.x += 2.0f;
 			}
-			else
-			{
-				g_aBlock[nCnt].bRight = false;	// 右端に着いてない
-			}
-
 			// 左壁
-			if (g_aBlock[nCnt].pos.x <= MAX_LEFT_POS)
+			else if (g_aBlock[nCnt].pos.x <= MAX_LEFT_POS)
 			{
 				g_aBlock[nCnt].pos.x = MAX_LEFT_POS;
 				//g_aBlock[nCnt].move.x = 0.0f;
 				g_aBlock[nCnt].bLeft = true;	// 左端に着いた
+				g_aBlock[nCnt].move.x -= 2.0f;
 			}
 			else
 			{
+				g_aBlock[nCnt].bRight = false;	// 右端に着いてない
 				g_aBlock[nCnt].bLeft = false;	// 左端に着いてない
 			}
 
-			// 右端に着いたら
-			if (g_aBlock[nCnt].bRight == true)
-			{
-				g_aBlock[nCnt].pos.x += 2.0f;
-			}
-			// 左端に着いたら
-			else if (g_aBlock[nCnt].bLeft == true)
-			{
-				g_aBlock[nCnt].pos.x -= 2.0f;
-			}
+			//// 右端に着いたら
+			//if (g_aBlock[nCnt].bRight == true)
+			//{
+			//	g_aBlock[nCnt].move.x += 2.0f;
+			//}
+			//// 左端に着いたら
+			//else if (g_aBlock[nCnt].bLeft == true)
+			//{
+			//	g_aBlock[nCnt].move.x -= 2.0f;
+			//}
 		}
 
 		// 移動量の更新
@@ -436,7 +434,7 @@ void LoadBlockText()
 	case 0:
 		//初期ウェブ
 		//ファイル開く
-		pFile = fopen("data\\TEXT\\SetBlock.txt", "r");
+		pFile = fopen("data\\TEXT\\SetBlock000.txt", "r");
 		break;
 
 	case 1:
