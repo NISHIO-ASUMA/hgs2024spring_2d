@@ -57,7 +57,7 @@ void InitTime(void)
 
 	//‰Šú‰»
 	g_posTime = D3DXVECTOR3(0.0f, 0.0f, 0.0f);//ˆÊ’u‚ğ‰Šú‰»‚·‚é(n‚Ü‚è‚ÌˆÊ’u)
-	g_nMinutes = 2;
+	g_nMinutes = 1;
 	g_nSeconds = 0;
 	g_bTimeEnd = false;
 

@@ -564,8 +564,6 @@ void LoadBlockText()
 	}
 	else
 	{
-		// メッセージBOXの表示
-		MessageBox(NULL, "開けません(SetBlock.txt)", "エラー", MB_OK);
 		pFile = NULL;
 		return;
 	}
@@ -727,7 +725,7 @@ void HitBlock(int nCntBlock, int nDamage)
 		{
 		case  BLOCKTYPE_NORMAL:		// 通常
 			// スコアを加算
-			AddScore(1000);
+			AddScore(2000);
 			break;
 
 		case BLOCKTYPE_VERTICAL:	// 縦に弾が出るブロック
@@ -748,17 +746,17 @@ void HitBlock(int nCntBlock, int nDamage)
 
 		case BLOCKTYPE_UNDER:	// 下だけに弾が出るブロック
 			// スコアを加算
-			AddScore(3000);
+			AddScore(5500);
 			break;
 
 		case BLOCKTYPE_RIGHT:	// 右だけに弾が出るブロック
 			// スコアを加算
-			AddScore(3000);
+			AddScore(5500);
 			break;
 
 		case BLOCKTYPE_LEFT:	// 左だけに弾が出るブロック
 			// スコアを加算
-			AddScore(3000);
+			AddScore(5500);
 			break;
 
 		case BLOCKTYPE_BULLETBLOCK:	// 残弾数増加のブロック
