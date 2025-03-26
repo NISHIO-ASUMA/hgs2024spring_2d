@@ -23,6 +23,7 @@
 #include "bullet.h"
 #include "explosion.h"
 #include "item.h"
+#include "bulletnum.h"
 
 //***********************************************
 // マクロ定義
@@ -56,6 +57,8 @@ void InitGame(void)
 	InitScore();			// スコアの初期化
 
 	InitItem();				// アイテムの初期化
+
+	InitBulletNum();		// 残弾数の初期化
 
 	LoadBlockText();		// 配置したブロック情報の読み込み
 
@@ -95,6 +98,9 @@ void UninitGame(void)
 	UninitScore();			// スコアの終了
 
 	UninitItem();			// アイテムの終了
+
+	UninitBulletNum();		// 残弾数の終了処理
+
 #if 0
 
 	UninitEffect();			//エフェクト
@@ -114,12 +120,6 @@ void UpdateGame(void)
 	{
 		// エディター起動
 		SetFade(MODE_EDIT);
-	}
-
-	if (KeyboardTrigger(DIK_RETURN))
-	{// ENTERキー
-		// リザルトに遷移
-		SetFade(MODE_RESULT);
 	}
 
 #endif // _DEBUG
@@ -150,10 +150,11 @@ void UpdateGame(void)
 
 		UpdateItem();		// アイテムの更新
 
+		UpdateBulletNum();	// 残弾数の更新
 	}
 
 #if 1
-	if ((GetTimeEnd() == true || GetFinish() == true) && g_gameState != GAMESTATE_NONE)
+	if ((GetTimeEnd() == true || GetFinish() == true || GetBulletNum() <= 0) && g_gameState != GAMESTATE_NONE)
 	{
 		g_gameState = GAMESTATE_END;  //終了状態
 
@@ -247,6 +248,8 @@ void DrawGame(void)
 	DrawItem();				// アイテムの描画
 
 	// DrawScore();			// スコアの描画
+
+	DrawBulletNum();		// 残弾数の描画
 
 #if 0
 	//アイテム

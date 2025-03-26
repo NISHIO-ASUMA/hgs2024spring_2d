@@ -11,6 +11,8 @@
 // #include "explosion.h"
 #include "fade.h"
 #include "bullet.h"
+#include "bulletnum.h"
+#include "time.h"
 //#include "effect.h"
 //#include "particle.h"
 //#include "sound.h"
@@ -141,14 +143,17 @@ void UpdatePlayer(void)
 	// 頂点情報のポインタ
 	VERTEX_2D* pVtx;	
 
-	// キー入力情報の取得
-	GetKeyPlayer();
+	if (GetBulletNum() > 0)
+	{
+		// キー入力情報の取得
+		GetKeyPlayer();
 
-	// パッド情報を取得
-	GetJoypadPlayer();
+		// パッド情報を取得
+		GetJoypadPlayer();
 
-	// スティック情報の取得
-	StickState();
+		// スティック情報の取得
+		StickState();
+	}
 
 	// 頂点バッファをロックし,頂点情報へのポインタを取得
 	g_pVtxBuffplayer->Lock(0, 0, (void**)&pVtx, 0);
@@ -256,10 +261,12 @@ void GetKeyPlayer(void)
 		g_aPlayer.move.x += 2.0f;
 	}
 
-	if (KeyboardTrigger(DIK_UP) || KeyboardTrigger(DIK_RETURN))
+
+	if (KeyboardTrigger(DIK_RETURN))
 	{// 上矢印キー
 		// 弾の設定
 		SetBullet(g_aPlayer.pos, D3DXVECTOR3(sinf(g_aPlayer.rot.z + D3DX_PI) * 10.0f, cosf(g_aPlayer.rot.z + D3DX_PI) * 10.0f, 0.0f), g_aPlayer.rot, 30.0f, 30.0f, 70, BULLETTYPE_PLAYER);
+		DecBulletNum(1);
 	}
 
 	// 位置を更新
@@ -267,7 +274,7 @@ void GetKeyPlayer(void)
 	g_aPlayer.pos.y += g_aPlayer.move.y;
 
 	// 右壁
-	if (g_aPlayer.pos.x  >= MAX_RIGHT_POS)
+	if (g_aPlayer.pos.x >= MAX_RIGHT_POS)
 	{
 		g_aPlayer.pos.x = MAX_RIGHT_POS;
 		g_aPlayer.move.x = 0.0f;
@@ -290,10 +297,10 @@ void GetKeyPlayer(void)
 	if (g_aPlayer.nCntAnimState >= 5)
 	{
 		// 頂点カラーの設定
-		pVtx[0].col = D3DXCOLOR(1.0f,1.0f,1.0f,1.0f);
-		pVtx[1].col = D3DXCOLOR(1.0f,1.0f,1.0f,1.0f);
-		pVtx[2].col = D3DXCOLOR(1.0f,1.0f,1.0f,1.0f);
-		pVtx[3].col = D3DXCOLOR(1.0f,1.0f,1.0f,1.0f);
+		pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[2].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[3].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
 		g_aPlayer.nCntAnimState = 0;			// 初期状態に戻す
 		g_aPlayer.bHit = false;					// 判定を未使用状態にする
@@ -318,7 +325,6 @@ void GetKeyPlayer(void)
 
 	// アンロック
 	g_pVtxBuffplayer->Unlock();
-
 }
 //=================================
 // パッドの処理
@@ -338,10 +344,12 @@ void GetJoypadPlayer(void)
 		g_aPlayer.move.x += 2.0f;
 	}
 
-	if (JoypadTrigger(JOYKEY_B) == true)
+
+	if (JoypadTrigger(JOYKEY_Y) == true)
 	{// Bボタンを押した
 		// 弾の設定
 		SetBullet(g_aPlayer.pos, D3DXVECTOR3(sinf(g_aPlayer.rot.z + D3DX_PI) * 10.0f, cosf(g_aPlayer.rot.z + D3DX_PI) * 10.0f, 0.0f), g_aPlayer.rot, 30.0f, 30.0f, 70, BULLETTYPE_PLAYER);
+		DecBulletNum(1);
 	}
 	//else if (JoypadTrigger(JOYKEY_X) == true)
 	//{// Xボタンを押した

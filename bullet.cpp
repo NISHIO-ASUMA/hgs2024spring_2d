@@ -12,6 +12,7 @@
 #include "player.h"
 #include "main.h"
 #include "block.h"
+#include "bulletnum.h"
 //#include "explosion.h"
 //#include "effect.h"
 //#include "particle.h"
@@ -23,6 +24,7 @@
 #define MAX_BULLET (128)			// 弾の最大数
 #define MAX_BULLETSIZE_X (15.0f)	// 弾のサイズ
 #define MAX_BULLETSIZE_Y (15.0f)	// 弾のサイズ
+
 
 //弾構造体の定義
 typedef struct
@@ -36,7 +38,6 @@ typedef struct
 	float fAngle;				// 角度
 	float fLength;				// 対角線の長さ
 	int nBulletType;			// 弾の種類
-	int nBulletNum;				// 弾の数
 }Bullet;
 
 //グローバル変数
@@ -293,6 +294,7 @@ void SetBullet(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, float fWidth,
 
 	for (int nCntBullet = 0; nCntBullet < MAX_BULLET; nCntBullet++)
 	{
+
 		if (g_aBullet[nCntBullet].bUse == false)
 		{
 			//対角線の長さを算出
@@ -308,7 +310,7 @@ void SetBullet(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, float fWidth,
 			g_aBullet[nCntBullet].nLife = nLife;	//体力
 			g_aBullet[nCntBullet].type = type;		//種類
 			g_aBullet[nCntBullet].bUse = true;		//使用状態にする
-			
+
 			//頂点座標の設定
 			pVtx[0].pos.x = g_aBullet[nCntBullet].pos.x + sinf(g_aBullet[nCntBullet].rot.z + (-D3DX_PI + g_aBullet[nCntBullet].fAngle)) * g_aBullet[nCntBullet].fLength;
 			pVtx[0].pos.y = g_aBullet[nCntBullet].pos.y + cosf(g_aBullet[nCntBullet].rot.z + (-D3DX_PI + g_aBullet[nCntBullet].fAngle)) * g_aBullet[nCntBullet].fLength;
@@ -342,4 +344,3 @@ void SetBullet(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot, float fWidth,
 	g_pVtxBuffBullet->Unlock();
 
 }
-
