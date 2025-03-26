@@ -286,6 +286,11 @@ void UpdateEdit(void)
 		SaveEdit();
 	}
 
+	if (KeyboardTrigger(DIK_F9))
+	{
+		ReloadEdit();
+	}
+
 	if (KeyboardTrigger(DIK_F3))
 	{
 		// 画面遷移
@@ -397,6 +402,135 @@ void SaveEdit(void)
 	//ファイルを閉じる
 	fclose(pFile);
 }
+//========================
+// 再読み込み処理
+//========================
+void ReloadEdit()
+{
+	// ファイルポインタを宣言
+	FILE* pFile;
+
+	// 任意のファイルを開く
+	pFile = fopen(TEXT_FILEPASS[nFillPass], "r");
+
+	if (pFile != NULL)
+	{// ファイルが開けたら
+
+		// 構造体を初期化
+		for (int nCnt = 0; nCnt < MAX_BLOCK; nCnt++)
+		{
+			g_aEditInfo[nCnt].nType = 0;							// 種類
+			g_aEditInfo[nCnt].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);	// 位置
+			g_aEditInfo[nCnt].fHeight = 20.0f;						// 高さ
+			g_aEditInfo[nCnt].fWidth = 20.0f;						// 横幅
+			g_aEditInfo[nCnt].bUse = false;							// 使用判定
+		}
+
+		// ローカル変数---------------------------------
+		int nData = 0; // ファイル読み込みの返り値
+		int nCnt = 0; // カウント用変数
+		char aString[256] = {}; // 文字列を読み込む
+		char aGomi[5] = {}; // =を格納する文字列
+		//-----------------------------------------------
+
+		while (1)
+		{
+			// nDataに代入する
+			nData = fscanf(pFile, "%s", &aString[0]);
+
+			if (strcmp(aString, "NUM_BLOCK") == 0)
+			{// NUM_BLOCKを読み取ったら
+				// 読み飛ばす
+				fscanf(pFile, "%s", &aGomi[0]);
+
+				// ブロックの配置された数を読み込む
+				fscanf(pFile, "%d", &g_nCntEdit);
+			}
+
+			if (strcmp(aString, "SETBLOCK") == 0)
+			{// START_BLOCKSETを読み取ったら
+
+				while (1)
+				{
+					fscanf(pFile, "%s", &aString[0]);
+
+					if (strcmp(aString, "POS") == 0)
+					{// POSを読み取ったら
+						// 読み飛ばす
+						fscanf(pFile, "%s", &aGomi[0]);
+
+						// 座標を代入
+						fscanf(pFile, "%f", &g_aEditInfo[nCnt].pos.x);
+						fscanf(pFile, "%f", &g_aEditInfo[nCnt].pos.y);
+						fscanf(pFile, "%f", &g_aEditInfo[nCnt].pos.z);
+
+					}
+
+					if (strcmp(aString, "WIDTH") == 0)
+					{// WIDTHを読み取ったら
+						// 読み飛ばす
+						fscanf(pFile, "%s", &aGomi[0]);
+
+						// 横幅を代入
+						fscanf(pFile, "%f", &g_aEditInfo[nCnt].fWidth);
+
+					}
+
+					if (strcmp(aString, "HEIGHT") == 0)
+					{// HEIGHTを読み取ったら
+						// 読み飛ばす
+						fscanf(pFile, "%s", &aGomi[0]);
+
+						// 横幅を代入
+						fscanf(pFile, "%f", &g_aEditInfo[nCnt].fHeight);
+
+					}
+
+					if (strcmp(aString, "TYPE") == 0)
+					{// TYPEを読み取ったら
+						// 読み飛ばす
+						fscanf(pFile, "%s", &aGomi[0]);
+
+						// 現在のブロックの種類番号を代入
+						fscanf(pFile, "%d", &g_aEditInfo[nCnt].nType);
+					}
+
+					if (strcmp(aString, "END_SETBLOCK") == 0)
+					{// END_BLOCKSETを読み取ったら
+						// 使用判定にする
+						g_aEditInfo[nCnt].bUse = true;
+
+						// インクリメントして次のブロック情報へ
+						nCnt++;
+
+						break;
+					}
+				}
+			}
+
+			if (nData == EOF)
+			{// EOFを読み取ったら
+				// 判定を初期状態に戻す
+				g_aEditInfo[g_nCntEdit].bUse = true;
+
+				break;
+			}
+		}
+	}
+	else
+	{
+		// メッセージBOXの表示
+		MessageBox(NULL, "再読み込み失敗(ReloadTextFile)", "エラー", MB_OK);
+		pFile = NULL;
+		return ;
+	}
+
+	// ファイルを閉じる
+	fclose(pFile);
+
+
+}
+
 int GeteditBlock()
 {
 	return g_nCntEdit;
