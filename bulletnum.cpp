@@ -279,7 +279,7 @@ void SetBulletNum(int nBulletNum)
 
 }
 //=============================
-// c’e”‚Ì‰ÁZˆ—
+// c’e”‚ÌŒ¸Zˆ—
 //=============================
 void DecBulletNum(int nBulletNum)
 {

@@ -118,16 +118,6 @@ void UninitGame(void)
 //===================
 void UpdateGame(void)
 {
-
-#ifdef _DEBUG
-	if (KeyboardTrigger(DIK_F2))
-	{
-		// エディター起動
-		SetFade(MODE_EDIT);
-	}
-
-#endif // _DEBUG
-
 	// ポーズ画面
 	if (KeyboardTrigger(DIK_P) == true || JoypadTrigger(JOYKEY_START))
 	{
@@ -157,7 +147,6 @@ void UpdateGame(void)
 		UpdateBulletNum();	// 残弾数の更新
 	}
 
-#if 1
 	if ((GetTimeEnd() == true || GetFinish() == true || GetBulletNum() <= 0) && g_gameState != GAMESTATE_NONE)
 	{
 		g_gameState = GAMESTATE_END;  //終了状態
@@ -217,17 +206,6 @@ void UpdateGame(void)
 	}
 #endif
 
-	//else 
-	//{
-	//	//ポーズ中で無ければ
-	// 
-	//	UpdateItem();				//アイテム
-
-	//	UpdateEffect();				//エフェクト
-
-	//	UpdateParticle();			//パーティクル
-	//}
-#endif
 }
 //===================
 // ゲームの描画
@@ -251,21 +229,7 @@ void DrawGame(void)
 
 	DrawItem();				// アイテムの描画
 
-	// DrawScore();			// スコアの描画
-
 	DrawBulletNum();		// 残弾数の描画
-
-#if 0
-	//アイテム
-	DrawItem();
-
-	//エフェクト
-	DrawEffect();
-
-	//パーティクル
-	DrawParticle();
-
-#endif
 }
 //=========================
 // ポーズの有効無効設定
