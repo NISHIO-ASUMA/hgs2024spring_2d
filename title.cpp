@@ -86,7 +86,7 @@ void InitTitle(void)
 
 	// テクスチャの読み込み (タイトル背景)
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\Block001.png",
+		"data\\TEXTURE\\title.png",
 		&g_pTextureTitleback);
 
 	// 選択肢テクスチャの読み込み

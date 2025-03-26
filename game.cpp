@@ -9,7 +9,7 @@
 // インクルードファイル宣言
 //***********************************************
 #include "game.h"
-//#include "Player.h"
+#include "Player.h"
 #include "background.h"
 #include "input.h"
 #include "fade.h"
@@ -43,6 +43,8 @@ void InitGame(void)
 
 	InitTime();				// タイムの初期化
 
+	InitPlayer();			// プレイヤーの初期化
+
 	LoadBlockText();		// 配置したブロック情報の読み込み
 
 #if 0
@@ -50,7 +52,6 @@ void InitGame(void)
 
 	InitBullet();			//弾
 
-	InitPlayer();			//プレイヤー
 
 	InitEnemy();			//敵
 
@@ -85,11 +86,13 @@ void UninitGame(void)
 {
 	SaveScore();			// スコアを保存
 
-	UninitBlock();			// ブロックの州終了
+	UninitBlock();			// ブロックの終了
 
 	UninitPause();			// ポーズの終了
 
 	UninitTime();			// タイムの終了処理
+
+	UninitPlayer();			// プレイヤーの終了処理	
 
 #if 0
 	StopSound();
@@ -99,7 +102,6 @@ void UninitGame(void)
 
 	UninitBullet();			//弾
 
-	UninitPlayer();			//プレイヤー
 
 	UninitEnemy();			//敵の終了
 
@@ -160,6 +162,8 @@ void UpdateGame(void)
 		UpdateBlock();		// ブロックの更新
 
 		UpdateTime();		// タイムの更新
+
+		UpdatePlayer();		// プレイヤーの更新処理
 	}
 
 #if 1
@@ -245,14 +249,19 @@ void UpdateGame(void)
 //===================
 void DrawGame(void)
 {
-	DrawBlock();			// ブロックの描画
-
 	if (g_bPause == true)
 	{// ポーズ中
 		DrawPause();		// ポーズの描画
 	}
 
+	DrawBlock();			// ブロックの描画
+
 	DrawTime();				// タイムの描画
+
+	DrawPlayer();			// プレイヤーの描画
+
+
+
 #if 0
 	//背景
 	DrawBackground();
