@@ -14,6 +14,7 @@
 #include "explosion.h"
 #include "player.h"
 #include "score.h"
+#include "bulletnum.h"
 // #include "player.h"
 
 //**************************
@@ -693,7 +694,7 @@ void HitBlock(int nCntBlock, int nDamage)
 			case BLOCKTYPE_BULLETBLOCK:	// 残弾数増加のブロック
 
 				// TODO : ここにプレイヤーの弾の残弾数を増やす関数呼ぶ
-
+				DecBulletNum(1);
 				break;
 
 			default:
