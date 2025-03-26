@@ -449,7 +449,7 @@ void LoadBlockText()
 	case 2:
 		//ファイルを開く
 		pFile = fopen("data\\TEXT\\SetBlock002.txt", "r");
-		SetBlock(D3DXVECTOR3(30.0f, 560.0f, 0.0f), BLOCKTYPE_MOVEBLOCK, 100.0f, 15.0f);
+		SetBlock(D3DXVECTOR3(30.0f, 520.0f, 0.0f), BLOCKTYPE_MOVEBLOCK, 100.0f, 15.0f);
 		break;
 
 	case 3:
