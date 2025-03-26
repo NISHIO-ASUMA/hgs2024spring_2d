@@ -486,9 +486,24 @@ void InitStruct()
 		g_aBlock[nCntBlock].fWidth = 0.0f;							 // 横幅
 		g_aBlock[nCntBlock].fHeight = 0.0f;							 // 高さ
 		g_aBlock[nCntBlock].nType = 0;								 // 種類
-		g_aBlock[nCntBlock].nLife = 3;								 // 体力
+		g_aBlock[nCntBlock].nLife = 1;								 // 体力
+		g_aBlock[nCntBlock].bHitBlock = false;						 // 当たったかどうか
 		g_aBlock[nCntBlock].nCntBlockstateCount = 0;				 // カウンターの初期化
 		g_aBlock[nCntBlock].bOldpos = D3DXVECTOR3(0.0f, 0.0f, 0.0f); // 座標
 	}
 
+}
+//=======================================
+// ブロックのヒット処理
+//=======================================
+void HitBlock(int nCntBlock, int nDamage)
+{
+	VERTEX_2D* pVtx;//頂点情報へのポインタ
+
+	g_aBlock[nCntBlock].nLife -= nDamage;
+
+	if (g_aBlock[nCntBlock].nLife <= 0)
+	{
+		g_aBlock[nCntBlock].bUse = false;
+	}
 }
