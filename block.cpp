@@ -236,7 +236,7 @@ void SetBlock(D3DXVECTOR3 pos,int nType,float fWidth,float fHeight)
 
 			if (g_aBlock[nCntBlock].nType == BLOCKTYPE_MOVEBLOCK)
 			{
-				g_aBlock[nCntBlock].nLife = 3;
+				g_aBlock[nCntBlock].nLife = 9999;
 			}
 			else
 			{
@@ -636,7 +636,7 @@ void HitBlock(int nCntBlock, int nDamage)
 		{
 			// 上方向
 			SetBullet(g_aBlock[nCntBlock].pos,
-				D3DXVECTOR3(0.0f, 10.0f, 0.0f),
+				D3DXVECTOR3(0.0f, -10.0f, 0.0f),
 				g_aBlock[nCntBlock].rot,
 				30.0f,
 				30.0f,
@@ -644,7 +644,7 @@ void HitBlock(int nCntBlock, int nDamage)
 
 			// 下方向
 			SetBullet(g_aBlock[nCntBlock].pos,
-				D3DXVECTOR3(0.0f, -10.0f, 0.0f),
+				D3DXVECTOR3(0.0f, 10.0f, 0.0f),
 				g_aBlock[nCntBlock].rot,
 				30.0f,
 				30.0f,
@@ -671,35 +671,102 @@ void HitBlock(int nCntBlock, int nDamage)
 				80.0f, BULLETTYPE_BLOCK);
 
 			g_aBlock[nCntBlock].bUse = false;
+		}
+		if (g_aBlock[nCntBlock].nType == BLOCKTYPE_TOP)
+		{
+			// 上方向
+			SetBullet(g_aBlock[nCntBlock].pos,
+				D3DXVECTOR3(0.0f, -10.0f, 0.0f),
+				g_aBlock[nCntBlock].rot,
+				30.0f,
+				30.0f,
+				80.0f, BULLETTYPE_BLOCK);
 
-			switch (g_aBlock[nCntBlock].nType)
-			{
-			case  BLOCKTYPE_NORMAL:		// 通常
-				// スコアを加算
-				AddScore(1000);
-				break;
+			g_aBlock[nCntBlock].bUse = false;
+		}
+		if (g_aBlock[nCntBlock].nType == BLOCKTYPE_UNDER)
+		{
+			// 下方向
+			SetBullet(g_aBlock[nCntBlock].pos,
+				D3DXVECTOR3(0.0f, 10.0f, 0.0f),
+				g_aBlock[nCntBlock].rot,
+				30.0f,
+				30.0f,
+				80.0f, BULLETTYPE_BLOCK);
 
-			case BLOCKTYPE_VERTICAL:	// 縦に弾が出るブロック
-				// スコアを加算
-				AddScore(3000);
-				break;
+			g_aBlock[nCntBlock].bUse = false;
+		}
+		if (g_aBlock[nCntBlock].nType == BLOCKTYPE_RIGHT)
+		{
+			// 右方向
+			SetBullet(g_aBlock[nCntBlock].pos,
+				D3DXVECTOR3(10.0f, 0.0f, 0.0f),
+				g_aBlock[nCntBlock].rot,
+				30.0f,
+				30.0f,
+				80.0f, BULLETTYPE_BLOCK);
+
+			g_aBlock[nCntBlock].bUse = false;
+		}
+		if (g_aBlock[nCntBlock].nType == BLOCKTYPE_LEFT)
+		{
+			// 左方向
+			SetBullet(g_aBlock[nCntBlock].pos,
+				D3DXVECTOR3(-10.0f, 0.0f, 0.0f),
+				g_aBlock[nCntBlock].rot,
+				30.0f,
+				30.0f,
+				80.0f, BULLETTYPE_BLOCK);
+
+			g_aBlock[nCntBlock].bUse = false;
+		}
+
+		switch (g_aBlock[nCntBlock].nType)
+		{
+		case  BLOCKTYPE_NORMAL:		// 通常
+			// スコアを加算
+			AddScore(1000);
+			break;
+
+		case BLOCKTYPE_VERTICAL:	// 縦に弾が出るブロック
+			// スコアを加算
+			AddScore(3000);
+			break;
 
 
-			case BLOCKTYPE_HORIZONTAL:	// 横に弾が出るブロック
-				// スコアを加算
-				AddScore(3000);
-				break;
+		case BLOCKTYPE_HORIZONTAL:	// 横に弾が出るブロック
+			// スコアを加算
+			AddScore(3000);
+			break;
 
-			case BLOCKTYPE_BULLETBLOCK:	// 残弾数増加のブロック
+		case BLOCKTYPE_TOP:		// 上だけに弾が出るブロック
+			// スコアを加算
+			AddScore(3000);
+			break;
 
-				// TODO : ここにプレイヤーの弾の残弾数を増やす関数呼ぶ
-				AddBulletNum(1);
-				break;
+		case BLOCKTYPE_UNDER:	// 下だけに弾が出るブロック
+			// スコアを加算
+			AddScore(3000);
+			break;
 
-			default:
-				break;
-			}
+		case BLOCKTYPE_RIGHT:	// 右だけに弾が出るブロック
+			// スコアを加算
+			AddScore(3000);
+			break;
 
+		case BLOCKTYPE_LEFT:	// 左だけに弾が出るブロック
+			// スコアを加算
+			AddScore(3000);
+			break;
+
+		case BLOCKTYPE_BULLETBLOCK:	// 残弾数増加のブロック
+
+			// TODO : ここにプレイヤーの弾の残弾数を増やす関数呼ぶ
+			AddBulletNum(1);
+			break;
+
+		default:
+			break;
 		}
 
 		g_nCntblock--; // デクリメント

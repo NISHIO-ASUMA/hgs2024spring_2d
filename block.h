@@ -30,6 +30,11 @@ typedef enum
 	BLOCKTYPE_NORMAL,				// ノーマルブロック
 	BLOCKTYPE_VERTICAL,				// 縦消しブロック
 	BLOCKTYPE_HORIZONTAL,			// 横消しブロック
+	BLOCKTYPE_TOP,					// 上消しブロック
+	BLOCKTYPE_UNDER,				// 下消しブロック
+	BLOCKTYPE_RIGHT,				// 右消しブロック
+	BLOCKTYPE_LEFT,					// 左消しブロック
+
 	BLOCKTYPE_MAX
 }BLOCKTYPE;
 
@@ -63,6 +68,10 @@ static const char* BLOCK_TEXTURE[BLOCKTYPE_MAX] =
 	"data\\TEXTURE\\Block_normal.png",		// ノーマルブロック
 	"data\\TEXTURE\\Block_vertical.png",	// 縦消しブロック
 	"data\\TEXTURE\\Block_horizontal.png",	// 横消しブロック
+	"data\\TEXTURE\\Block_top.png",			// 上消しブロック
+	"data\\TEXTURE\\Block_under.png",		// 下消しブロック
+	"data\\TEXTURE\\Block_right.png",		// 右消しブロック
+	"data\\TEXTURE\\Block_left.png",		// 左消しブロック
 };
 
 //*************************
