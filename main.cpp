@@ -33,6 +33,8 @@ RECT g_windowRect;						//　ウィンドウを切り替えるための変数
 LPD3DXFONT g_pFont = NULL;				//　フォントへのポインタ
 int g_nCountFPS = 0;					//　FPSカウンタ
 
+void DrawEditkey(void);
+
 //************************************************
 // ウィンドウをフルスクリーンに変える処理
 //************************************************
@@ -488,6 +490,7 @@ void Draw(void)
 
 		case MODE_EDIT:		// エディット画面
 			DrawEdit();
+			DrawEditkey();
 			break;
 
 		case MODE_RANKING:	// ランキング画面
@@ -568,60 +571,6 @@ void DrawDebugPlayerPos(void)
 	g_pFont->DrawText(NULL, &aStringx[0], -1, &rectPosx, DT_LEFT, D3DCOLOR_RGBA(255, 0,0, 255));
 	g_pFont->DrawText(NULL, &aStringy[0], -1, &rectPosy, DT_LEFT, D3DCOLOR_RGBA(255, 0,0, 255));
 	g_pFont->DrawText(NULL, &aStringKey[0], -1,&rectkey, DT_LEFT, D3DCOLOR_RGBA(255,0,0,255));	// モード変更キー
-
-}
-//==============================
-// エディット画面の表示
-//==============================
-void DrawEditkey(void)
-{
-	// ローカル変数
-	RECT rect1 = { 0,40,SCREEN_WIDTH,SCREEN_HEIGHT };
-	RECT rect2 = { 0,60,SCREEN_WIDTH,SCREEN_HEIGHT };
-	RECT rect3 = { 0,80,SCREEN_WIDTH,SCREEN_HEIGHT };
-	RECT rect4 = { 0,100,SCREEN_WIDTH,SCREEN_HEIGHT };
-	RECT rect5 = { 0,120,SCREEN_WIDTH,SCREEN_HEIGHT };
-	RECT rect6 = { 0,140,SCREEN_WIDTH,SCREEN_HEIGHT };
-	RECT rect7 = { 0,160,SCREEN_WIDTH,SCREEN_HEIGHT };
-	RECT rect8 = { 0,240,SCREEN_WIDTH,SCREEN_HEIGHT };
-	RECT rect9 = { 0,260,SCREEN_WIDTH,SCREEN_HEIGHT };
-	RECT rect10 = { 0,280,SCREEN_WIDTH,SCREEN_HEIGHT };
-
-	// 文字列
-	char aString1[256];
-	char aString2[256];
-	char aString3[256];
-	char aString4[256];
-	char aString5[256];
-	char aString6[256];
-	char aString7[256];
-	char aString8[256];
-	char aString9[256];
-	char aString10[256];
-
-	// 文字列に代入
-	wsprintf(&aString1[0], "カテゴリーの切り替え   [Q/E]\n");
-	wsprintf(&aString2[0], "移動キー         [W/A/S/D]\n");
-	wsprintf(&aString3[0], "テクスチャの切り替え　[↑/↓]\n");
-	wsprintf(&aString4[0], "高さの増減       [ V/C ]\n");
-	wsprintf(&aString5[0], "横幅の増減       [ B/N ]\n");
-	wsprintf(&aString6[0], "ファイル書き出し [F7キー]\n");
-	wsprintf(&aString7[0], "配置の決定       [Enterキー]\n");
-	wsprintf(&aString8[0], "リロード         [F2キー]\n");
-	wsprintf(&aString9[0], "サイズリセット   [Mキー]\n");
-	wsprintf(&aString10[0], "ゲーム画面へ    [F5キー]\n");
-
-	// テキスト描画
-	g_pFont->DrawText(NULL, &aString1[0], -1, &rect1, DT_LEFT, D3DCOLOR_RGBA(255,0,0,255));		// 切り替えキー
-	g_pFont->DrawText(NULL, &aString2[0], -1, &rect2, DT_LEFT, D3DCOLOR_RGBA(255,0,0,255));		// 移動キー
-	g_pFont->DrawText(NULL, &aString3[0], -1, &rect3, DT_LEFT, D3DCOLOR_RGBA(255,0,0,255));		// テクスチャ切り替え
-	g_pFont->DrawText(NULL, &aString4[0], -1, &rect4, DT_LEFT, D3DCOLOR_RGBA(255,0,0,255));		// 高さ調整
-	g_pFont->DrawText(NULL, &aString5[0], -1, &rect5, DT_LEFT, D3DCOLOR_RGBA(255,0,0,255));		// 横幅調整
-	g_pFont->DrawText(NULL, &aString6[0], -1, &rect6, DT_LEFT, D3DCOLOR_RGBA(255,0,0,255));		// 書き出しキー
-	g_pFont->DrawText(NULL, &aString7[0], -1, &rect7, DT_LEFT, D3DCOLOR_RGBA(255,0,0,255));		// 配置キー
-	g_pFont->DrawText(NULL, &aString8[0], -1, &rect8, DT_LEFT, D3DCOLOR_RGBA(255,0,0,255));		// リロードキー
-	g_pFont->DrawText(NULL, &aString9[0], -1, &rect9, DT_LEFT, D3DCOLOR_RGBA(255,0,0,255));		// サイズリセットキー
-	g_pFont->DrawText(NULL, &aString10[0], -1, &rect10, DT_LEFT, D3DCOLOR_RGBA(255,0,0,255));	// モード変更キー
 
 }
 //==============================
@@ -742,4 +691,86 @@ LPDIRECT3DDEVICE9 GetDevice(void)
 MODE GetMode(void)
 {
 	return g_mode;//変数を返す
+}
+//==============================
+// エディット画面の表示
+//==============================
+void DrawEditkey(void)
+{
+	int ndata = ReturnPass();
+
+
+	// ローカル変数
+	RECT rect = { 0,20,SCREEN_WIDTH,SCREEN_HEIGHT };
+	RECT rect8 = { 0,40,SCREEN_WIDTH,SCREEN_HEIGHT };
+	RECT rect2 = { 0,60,SCREEN_WIDTH,SCREEN_HEIGHT };
+	RECT rect3 = { 0,80,SCREEN_WIDTH,SCREEN_HEIGHT };
+	RECT rect4 = { 0,100,SCREEN_WIDTH,SCREEN_HEIGHT };
+	RECT rect5 = { 0,120,SCREEN_WIDTH,SCREEN_HEIGHT };
+	RECT rect6 = { 0,140,SCREEN_WIDTH,SCREEN_HEIGHT };
+	RECT rect7 = { 0,160,SCREEN_WIDTH,SCREEN_HEIGHT };
+	RECT rect10 = { 0,280,SCREEN_WIDTH,SCREEN_HEIGHT };
+
+	// 文字列
+	char aString1[256];
+	char aString2[256];
+	char aString3[256];
+	char aString4[256];
+	char aString5[256];
+	char aString6[256];
+	char aString7[256];
+	char aString8[256];
+	char aString10[256];
+
+	char aStFile[256];
+
+	switch (ndata)
+	{
+	case 0:
+		strcpy(aStFile, "data/TEXT/SetBlock.txt"); // 初期ファイル
+		break;
+
+	case 1:
+		strcpy(aStFile, "data/TEXT/SetBlock001.txt"); // 
+		break;
+
+	case 2:
+		strcpy(aStFile, "data/TEXT/SetBlock002.txt"); // 
+		break;
+
+
+	case 3:
+		strcpy(aStFile, "data/TEXT/SetBlock003.txt"); // 
+		break;
+
+	case 4:
+		strcpy(aStFile, "data/TEXT/SetBlock004.txt"); // 
+		break;
+
+	default:
+		break;
+	}
+
+	// 文字列に代入
+	wsprintf(&aString1[0], "[ F7 ] : ファイル書き出し  ***< %s >*** \n", &aStFile[0]);
+	wsprintf(&aString2[0], "移動キー         [W/A/S/D]\n");
+	wsprintf(&aString3[0], "テクスチャの切り替え　[↑/↓]\n");
+	wsprintf(&aString4[0], "高さの増減       [ V/C ]\n");
+	wsprintf(&aString5[0], "横幅の増減       [ Q/E ]\n");
+	wsprintf(&aString6[0], "ファイル書き出し [ F7キー ]\n");
+	wsprintf(&aString7[0], "配置の決定       [ Enterキー ]\n");
+	wsprintf(&aString8[0], "ファイルパス切り替え       [ F4キー ]\n");
+	wsprintf(&aString10[0], "ゲーム画面へ    [ F3キー ]\n");
+
+	// テキスト描画
+	g_pFont->DrawText(NULL, &aString1[0], -1, &rect, DT_LEFT,  D3DCOLOR_RGBA(255, 255, 255, 255));		// 移動キー
+	g_pFont->DrawText(NULL, &aString2[0], -1, &rect2, DT_LEFT, D3DCOLOR_RGBA(255, 255, 255, 255));		// 移動キー
+	g_pFont->DrawText(NULL, &aString3[0], -1, &rect3, DT_LEFT, D3DCOLOR_RGBA(255, 255, 255, 255));		// テクスチャ切り替え
+	g_pFont->DrawText(NULL, &aString4[0], -1, &rect4, DT_LEFT, D3DCOLOR_RGBA(255, 255, 255, 255));		// 高さ調整
+	g_pFont->DrawText(NULL, &aString5[0], -1, &rect5, DT_LEFT, D3DCOLOR_RGBA(255, 255, 255, 255));		// 横幅調整
+	g_pFont->DrawText(NULL, &aString6[0], -1, &rect6, DT_LEFT, D3DCOLOR_RGBA(255, 255, 255, 255));		// 書き出しキー
+	g_pFont->DrawText(NULL, &aString7[0], -1, &rect7, DT_LEFT, D3DCOLOR_RGBA(255, 255, 255, 255));		// 配置キー
+	g_pFont->DrawText(NULL, &aString8[0], -1, &rect8, DT_LEFT, D3DCOLOR_RGBA(255, 255, 255, 255));		// 配置キー
+	g_pFont->DrawText(NULL, &aString10[0], -1, &rect10, DT_LEFT, D3DCOLOR_RGBA(255, 255, 255, 255));	// モード変更キー
+
 }
