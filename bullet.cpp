@@ -21,8 +21,8 @@
 // マクロ定義
 //***********************************
 #define MAX_BULLET (128)			// 弾の最大数
-#define MAX_BULLETSIZE_X (25.0f)	// 弾のサイズ
-#define MAX_BULLETSIZE_Y (25.0f)	// 弾のサイズ
+#define MAX_BULLETSIZE_X (15.0f)	// 弾のサイズ
+#define MAX_BULLETSIZE_Y (15.0f)	// 弾のサイズ
 
 //弾構造体の定義
 typedef struct

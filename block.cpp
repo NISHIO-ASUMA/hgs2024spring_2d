@@ -506,7 +506,6 @@ void HitBlock(int nCntBlock, int nDamage)
 
 	if (g_aBlock[nCntBlock].nLife <= 0)
 	{
-<<<<<<< HEAD
 		if (g_aBlock[nCntBlock].nType == BLOCKTYPE_NORMAL)
 		{
 			g_aBlock[nCntBlock].bUse = false;
@@ -552,10 +551,6 @@ void HitBlock(int nCntBlock, int nDamage)
 			g_aBlock[nCntBlock].bUse = false;
 		}
 
-=======
-		g_aBlock[nCntBlock].bUse = false;
-
 		g_nCntblock--; // ƒfƒNƒŠƒƒ“ƒg
->>>>>>> a5bbacd6a7a9ea15beedbff480000d1b3f2a5e47
 	}
 }
