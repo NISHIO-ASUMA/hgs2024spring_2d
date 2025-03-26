@@ -34,7 +34,7 @@ typedef enum
 
 const char* TEXT_FILEPASS[FILLPASS_MAX] = 
 {
-	"data\\TEXT\\SetBlock.txt",
+	"data\\TEXT\\SetBlock000.txt",
 	"data\\TEXT\\SetBlock001.txt",
 	"data\\TEXT\\SetBlock002.txt",
 	"data\\TEXT\\SetBlock003.txt",
