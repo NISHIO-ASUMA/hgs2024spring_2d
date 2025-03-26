@@ -162,6 +162,7 @@ void UpdateGame(void)
 
 		if (g_nCntWaveTimeCount >= 90)
 		{// カウントが90より上なら
+
 			// 新規ウェーブを読み込む
 			LoadBlockText();
 
