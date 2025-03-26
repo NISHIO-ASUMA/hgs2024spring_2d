@@ -89,9 +89,6 @@ void UninitResult(void)
 	// 音楽を停止
 	StopSound();
 
-	// リザルトスコアの終了
-	UninitResultScore();
-
 	// テクスチャの破棄
 	if (g_pTextureResult != NULL)
 	{
@@ -106,6 +103,8 @@ void UninitResult(void)
 		g_pVtxBuffResult = NULL;
 	}
 
+	// リザルトスコアの終了
+	UninitResultScore();
 }
 //========================
 // リザルトの更新処理
@@ -129,6 +128,7 @@ void UpdateResult(void)
 //========================
 void DrawResult(void)
 {
+
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();		// デバイスへのポインタ
 
 	// 頂点バッファをデータストリームに設定
@@ -145,5 +145,4 @@ void DrawResult(void)
 
 	// リザルトスコアの描画
 	DrawResultScore();
-
 }
