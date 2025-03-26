@@ -42,12 +42,12 @@ void InitTime(void)
 
 	//テクスチャの読み込み(分)
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\time001.png",
+		"data\\TEXTURE\\time.png",
 		&g_pTextureTimeMinute);
 
 	//テクスチャの読み込み(秒)
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\time001.png",
+		"data\\TEXTURE\\time.png",
 		&g_pTextureTimeSecond);
 
 	//テクスチャの読み込み(コロン)

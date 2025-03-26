@@ -126,10 +126,10 @@ void UpdateBlock(void)
 	for (int nCnt = 0; nCnt < MAX_BLOCK; nCnt++)
 	{
 		//頂点座標の設定
-		pVtx[0].pos = D3DXVECTOR3(g_aBlock[nCnt].pos.x - g_aBlock[nCnt].fWidth, g_aBlock[nCnt].pos.y - (g_aBlock[nCnt].fHeight * 0.5f),0.0f);	// 1つ目の頂点情報
-		pVtx[1].pos = D3DXVECTOR3(g_aBlock[nCnt].pos.x + g_aBlock[nCnt].fWidth, g_aBlock[nCnt].pos.y - (g_aBlock[nCnt].fHeight * 0.5f),0.0f);	// 2つ目の頂点情報
-		pVtx[2].pos = D3DXVECTOR3(g_aBlock[nCnt].pos.x - g_aBlock[nCnt].fWidth, g_aBlock[nCnt].pos.y + (g_aBlock[nCnt].fHeight * 0.5f),0.0f);	// 3つ目の頂点情報
-		pVtx[3].pos = D3DXVECTOR3(g_aBlock[nCnt].pos.x + g_aBlock[nCnt].fWidth, g_aBlock[nCnt].pos.y + (g_aBlock[nCnt].fHeight * 0.5f),0.0f);	// 4つ目の頂点情報
+		pVtx[0].pos = D3DXVECTOR3(g_aBlock[nCnt].pos.x - g_aBlock[nCnt].fWidth, g_aBlock[nCnt].pos.y - g_aBlock[nCnt].fHeight,0.0f);	// 1つ目の頂点情報
+		pVtx[1].pos = D3DXVECTOR3(g_aBlock[nCnt].pos.x + g_aBlock[nCnt].fWidth, g_aBlock[nCnt].pos.y - g_aBlock[nCnt].fHeight,0.0f);	// 2つ目の頂点情報
+		pVtx[2].pos = D3DXVECTOR3(g_aBlock[nCnt].pos.x - g_aBlock[nCnt].fWidth, g_aBlock[nCnt].pos.y + g_aBlock[nCnt].fHeight,0.0f);	// 3つ目の頂点情報
+		pVtx[3].pos = D3DXVECTOR3(g_aBlock[nCnt].pos.x + g_aBlock[nCnt].fWidth, g_aBlock[nCnt].pos.y + g_aBlock[nCnt].fHeight,0.0f);	// 4つ目の頂点情報
 
 		// 頂点情報分ずらす
 		pVtx += 4;
