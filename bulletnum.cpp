@@ -77,10 +77,10 @@ void InitBulletNum(void)
 		g_aBulletNum[nCnt].bUse = true;
 
 		//頂点座標の設定
-		pVtx[0].pos = D3DXVECTOR3(1110.0f + nCnt * 35.0f, 610.0f, 0.0f);
-		pVtx[1].pos = D3DXVECTOR3(1110.0f + nCnt * 35.0f + 35.0f, 610.0f, 0.0f);
-		pVtx[2].pos = D3DXVECTOR3(1110.0f + nCnt * 35.0f, 680.0f, 0.0f);
-		pVtx[3].pos = D3DXVECTOR3(1110.0f + nCnt * 35.0f + 35.0f, 680.0f, 0.0f);
+		pVtx[0].pos = D3DXVECTOR3(1205.0f + nCnt * 35.0f, 630.0f, 0.0f);
+		pVtx[1].pos = D3DXVECTOR3(1205.0f + nCnt * 35.0f + 35.0f, 630.0f, 0.0f);
+		pVtx[2].pos = D3DXVECTOR3(1205.0f + nCnt * 35.0f, 700.0f, 0.0f);
+		pVtx[3].pos = D3DXVECTOR3(1205.0f + nCnt * 35.0f + 35.0f, 700.0f, 0.0f);
 
 		//rhwの設定
 		pVtx[0].rhw = 1.0f;
@@ -110,10 +110,10 @@ void InitBulletNum(void)
 	g_pVtxBuffBulletNum2->Lock(0, 0, (void**)&pVtx, 0);
 
 	//頂点座標の設定
-	pVtx[0].pos = D3DXVECTOR3(900.0f, 630.0f, 0.0f);
-	pVtx[1].pos = D3DXVECTOR3(1100.0f, 630.0f, 0.0f);
-	pVtx[2].pos = D3DXVECTOR3(900.0f, 680.0f, 0.0f);
-	pVtx[3].pos = D3DXVECTOR3(1100.0f, 680.0f, 0.0f);
+	pVtx[0].pos = D3DXVECTOR3(1050.0f, 650.0f, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(1200.0f, 650.0f, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(1050.0f, 700.0f, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(1200.0f, 700.0f, 0.0f);
 
 	//rhwの設定
 	pVtx[0].rhw = 1.0f;

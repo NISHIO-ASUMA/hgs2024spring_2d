@@ -71,7 +71,7 @@ void InitTutorial(void)
 
 	// テクスチャの読み込み(背景)
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\tutorial2.png",
+		"data\\TEXTURE\\tutorial.png",
 		&g_pTextureTutorialBG);
 
 	for (int nCntTutorial = 0; nCntTutorial < TUTORIAL_MAX; nCntTutorial++)
