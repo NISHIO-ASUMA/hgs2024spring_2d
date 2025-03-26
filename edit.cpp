@@ -53,8 +53,8 @@ void InitEdit(void)
 	{
 		g_aEditInfo[nCnt].nType = 0;							// éÌóﬁ
 		g_aEditInfo[nCnt].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);	// à íu
-		g_aEditInfo[nCnt].fHeight = 50.0f;						// çÇÇ≥
-		g_aEditInfo[nCnt].fWidth = 50.0f;						// â°ïù
+		g_aEditInfo[nCnt].fHeight = 20.0f;						// çÇÇ≥
+		g_aEditInfo[nCnt].fWidth = 20.0f;						// â°ïù
 		g_aEditInfo[nCnt].bUse = false;							// égópîªíË
 	}
 
