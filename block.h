@@ -25,8 +25,8 @@
 //******************************
 typedef enum
 {
-	BLOCKTYPE_MOVEBLOCK = 0,		// 動くブロック
-	BLOCKTYPE_WALL,					// 仮2
+	BLOCKTYPE_BULLETBLOCK = 0,		// 弾増えるブロック
+	BLOCKTYPE_MOVEBLOCK,			// 動くブロック
 	BLOCKTYPE_NORMAL,				// ノーマルブロック
 	BLOCKTYPE_VERTICAL,				// 縦消しブロック
 	BLOCKTYPE_HORIZONTAL,			// 横消しブロック
@@ -58,12 +58,11 @@ typedef struct
 //**************************
 static const char* BLOCK_TEXTURE[BLOCKTYPE_MAX] =
 {
-	"data\\TEXTURE\\Block000.png",			// 地面ブロック
+	"data\\TEXTURE\\Block_bullet.png",		// 弾ブロック
 	"data\\TEXTURE\\Block001.png",			// 壁ブロック
 	"data\\TEXTURE\\Block_normal.png",		// ノーマルブロック
 	"data\\TEXTURE\\Block_vertical.png",	// 縦消しブロック
 	"data\\TEXTURE\\Block_horizontal.png",	// 横消しブロック
-
 };
 
 //*************************

@@ -599,6 +599,14 @@ void HitBlock(int nCntBlock, int nDamage)
 		{
 			g_aBlock[nCntBlock].bUse = false;
 		}
+
+		// ’eƒuƒƒbƒN‚ğ”j‰ó‚µ‚½
+		if (g_aBlock[nCntBlock].nType == BLOCKTYPE_BULLETBLOCK)
+		{
+
+			g_aBlock[nCntBlock].bUse = false;
+		}
+
 		if (g_aBlock[nCntBlock].nType == BLOCKTYPE_VERTICAL)
 		{
 			// ã•ûŒü

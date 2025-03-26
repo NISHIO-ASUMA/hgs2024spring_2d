@@ -36,6 +36,7 @@ typedef struct
 	float fAngle;				// Šp“x
 	float fLength;				// ‘ÎŠpü‚Ì’·‚³
 	int nBulletType;			// ’e‚Ìí—Ş
+	int nBulletNum;				// ’e‚Ì”
 }Bullet;
 
 //ƒOƒ[ƒoƒ‹•Ï”
