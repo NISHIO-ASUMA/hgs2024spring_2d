@@ -136,17 +136,21 @@ void UpdateGame(void)
 	}
 	else
 	{
-		UpdateBlock();		// ブロックの更新
+		if (GetBulletNum() > 0 || GetFinish() == false)
+		{
 
-		UpdateBullet();		// 弾の更新処理
-		
-		UpdatePlayer();		// プレイヤーの更新処理
+			UpdateBlock();		// ブロックの更新
 
-		UpdateExplosion();	// 爆発の更新処理
+			UpdateBullet();		// 弾の更新処理
 
-		UpdateItem();		// アイテムの更新
+			UpdatePlayer();		// プレイヤーの更新処理
 
-		UpdateBulletNum();	// 残弾数の更新
+			UpdateExplosion();	// 爆発の更新処理
+
+			UpdateItem();		// アイテムの更新
+
+			UpdateBulletNum();	// 残弾数の更新
+		}
 	}
 
 	if ((GetFinish() == true  || GetBulletNum() <= 0)

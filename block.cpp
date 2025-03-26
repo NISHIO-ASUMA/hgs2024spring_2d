@@ -472,7 +472,6 @@ void LoadBlockText()
 	case 6:
 		//ファイルを開く
 		pFile = fopen("data\\TEXT\\SetBlock006.txt", "r");
-
 		break;
 
 	default:
