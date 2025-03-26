@@ -57,26 +57,12 @@ void InitGame(void)
 	LoadBlockText();		// 配置したブロック情報の読み込み
 
 #if 0
-	InitBackground();		//背景
-
-	InitBullet();			//弾
-
-
-	InitEnemy();			//敵
-
-
 
 	InitItem();				//アイテム
 
 	InitEffect();			//エフェクト
 
 	InitParticle();			//パーティクル
-
-	InitTimer();			//タイマー
-
-	InitPlayerLifeBar();	//ライフバー
-
-	InitBlock();					//ブロックの初期化
 
 	PlaySound(SOUND_LABEL_GAME);
 #endif
@@ -109,31 +95,11 @@ void UninitGame(void)
 	UninitScore();			// スコアの終了
 
 #if 0
-	StopSound();
-
-
-	UninitBackground();		//背景
-
-	UninitBullet();			//弾
-
-
-	UninitEnemy();			//敵の終了
-
-
-
-	UninitItem();			//アイテム
 
 	UninitEffect();			//エフェクト
 
 	UninitParticle();		//パーティクル
 
-	UninitPause();			//ポーズ
-
-	UninitTimer();			//タイマー
-
-	UninitPlayerLifeBar();	//ライフバー
-
-	UninitBlock();			//ブロック
 #endif
 }
 //===================
@@ -184,9 +150,6 @@ void UpdateGame(void)
 	}
 
 #if 1
-	//// プレイヤーの取得
-	//Player* pPlayer = GetPlayer();
-
 	if ((GetTimeEnd() == true || GetFinish() == true) && g_gameState != GAMESTATE_NONE)
 	{
 		g_gameState = GAMESTATE_END;  //終了状態
@@ -249,25 +212,12 @@ void UpdateGame(void)
 	//else 
 	//{
 	//	//ポーズ中で無ければ
-	//	UpdateBackground();			//背景
-
-	//	UpdatePlayer();				//プレイヤー
-
-	//	UpdateBullet();				//弾
-
-	//	UpdateEnemy();				//敵
-
-	//	UpdateScore();				//スコア更新
-
+	// 
 	//	UpdateItem();				//アイテム
 
 	//	UpdateEffect();				//エフェクト
 
 	//	UpdateParticle();			//パーティクル
-
-	//	UpdateTimer();				//タイマー
-
-	//	UpdatePlayerLifeBar();	//ライフバー
 	//}
 #endif
 }
@@ -294,33 +244,14 @@ void DrawGame(void)
 	// DrawScore();			// スコアの描画
 
 #if 0
-	//背景
-	DrawBackground();
-
 	//アイテム
 	DrawItem();
-
-	//弾
-	DrawBullet();
-
-	//プレイヤー
-	DrawPlayer();
-
-	//敵
-	DrawEnemy();
-
 
 	//エフェクト
 	DrawEffect();
 
 	//パーティクル
 	DrawParticle();
-
-	//タイマー
-	DrawTimer();
-
-	//ライフバー
-	DrawPlayerLifeBar();
 
 #endif
 }
