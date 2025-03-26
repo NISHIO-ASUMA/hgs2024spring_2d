@@ -750,6 +750,14 @@ void DrawEditkey(void)
 		strcpy(aStFile, "data/TEXT/SetBlock004.txt"); // 
 		break;
 
+	case 5:
+		strcpy(aStFile, "data/TEXT/SetBlock005.txt"); // 
+		break;
+
+	case 6:
+		strcpy(aStFile, "data/TEXT/SetBlock006.txt"); // 
+		break;
+
 	default:
 		break;
 	}

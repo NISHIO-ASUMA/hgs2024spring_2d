@@ -214,11 +214,6 @@ void UpdateGame(void)
 //===================
 void DrawGame(void)
 {
-	if (g_bPause == true)
-	{// ポーズ中
-		DrawPause();		// ポーズの描画
-	}
-
 	DrawBlock();			// ブロックの描画
 
 	//DrawTime();				// タイムの描画
@@ -232,6 +227,12 @@ void DrawGame(void)
 	DrawItem();				// アイテムの描画
 
 	DrawBulletNum();		// 残弾数の描画
+
+	if (g_bPause == true)
+	{// ポーズ中
+		DrawPause();		// ポーズの描画
+	}
+
 }
 //=========================
 // ポーズの有効無効設定

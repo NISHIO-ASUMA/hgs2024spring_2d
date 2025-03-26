@@ -29,6 +29,8 @@ typedef enum
 	FILLPASS_2,
 	FILLPASS_3,
 	FILLPASS_4,
+	FILLPASS_5,
+	FILLPASS_6,
 	FILLPASS_MAX
 }FILLPASS;
 
@@ -39,6 +41,9 @@ const char* TEXT_FILEPASS[FILLPASS_MAX] =
 	"data\\TEXT\\SetBlock002.txt",
 	"data\\TEXT\\SetBlock003.txt",
 	"data\\TEXT\\SetBlock004.txt",
+	"data\\TEXT\\SetBlock005.txt",
+	"data\\TEXT\\SetBlock006.txt",
+
 };
 
 //***********************************************
