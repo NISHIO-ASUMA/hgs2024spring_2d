@@ -136,38 +136,10 @@ void UpdateBlock(void)
 	{
 		if (g_aBlock[nCnt].nType == BLOCKTYPE_MOVEBLOCK)
 		{
-			// 右壁
-			if (g_aBlock[nCnt].pos.x >= MAX_RIGHT_POS)
-			{
-				g_aBlock[nCnt].pos.x = MAX_RIGHT_POS;
-				//g_aBlock[nCnt].move.x = 0.0f;
-				g_aBlock[nCnt].bRight = true;	// 右端に着いた
-				g_aBlock[nCnt].move.x += 2.0f;
-			}
-			// 左壁
-			else if (g_aBlock[nCnt].pos.x <= MAX_LEFT_POS)
-			{
-				g_aBlock[nCnt].pos.x = MAX_LEFT_POS;
-				//g_aBlock[nCnt].move.x = 0.0f;
-				g_aBlock[nCnt].bLeft = true;	// 左端に着いた
-				g_aBlock[nCnt].move.x -= 2.0f;
-			}
-			else
-			{
-				g_aBlock[nCnt].bRight = false;	// 右端に着いてない
-				g_aBlock[nCnt].bLeft = false;	// 左端に着いてない
-			}
+			// 左右に動く
 
-			//// 右端に着いたら
-			//if (g_aBlock[nCnt].bRight == true)
-			//{
-			//	g_aBlock[nCnt].move.x += 2.0f;
-			//}
-			//// 左端に着いたら
-			//else if (g_aBlock[nCnt].bLeft == true)
-			//{
-			//	g_aBlock[nCnt].move.x -= 2.0f;
-			//}
+
+
 		}
 
 		// 移動量の更新
@@ -635,7 +607,7 @@ void HitBlock(int nCntBlock, int nDamage)
 				g_aBlock[nCntBlock].rot,
 				30.0f,
 				30.0f,
-				70.0f, BULLETTYPE_BLOCK);
+				80.0f, BULLETTYPE_BLOCK);
 
 			// 下方向
 			SetBullet(g_aBlock[nCntBlock].pos,
@@ -643,7 +615,7 @@ void HitBlock(int nCntBlock, int nDamage)
 				g_aBlock[nCntBlock].rot,
 				30.0f,
 				30.0f,
-				70.0f, BULLETTYPE_BLOCK);
+				80.0f, BULLETTYPE_BLOCK);
 
 			g_aBlock[nCntBlock].bUse = false;
 		}
@@ -655,7 +627,7 @@ void HitBlock(int nCntBlock, int nDamage)
 				g_aBlock[nCntBlock].rot,
 				30.0f,
 				30.0f,
-				70.0f, BULLETTYPE_BLOCK);
+				80.0f, BULLETTYPE_BLOCK);
 
 			// 左方向
 			SetBullet(g_aBlock[nCntBlock].pos,
@@ -663,7 +635,7 @@ void HitBlock(int nCntBlock, int nDamage)
 				g_aBlock[nCntBlock].rot,
 				30.0f,
 				30.0f,
-				70.0f, BULLETTYPE_BLOCK);
+				80.0f, BULLETTYPE_BLOCK);
 
 			g_aBlock[nCntBlock].bUse = false;
 		}
