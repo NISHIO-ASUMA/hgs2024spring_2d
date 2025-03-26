@@ -199,7 +199,7 @@ void UpdateEdit(void)
 	}
 	else if (KeyboardTrigger(DIK_DOWN) == true)
 	{// Ží—ÞØ‚è‘Ö‚¦
-		if (g_aEditInfo[g_nCntEdit].nType > BLOCKTYPE_MOVEBLOCK)
+		if (g_aEditInfo[g_nCntEdit].nType > BLOCKTYPE_BULLETBLOCK)
 		{
 			// 0‚æ‚è‘å‚«‚¢‚Æ‚«
 			g_aEditInfo[g_nCntEdit].nType--;

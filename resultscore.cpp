@@ -95,8 +95,8 @@ void InitResultScore(void)
 	// アンロック
 	g_pVtxBuffResultScore->Unlock();
 
-	// LoadScore();			// スコアを読み込む
-	// SetResultScore();	// リザルトスコアの設定
+	 LoadScore();			// スコアを読み込む
+	 SetResultScore();	// リザルトスコアの設定
 }
 //===========================
 // リザルトスコアの終了処理
