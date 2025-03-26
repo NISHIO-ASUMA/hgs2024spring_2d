@@ -96,10 +96,10 @@ void InitTime(void)
 		g_aTime[nCnt].bUse = true;
 
 		//頂点座標の設定
-		pVtx[0].pos = D3DXVECTOR3(600.0f + nCnt * 35.0f, 20.0f, 0.0f);
-		pVtx[1].pos = D3DXVECTOR3(600.0f + nCnt * 35.0f + 40.0f, 20.0f, 0.0f);
-		pVtx[2].pos = D3DXVECTOR3(600.0f + nCnt * 35.0f, 80.0f, 0.0f);
-		pVtx[3].pos = D3DXVECTOR3(600.0f + nCnt * 35.0f + 40.0f, 80.0f, 0.0f);
+		pVtx[0].pos = D3DXVECTOR3(550.0f + nCnt * 35.0f, 20.0f, 0.0f);
+		pVtx[1].pos = D3DXVECTOR3(550.0f + nCnt * 35.0f + 40.0f, 20.0f, 0.0f);
+		pVtx[2].pos = D3DXVECTOR3(550.0f + nCnt * 35.0f, 80.0f, 0.0f);
+		pVtx[3].pos = D3DXVECTOR3(550.0f + nCnt * 35.0f + 40.0f, 80.0f, 0.0f);
 
 		//rhwの設定
 		pVtx[0].rhw = 1.0f;
@@ -128,7 +128,7 @@ void InitTime(void)
 	// コロンの頂点バッファをロック
 	g_pVtxBuffColon->Lock(0, 0, (void**)&pVtx, 0);
 
-	float colonX = 680.0f; // コロンのX座標
+	float colonX = 635.0f; // コロンのX座標
 	float colonY = 20.0f;  // コロンのY座標
 
 	// コロンの頂点座標設定
@@ -161,10 +161,10 @@ void InitTime(void)
 		g_aTime[nCnt].bUse = true;
 
 		//頂点座標の設定
-		pVtx[0].pos = D3DXVECTOR3(700.0f + nCnt * 35.0f, 20.0f, 0.0f);
-		pVtx[1].pos = D3DXVECTOR3(700.0f + nCnt * 35.0f + 40.0f, 20.0f, 0.0f);
-		pVtx[2].pos = D3DXVECTOR3(700.0f + nCnt * 35.0f, 80.0f, 0.0f);
-		pVtx[3].pos = D3DXVECTOR3(700.0f + nCnt * 35.0f + 40.0f, 80.0f, 0.0f);
+		pVtx[0].pos = D3DXVECTOR3(665.0f + nCnt * 35.0f, 20.0f, 0.0f);
+		pVtx[1].pos = D3DXVECTOR3(665.0f + nCnt * 35.0f + 40.0f, 20.0f, 0.0f);
+		pVtx[2].pos = D3DXVECTOR3(665.0f + nCnt * 35.0f, 80.0f, 0.0f);
+		pVtx[3].pos = D3DXVECTOR3(665.0f + nCnt * 35.0f + 40.0f, 80.0f, 0.0f);
 
 		//rhwの設定
 		pVtx[0].rhw = 1.0f;

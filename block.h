@@ -40,6 +40,7 @@ typedef struct
 {
 	D3DXVECTOR3 pos;			// ˆÊ’u
 	D3DXVECTOR3 move;			// ˆÚ“®—Ê
+	D3DXVECTOR3 rot;			// Œü‚«
 	bool bUse;					// g—p‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©
 	float fWidth;				// ‰¡•
 	float fHeight;				// ‚‚³

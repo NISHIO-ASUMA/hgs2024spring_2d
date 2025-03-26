@@ -10,6 +10,7 @@
 //******************************
 #include "block.h"
 #include <stdio.h>
+#include "bullet.h"
 // #include "player.h"
 
 //**************************
@@ -482,6 +483,7 @@ void InitStruct()
 	{
 		g_aBlock[nCntBlock].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);	 // 座標
 		g_aBlock[nCntBlock].move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);	 // 移動量
+		g_aBlock[nCntBlock].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);	 // 向き
 		g_aBlock[nCntBlock].bUse = false;							 // 使用してない状態にする
 		g_aBlock[nCntBlock].fWidth = 0.0f;							 // 横幅
 		g_aBlock[nCntBlock].fHeight = 0.0f;							 // 高さ
@@ -504,6 +506,50 @@ void HitBlock(int nCntBlock, int nDamage)
 
 	if (g_aBlock[nCntBlock].nLife <= 0)
 	{
-		g_aBlock[nCntBlock].bUse = false;
+		if (g_aBlock[nCntBlock].nType == BLOCKTYPE_NORMAL)
+		{
+			g_aBlock[nCntBlock].bUse = false;
+		}
+		if (g_aBlock[nCntBlock].nType == BLOCKTYPE_VERTICAL)
+		{
+			// 上方向
+			SetBullet(g_aBlock[nCntBlock].pos,
+				D3DXVECTOR3(0.0f, 10.0f, 0.0f),
+				g_aBlock[nCntBlock].rot,
+				30.0f,
+				30.0f,
+				70.0f, BULLETTYPE_BLOCK);
+
+			// 下方向
+			SetBullet(g_aBlock[nCntBlock].pos,
+				D3DXVECTOR3(0.0f, -10.0f, 0.0f),
+				g_aBlock[nCntBlock].rot,
+				30.0f,
+				30.0f,
+				70.0f, BULLETTYPE_BLOCK);
+
+			g_aBlock[nCntBlock].bUse = false;
+		}
+		if (g_aBlock[nCntBlock].nType == BLOCKTYPE_HORIZONTAL)
+		{
+			// 右方向
+			SetBullet(g_aBlock[nCntBlock].pos,
+				D3DXVECTOR3(10.0f, 0.0f, 0.0f),
+				g_aBlock[nCntBlock].rot,
+				30.0f,
+				30.0f,
+				70.0f, BULLETTYPE_BLOCK);
+
+			// 左方向
+			SetBullet(g_aBlock[nCntBlock].pos,
+				D3DXVECTOR3(-10.0f, 0.0f, 0.0f),
+				g_aBlock[nCntBlock].rot,
+				30.0f,
+				30.0f,
+				70.0f, BULLETTYPE_BLOCK);
+
+			g_aBlock[nCntBlock].bUse = false;
+		}
+
 	}
 }
