@@ -22,6 +22,7 @@
 #include "time.h"
 #include "bullet.h"
 #include "explosion.h"
+#include "item.h"
 
 //***********************************************
 // マクロ定義
@@ -53,6 +54,8 @@ void InitGame(void)
 	InitExplosion();		// 爆発の初期化
 
 	InitScore();			// スコアの初期化
+
+	InitItem();				// アイテムの初期化
 
 	LoadBlockText();		// 配置したブロック情報の読み込み
 
@@ -94,6 +97,7 @@ void UninitGame(void)
 
 	UninitScore();			// スコアの終了
 
+	UninitItem();			// アイテムの終了
 #if 0
 
 	UninitEffect();			//エフェクト
@@ -146,6 +150,8 @@ void UpdateGame(void)
 		UpdatePlayer();		// プレイヤーの更新処理
 
 		UpdateExplosion();	// 爆発の更新処理
+
+		UpdateItem();		// アイテムの更新
 
 	}
 
@@ -240,6 +246,8 @@ void DrawGame(void)
 	DrawPlayer();			// プレイヤーの描画
 
 	DrawExplosion();		// 爆発の描画
+
+	DrawItem();				// アイテムの描画
 
 	// DrawScore();			// スコアの描画
 
