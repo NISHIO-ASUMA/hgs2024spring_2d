@@ -25,7 +25,7 @@
 //******************************
 typedef enum
 {
-	BLOCKTYPE_GROUND = 0,			// 仮1
+	BLOCKTYPE_MOVEBLOCK = 0,		// 動くブロック
 	BLOCKTYPE_WALL,					// 仮2
 	BLOCKTYPE_NORMAL,				// ノーマルブロック
 	BLOCKTYPE_VERTICAL,				// 縦消しブロック
@@ -47,6 +47,8 @@ typedef struct
 	int nType;					// 種類
 	int nLife;					// 体力
 	bool bHitBlock;				// 当たったかどうか
+	bool bLeft;					// 左端に着いたか
+	bool bRight;				// 右端に着いたか
 	int nCntBlockstateCount;    // ブロックの状態管理カウンター
 	D3DXVECTOR3 bOldpos;		// 前回の位置
 }Block;

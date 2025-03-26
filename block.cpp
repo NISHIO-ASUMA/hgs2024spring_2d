@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include "bullet.h"
 #include "explosion.h"
+#include "player.h"
 // #include "player.h"
 
 //**************************
@@ -133,6 +134,48 @@ void UpdateBlock(void)
 
 	for (int nCnt = 0; nCnt < MAX_BLOCK; nCnt++)
 	{
+		if (g_aBlock[nCnt].nType == BLOCKTYPE_MOVEBLOCK)
+		{
+			// 右壁
+			if (g_aBlock[nCnt].pos.x >= MAX_RIGHT_POS)
+			{
+				g_aBlock[nCnt].pos.x = MAX_RIGHT_POS;
+				//g_aBlock[nCnt].move.x = 0.0f;
+				g_aBlock[nCnt].bRight = true;	// 右端に着いた
+			}
+			else
+			{
+				g_aBlock[nCnt].bRight = false;	// 右端に着いてない
+			}
+
+			// 左壁
+			if (g_aBlock[nCnt].pos.x <= MAX_LEFT_POS)
+			{
+				g_aBlock[nCnt].pos.x = MAX_LEFT_POS;
+				//g_aBlock[nCnt].move.x = 0.0f;
+				g_aBlock[nCnt].bLeft = true;	// 左端に着いた
+			}
+			else
+			{
+				g_aBlock[nCnt].bLeft = false;	// 左端に着いてない
+			}
+
+			// 右端に着いたら
+			if (g_aBlock[nCnt].bRight == true)
+			{
+				g_aBlock[nCnt].pos.x += 2.0f;
+			}
+			// 左端に着いたら
+			else if (g_aBlock[nCnt].bLeft == true)
+			{
+				g_aBlock[nCnt].pos.x -= 2.0f;
+			}
+		}
+
+		// 移動量の更新
+		g_aBlock[nCnt].pos.x += g_aBlock[nCnt].move.x;
+		g_aBlock[nCnt].pos.y += g_aBlock[nCnt].move.y;
+
 		//頂点座標の設定
 		pVtx[0].pos = D3DXVECTOR3(g_aBlock[nCnt].pos.x - g_aBlock[nCnt].fWidth, g_aBlock[nCnt].pos.y - g_aBlock[nCnt].fHeight,0.0f);	// 1つ目の頂点情報
 		pVtx[1].pos = D3DXVECTOR3(g_aBlock[nCnt].pos.x + g_aBlock[nCnt].fWidth, g_aBlock[nCnt].pos.y - g_aBlock[nCnt].fHeight,0.0f);	// 2つ目の頂点情報
@@ -195,6 +238,15 @@ void SetBlock(D3DXVECTOR3 pos,int nType,float fWidth,float fHeight)
 			g_aBlock[nCntBlock].fWidth = fWidth;	// 横幅
 			g_aBlock[nCntBlock].fHeight = fHeight;	// 高さ
 			g_aBlock[nCntBlock].bUse = true;		// 使用状態にする
+
+			if (g_aBlock[nCntBlock].nType == BLOCKTYPE_MOVEBLOCK)
+			{
+				g_aBlock[nCntBlock].nLife = 3;
+			}
+			else
+			{
+				g_aBlock[nCntBlock].nLife = 1;
+			}
 
 			// 頂点座標の設定
 			pVtx[0].pos = D3DXVECTOR3(pos.x - fWidth, pos.y - fHeight,0.0f);	// 1つ目の頂点情報
@@ -552,8 +604,10 @@ void InitStruct()
 		g_aBlock[nCntBlock].fWidth = 0.0f;							 // 横幅
 		g_aBlock[nCntBlock].fHeight = 0.0f;							 // 高さ
 		g_aBlock[nCntBlock].nType = 0;								 // 種類
-		g_aBlock[nCntBlock].nLife = 1;								 // 体力
+		g_aBlock[nCntBlock].nLife = 0;								 // 体力
 		g_aBlock[nCntBlock].bHitBlock = false;						 // 当たったかどうか
+		g_aBlock[nCntBlock].bLeft = false;							 // 左端に着いたかどうか
+		g_aBlock[nCntBlock].bRight = false;							 // 右端に着いたかどうか
 		g_aBlock[nCntBlock].nCntBlockstateCount = 0;				 // カウンターの初期化
 		g_aBlock[nCntBlock].bOldpos = D3DXVECTOR3(0.0f, 0.0f, 0.0f); // 座標
 	}
@@ -571,7 +625,7 @@ void HitBlock(int nCntBlock, int nDamage)
 		// 爆発
 		SetExplosion(g_aBlock[nCntBlock].pos, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 
-		if (g_aBlock[nCntBlock].nType == BLOCKTYPE_NORMAL)
+		if (g_aBlock[nCntBlock].nType == BLOCKTYPE_NORMAL || g_aBlock[nCntBlock].nType == BLOCKTYPE_MOVEBLOCK)
 		{
 			g_aBlock[nCntBlock].bUse = false;
 		}

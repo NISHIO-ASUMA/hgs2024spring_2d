@@ -21,6 +21,8 @@
 #define MAX_ANIMATION_PATTERN (8)	//最大パターン数
 #define MAX_SIZE_X (40.0f)			//横のサイズ(自機)
 #define MAX_SIZE_Y (40.0f)			//縦のサイズ(自機)
+#define MAX_RIGHT_POS     (1260)	// 右に行ける最大X座標
+#define MAX_LEFT_POS      (20)      // 左に行ける最大X座標
 
 // プレイヤーの状態
 typedef enum

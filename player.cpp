@@ -21,10 +21,9 @@
 #define MAX_LIFEBARSIZE_X (400)		// 横幅
 #define MAX_LIFEBARSIZE_Y (20)		// 高さ
 									   
-#define MAX_UNDER_POS	  (700)		// 下に行ける最大Y座標
 #define MAX_TOP_POS       (20)		// 上に行ける最大Y座標
 #define MAX_RIGHT_POS     (1260)	// 右に行ける最大X座標
-#define MAX_LEFT_POS      (20)      // 左に行ける最大X座標
+#define MAX_UNDER_POS     (700)		// 上に行ける最大Y座標
 
 //グローバル変数
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffplayer = NULL;		// 頂点バッファのポインタ
