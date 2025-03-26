@@ -21,8 +21,8 @@ typedef enum
 
 static const char* BULLET_TEXTURE[BULLETTYPE_MAX] =
 {
-	"data\\TEXTURE\\bullet.png",	// プレイヤー
-	"data\\TEXTURE\\bullet001.png",	// ブロック
+	"data\\TEXTURE\\bullet001.png",	// プレイヤー
+	"data\\TEXTURE\\bullet.png",	// ブロック
 };
 
 //プロトタイプ宣言

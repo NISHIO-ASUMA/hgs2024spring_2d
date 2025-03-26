@@ -20,5 +20,6 @@ void UninitEdit(void);			//エディット画面の終了
 void UpdateEdit(void);			//エディット画面の更新
 void DrawEdit(void);			//エディット画面の描画
 int GeteditBlock();
+int ReturnPass();
 
 #endif

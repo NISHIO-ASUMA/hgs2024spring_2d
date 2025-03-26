@@ -20,6 +20,28 @@
 #define EDIT_MOVE (10.0f)		// 配置時の移動量
 
 //***********************************************
+// 書き出しパスの列挙型
+//***********************************************
+typedef enum
+{
+	FILLPASS_0 = 0,
+	FILLPASS_1,
+	FILLPASS_2,
+	FILLPASS_3,
+	FILLPASS_4,
+	FILLPASS_MAX
+}FILLPASS;
+
+const char* TEXT_FILEPASS[FILLPASS_MAX] = 
+{
+	"data\\TEXT\\SetBlock.txt",
+	"data\\TEXT\\SetBlock001.txt",
+	"data\\TEXT\\SetBlock002.txt",
+	"data\\TEXT\\SetBlock003.txt",
+	"data\\TEXT\\SetBlock004.txt",
+};
+
+//***********************************************
 // エディター構造体の宣言
 //***********************************************
 typedef struct
@@ -38,6 +60,7 @@ int g_nCntEdit;								// 配置した数をカウント
 EditInfo g_aEditInfo[MAX_BLOCK];			// 構造体情報
 LPDIRECT3DTEXTURE9 g_apTextureEdit[BLOCKTYPE_MAX] = {};	// テクスチャへのポインタ
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffEdit = NULL;			// 頂点バッファのポインタ
+int nFillPass = 0;
 
 void SaveEdit(void);			//ファイル書き出し
 void ReloadEdit();				// 再読み込み
@@ -61,6 +84,7 @@ void InitEdit(void)
 	// 最初の番号だけ使用判定
 	g_aEditInfo[0].bUse = true;
 	g_nCntEdit = 0;
+	nFillPass = FILLPASS_0; // 初期パス
 
 	// 頂点情報のポインタ
 	VERTEX_2D* pVtx;			
@@ -165,7 +189,7 @@ void UpdateEdit(void)
 	}
 
 	if (KeyboardTrigger(DIK_UP) == true)
-	{
+	{// 種類切り替え
 		if (g_aEditInfo[g_nCntEdit].nType < BLOCKTYPE_MAX - 1)
 		{
 			// 最大数より小さいとき
@@ -174,7 +198,7 @@ void UpdateEdit(void)
 
 	}
 	else if (KeyboardTrigger(DIK_DOWN) == true)
-	{
+	{// 種類切り替え
 		if (g_aEditInfo[g_nCntEdit].nType > BLOCKTYPE_GROUND)
 		{
 			// 0より大きいとき
@@ -214,6 +238,45 @@ void UpdateEdit(void)
 			// デクリメント
 			g_nCntEdit--;
 		}
+	}
+
+	if (KeyboardTrigger(DIK_Q))
+	{
+		// 横幅増加
+		g_aEditInfo[g_nCntEdit].fWidth += 5.0f;
+	}
+	else if (KeyboardTrigger(DIK_E))
+	{
+		// 横幅減少
+		g_aEditInfo[g_nCntEdit].fWidth -= 5.0f;
+
+		if (g_aEditInfo[g_nCntEdit].fWidth <= 5.0f)
+		{// 5以下なら
+			g_aEditInfo[g_nCntEdit].fWidth = 5.0f;
+		}
+	}
+
+	if (KeyboardTrigger(DIK_Z))
+	{
+		// 高さ増加
+		g_aEditInfo[g_nCntEdit].fHeight += 5.0f;
+	}
+	else if (KeyboardTrigger(DIK_C))
+	{
+		// 高さ減少
+		g_aEditInfo[g_nCntEdit].fHeight -= 5.0f;
+
+		if (g_aEditInfo[g_nCntEdit].fHeight <= 5.0f)
+		{// 5以下なら
+			g_aEditInfo[g_nCntEdit].fHeight = 5.0f;
+		}
+	}
+
+	if (KeyboardTrigger(DIK_F4))
+	{
+		// ファイルパスを切り替え
+		nFillPass = (nFillPass + 1) % FILLPASS_MAX;
+
 	}
 
 	// 書き出し処理
@@ -290,7 +353,7 @@ void SaveEdit(void)
 	FILE* pFile;	// ファイルポインタを宣言
 
 	//ファイルを開く
-	pFile = fopen("data\\TEXT\\SetBlock.txt","w");
+	pFile = fopen(TEXT_FILEPASS[nFillPass],"w");
 
 	if (pFile != NULL)
 	{// 書き出し開始
@@ -337,4 +400,8 @@ void SaveEdit(void)
 int GeteditBlock()
 {
 	return g_nCntEdit;
+}
+int ReturnPass()
+{
+	return nFillPass;
 }
