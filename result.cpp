@@ -122,7 +122,7 @@ void UpdateResult(void)
 	}
 
 	// リザルトスコアの更新
-	// UpdateResultScore();
+	 UpdateResultScore();
 }
 //========================
 // リザルトの描画処理
@@ -143,7 +143,7 @@ void DrawResult(void)
 	// リザルトポリゴンの描画
 	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
 
-	//リザルトスコアの描画
-	//DrawResultScore();
+	// リザルトスコアの描画
+	DrawResultScore();
 
 }
