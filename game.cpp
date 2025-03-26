@@ -20,6 +20,7 @@
 #include "block.h"
 #include "pause.h"
 #include "time.h"
+#include "bullet.h"
 
 //***********************************************
 // マクロ定義
@@ -42,6 +43,8 @@ void InitGame(void)
 	InitPause();			// ポーズの初期化
 
 	InitTime();				// タイムの初期化
+
+	InitBullet();			// 弾の初期化
 
 	InitPlayer();			// プレイヤーの初期化
 
@@ -93,6 +96,8 @@ void UninitGame(void)
 	UninitTime();			// タイムの終了処理
 
 	UninitPlayer();			// プレイヤーの終了処理	
+
+	UninitBullet();			// 弾の終了処理
 
 #if 0
 	StopSound();
@@ -163,6 +168,8 @@ void UpdateGame(void)
 
 		UpdateTime();		// タイムの更新
 
+		UpdateBullet();		// 弾の更新処理
+		
 		UpdatePlayer();		// プレイヤーの更新処理
 	}
 
@@ -258,9 +265,9 @@ void DrawGame(void)
 
 	DrawTime();				// タイムの描画
 
+	DrawBullet();			// 弾の描画処理
+
 	DrawPlayer();			// プレイヤーの描画
-
-
 
 #if 0
 	//背景

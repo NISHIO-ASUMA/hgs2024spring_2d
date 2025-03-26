@@ -19,8 +19,8 @@
 #define SPLIT_V (1.0f)				//縦の分割数
 #define MAX_ANIMATION_TIME (10)		//最大アニメーション時間
 #define MAX_ANIMATION_PATTERN (8)	//最大パターン数
-#define MAX_SIZE_X (50.0f)			//横のサイズ(自機)
-#define MAX_SIZE_Y (50.0f)			//縦のサイズ(自機)
+#define MAX_SIZE_X (40.0f)			//横のサイズ(自機)
+#define MAX_SIZE_Y (40.0f)			//縦のサイズ(自機)
 
 // プレイヤーの状態
 typedef enum
