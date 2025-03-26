@@ -61,5 +61,5 @@ void DrawRanking(void)
 {
 	DrawRankingData();		// 順位の描画処理
 
-	//DrawRankingScore();		//ランキングのスコアの描画処理
+	DrawRankingScore();		//ランキングのスコアの描画処理
 }
