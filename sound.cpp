@@ -30,7 +30,8 @@ SOUNDINFO g_aSoundInfo[SOUND_LABEL_MAX] =
 	{"data/BGM/gamebgm.wav", -1},			// ゲーム
 	{"data/BGM/result.wav", -1},			// リザルト
 	{"data/BGM/ranking.wav", -1},			// ランキング
-
+	{"data/SE/explosion.wav", 0},			// 爆発音
+	{"data/SE/playershot.wav", 0},			// 弾発射音
 };
 
 //=============================================================================

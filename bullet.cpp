@@ -13,6 +13,7 @@
 #include "main.h"
 #include "block.h"
 #include "bulletnum.h"
+#include "sound.h"
 //#include "explosion.h"
 //#include "effect.h"
 //#include "particle.h"
@@ -129,7 +130,7 @@ void InitBullet(void)
 //========================
 void UninitBullet(void)
 {
-	// StopSound();	// サウンドの停止
+	StopSound();	// サウンドの停止
 
 	// テクスチャの破棄
 	for (int nCnt = 0; nCnt < BULLETTYPE_MAX; nCnt++)
@@ -186,6 +187,8 @@ void UpdateBullet(void)
 							// TODO : ブロックに当たる処理
 							HitBlock(nCntEnemy, 1);
 
+							PlaySound(SOUND_LABEL_EXPROSION_SE);
+
 							g_aBullet[nCntBullet].bUse = false;
 						}
 					}
@@ -210,6 +213,10 @@ void UpdateBullet(void)
 						{
 							// TODO : ブロックに当たる処理
 							HitBlock(nCntEnemy, 1);
+
+							// 音楽再生
+							PlaySound(SOUND_LABEL_EXPROSION_SE);
+
 						}
 					}
 				}
