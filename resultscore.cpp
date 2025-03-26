@@ -44,7 +44,7 @@ void InitResultScore(void)
 
 	// テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\number003.png",
+		"data\\TEXTURE\\score000.png",
 		&g_pTextureResultScore);
 
 	// 頂点バッファの生成

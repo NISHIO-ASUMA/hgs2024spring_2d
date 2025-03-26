@@ -52,12 +52,12 @@ void InitTitle(void)
 
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\Block001.png",
+		"data\\TEXTURE\\titlebg.png",
 		&g_pTextureTitleback);
 
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\gametitle.png",
+		"data\\TEXTURE\\titlerogo.png",
 		&g_pTextureTitle[0]);
 
 	//テクスチャの読み込み
@@ -371,7 +371,7 @@ void SetTitle(int nType, D3DXVECTOR3 pos)
 			{
 			case TITLE_FIRST:
 
-				g_aTitle[nCntTitle].fHeight = 400.0f;//高さ
+				g_aTitle[nCntTitle].fHeight = 200.0f;//高さ
 				g_aTitle[nCntTitle].fWidth = 800.0f;//横幅
 				break;
 
