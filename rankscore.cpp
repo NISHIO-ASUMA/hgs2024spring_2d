@@ -80,7 +80,7 @@ void InitRankingScore(void)
 	for (int nCntRank = 0; nCntRank < MAX_RANK; nCntRank++)
 	{
 		// \‘¢‘Ì•Ï”‚Ì‰Šú‰»
-		g_aRankScore[nCntRank].pos = D3DXVECTOR3(480.0f,190.0f + (POLYGON_SIZEHIGHT * nCntRank) + (POLYGON_INTERVAL_Y * nCntRank), 0.0f);
+		g_aRankScore[nCntRank].pos = D3DXVECTOR3(480.0f,200.0f + (POLYGON_SIZEHIGHT * nCntRank) + (POLYGON_INTERVAL_Y * nCntRank), 0.0f);
 		g_aRankScore[nCntRank].nScore = 0;
 
 		// Œ…”•ª‰ñ‚·(8)
