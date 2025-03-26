@@ -568,12 +568,9 @@ void HitBlock(int nCntBlock, int nDamage)
 
 	if (g_aBlock[nCntBlock].nLife <= 0)
 	{
-<<<<<<< HEAD
 		// ”š”­
 		SetExplosion(g_aBlock[nCntBlock].pos, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 
-=======
->>>>>>> 9f140ede2b26c58cc74512e501e38fde15298dec
 		if (g_aBlock[nCntBlock].nType == BLOCKTYPE_NORMAL)
 		{
 			g_aBlock[nCntBlock].bUse = false;
