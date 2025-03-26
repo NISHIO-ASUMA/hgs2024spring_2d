@@ -13,6 +13,7 @@
 #include "fade.h"
 #include "sound.h"
 #include "input.h"
+#include "tutorial2.h"
 
 //******************************************
 // マクロ定義
@@ -55,6 +56,8 @@ int g_nCntMove;				// 移動量のカウント
 //==============================
 void InitTutorial(void)
 {
+	InitTutorial2();		// 2個目のチュートリアルの初期化
+
 	// デバイスへのポインタ
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();		
 
@@ -177,6 +180,10 @@ void InitTutorial(void)
 	// アンロック
 	g_pVtxBuffTutorial->Unlock();
 
+	SetTutorial(TUTORIAL_ENTER, D3DXVECTOR3(1050.0f, 50.0f, 0.0f));			//チュートリアル2
+
+	SetTutorial2();			//2個目のチュートリアル
+
 	// 音楽再生
 	PlaySound(SOUND_LABEL_TUTOBGM);
 }
@@ -225,6 +232,8 @@ void UninitTutorial(void)
 		g_pVtxBuffTutorialBG->Release();
 		g_pVtxBuffTutorialBG = NULL;
 	}
+
+	UninitTutorial2();
 }
 //==========================
 // チュートリアルの更新処理
@@ -233,11 +242,47 @@ void UpdateTutorial(void)
 {
 	FADE g_fade = GetFade();
 
-	if (KeyboardTrigger(DIK_RETURN) == true || GetAnyJoypadTrigger())
+	if (KeyboardTrigger(DIK_RETURN) == true || JoypadTrigger(JOYKEY_A) == true)
 	{
-		//モード設定(ゲーム画面に移動)
-		SetFade(MODE_GAME);
+		PlaySound(SOUND_LABEL_SE_ENTER);
+
+		//Enterキーが押された or STARTボタンが押された
+		for (int nCnt = 0; nCnt < TUTORIAL_MAX; nCnt++)
+		{
+			if (g_aTutorial[nCnt].bUse == true && g_aTutorial[nCnt].nType == TUTORIAL_ENTER)
+			{
+				g_aTutorial[nCnt].state = TUTORIALSTATE_FLASH;
+			}
+
+		}
+		g_bNext = true;
 	}
+
+	if (g_aTutorial[1].pos.x <= -640.0f)
+	{
+		g_bNext = false;
+	}
+
+	if (g_bNext)
+	{
+		g_nCntMove++;		//加算
+	}
+
+	if (g_bNext == true && g_nCntMove >= 60)
+	{
+		if (KeyboardTrigger(DIK_RETURN) == true || JoypadTrigger(JOYKEY_A) == true)
+		{
+			//モード設定(ゲーム画面に移動)
+			SetFade(MODE_GAME);
+		}
+
+	}
+	//================
+	//キーを押したら
+	//================
+
+	UpdateTutorial2();		// 2個目のチュートリアルの更新
+
 }
 //===========================
 // チュートリアルの描画処理
@@ -281,7 +326,7 @@ void DrawTutorial(void)
 		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, nCnt * 4, 2);
 	}
 
-	// DrawTutorial2();	//2個目のチュートリアルの描画
+	DrawTutorial2();	//2個目のチュートリアルの描画
 }
 //==================================
 // チュートリアルの設定(テクスチャ)

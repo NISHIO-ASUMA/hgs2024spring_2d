@@ -54,8 +54,8 @@ typedef enum
 //********************************************
 static const char* TUTORIAL_TEXTURE[TUTORIAL_MAX] =   
 {
-	"data\\TEXTURE\\tutoriallife.png",		//1‚Â–Ú
-	"data\\TEXTURE\\tutorial.png",			//2‚Â–Ú
+	"data\\TEXTURE\\Enter000.png",		//1‚Â–Ú
+	"data\\TEXTURE\\Enter000.png",			//2‚Â–Ú
 	"data\\TEXTURE\\tutorial020.png",		//3‚Â–Ú(w)
 	"data\\TEXTURE\\tutorial030.png",		//4‚Â–Ú(a)
 	"data\\TEXTURE\\tutorial040.png",		//5‚Â–Ú(s)
