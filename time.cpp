@@ -25,6 +25,7 @@ Time g_aTime[MAX_TIMEDIGIT];
 
 int g_nMinutes;											// 分
 int g_nSeconds;											// 秒
+bool g_bTimeEnd;
 
 //=============================
 //タイムの初期化処理
@@ -41,12 +42,12 @@ void InitTime(void)
 
 	//テクスチャの読み込み(分)
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\time.png",
+		"data\\TEXTURE\\time001.png",
 		&g_pTextureTimeMinute);
 
 	//テクスチャの読み込み(秒)
 	D3DXCreateTextureFromFile(pDevice,
-		"data\\TEXTURE\\time.png",
+		"data\\TEXTURE\\time001.png",
 		&g_pTextureTimeSecond);
 
 	//テクスチャの読み込み(コロン)
@@ -56,8 +57,9 @@ void InitTime(void)
 
 	//初期化
 	g_posTime = D3DXVECTOR3(0.0f, 0.0f, 0.0f);//位置を初期化する(始まりの位置)
-	g_nMinutes = 0;
+	g_nMinutes = 2;
 	g_nSeconds = 0;
+	g_bTimeEnd = false;
 
 	//頂点バッファの生成
 	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4 * MAX_TIMEDIGIT,
@@ -245,9 +247,6 @@ void UninitTime(void)
 void UpdateTime(void)
 {
 	//Block* pBlock = GetBlock();
-	//Flags* pFlag = GetFlag();
-	//GAME* pGame = GetGame();
-	//bool bEnd = GetEnd();
 
 	VERTEX_2D* pVtx;
 
@@ -255,24 +254,24 @@ void UpdateTime(void)
 
 	nCntTimeSecond++;
 
-	//if (pFlag->bExit == false && bEnd == false && pGame->bMap == false)
-	//{
+	if (g_bTimeEnd == false)
+	{
 		if (nCntTimeSecond >= 60)			// 1秒ごとに処理
 		{
 			nCntTimeSecond = 0;
 
-			if (g_nSeconds >= 59)
+			if (g_nSeconds <= 0)
 			{
-				g_nMinutes++;				// 分を増やす
-				g_nSeconds = 0;				// 秒をリセット
+				g_nMinutes--;				// 分を減らす
+				g_nSeconds = 59;				// 秒をリセット
 			}
-			else if (g_nSeconds < 60)
+			else if (g_nSeconds <= 59)
 			{
-				g_nSeconds++;				// 秒を増やす
+				g_nSeconds--;				// 秒を減らす
 			}
 
 		}
-	//}
+	}
 
 	int min10 = g_nMinutes / 10;	// 分の10の位
 	int min1 = g_nMinutes % 10;		// 分の1の位
@@ -420,4 +419,11 @@ int GetTimeMinutes(void)
 int GetTimeSeconds(void)
 {
 	return g_nSeconds;
+}
+//=============================
+// 時間切れの取得
+//=============================
+bool GetTimeEnd(void)
+{
+	return g_bTimeEnd;
 }

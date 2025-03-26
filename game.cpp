@@ -19,6 +19,7 @@
 #include "rankscore.h"
 #include "block.h"
 #include "pause.h"
+#include "time.h"
 
 //***********************************************
 // マクロ定義
@@ -36,11 +37,13 @@ bool g_bPause = false;						// ポーズ中かどうか
 //=====================
 void InitGame(void)
 {
-	InitBlock();			 // ブロックの初期化
+	InitBlock();			// ブロックの初期化
 
-	InitPause();			 // ポーズの初期化
+	InitPause();			// ポーズの初期化
 
-	LoadBlockText();		 // 配置したブロック情報の読み込み
+	InitTime();				// タイムの初期化
+
+	LoadBlockText();		// 配置したブロック情報の読み込み
 
 #if 0
 	InitBackground();		//背景
@@ -85,6 +88,9 @@ void UninitGame(void)
 	UninitBlock();			// ブロックの州終了
 
 	UninitPause();			// ポーズの終了
+
+	UninitTime();			// タイムの終了処理
+
 #if 0
 	StopSound();
 
@@ -152,21 +158,23 @@ void UpdateGame(void)
 	else
 	{
 		UpdateBlock();		// ブロックの更新
+
+		UpdateTime();		// タイムの更新
 	}
 
-#if 0
-	// プレイヤーの取得
-	Player* pPlayer = GetPlayer();
+#if 1
+	//// プレイヤーの取得
+	//Player* pPlayer = GetPlayer();
 
-	// 敵の取得
-	int nNum = GetNumEnemy();
+	//// 敵の取得
+	//int nNum = GetNumEnemy();
 
-	if ((pPlayer->bDisp == false || nTime <= 0 || bExit == true) && g_gameState != GAMESTATE_NONE)
+	if (GetTimeEnd() == true && g_gameState != GAMESTATE_NONE)
 	{
 
 		g_gameState = GAMESTATE_END;  //終了状態
 
-		PlaySound(SOUND_LABLE_EXIT);
+		//PlaySound(SOUND_LABLE_EXIT);
 	}
 
 	switch(g_gameState)
@@ -205,31 +213,31 @@ void UpdateGame(void)
 	}
 #endif
 
-	else 
-	{
-		//ポーズ中で無ければ
-		UpdateBackground();			//背景
+	//else 
+	//{
+	//	//ポーズ中で無ければ
+	//	UpdateBackground();			//背景
 
-		UpdatePlayer();				//プレイヤー
+	//	UpdatePlayer();				//プレイヤー
 
-		UpdateBullet();				//弾
+	//	UpdateBullet();				//弾
 
-		UpdateEnemy();				//敵
+	//	UpdateEnemy();				//敵
 
-		UpdateExplosion();			//爆発
+	//	UpdateExplosion();			//爆発
 
-		UpdateScore();				//スコア更新
+	//	UpdateScore();				//スコア更新
 
-		UpdateItem();				//アイテム
+	//	UpdateItem();				//アイテム
 
-		UpdateEffect();				//エフェクト
+	//	UpdateEffect();				//エフェクト
 
-		UpdateParticle();			//パーティクル
+	//	UpdateParticle();			//パーティクル
 
-		UpdateTimer();				//タイマー
+	//	UpdateTimer();				//タイマー
 
-		UpdatePlayerLifeBar();	//ライフバー
-	}
+	//	UpdatePlayerLifeBar();	//ライフバー
+	//}
 #endif
 }
 //===================
@@ -244,6 +252,7 @@ void DrawGame(void)
 		DrawPause();		// ポーズの描画
 	}
 
+	DrawTime();				// タイムの描画
 #if 0
 	//背景
 	DrawBackground();

@@ -26,6 +26,7 @@ void DrawTime(void);
 
 int GetTimeMinutes(void);
 int GetTimeSeconds(void);
+bool GetTimeEnd(void);
 
 #endif
 
