@@ -11,6 +11,7 @@
 #include "block.h"
 #include <stdio.h>
 #include "bullet.h"
+#include "explosion.h"
 // #include "player.h"
 
 //**************************
@@ -500,13 +501,13 @@ void InitStruct()
 //=======================================
 void HitBlock(int nCntBlock, int nDamage)
 {
-	VERTEX_2D* pVtx;//頂点情報へのポインタ
-
 	g_aBlock[nCntBlock].nLife -= nDamage;
 
 	if (g_aBlock[nCntBlock].nLife <= 0)
 	{
-<<<<<<< HEAD
+		// 爆発
+		SetExplosion(g_aBlock[nCntBlock].pos, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+
 		if (g_aBlock[nCntBlock].nType == BLOCKTYPE_NORMAL)
 		{
 			g_aBlock[nCntBlock].bUse = false;
@@ -552,10 +553,6 @@ void HitBlock(int nCntBlock, int nDamage)
 			g_aBlock[nCntBlock].bUse = false;
 		}
 
-=======
-		g_aBlock[nCntBlock].bUse = false;
-
 		g_nCntblock--; // デクリメント
->>>>>>> a5bbacd6a7a9ea15beedbff480000d1b3f2a5e47
 	}
 }
