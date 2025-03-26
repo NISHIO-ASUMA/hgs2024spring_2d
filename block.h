@@ -15,7 +15,7 @@
 //******************************
 // マクロ定義
 //******************************
-#define MAX_BLOCK (256)			 // ブロックの最大数
+#define MAX_BLOCK (512)			 // ブロックの最大数
 #define MAX_BLOCKSIZE_X (100.0f) // ブロックのサイズ
 #define MAX_BLOCKSIZE_Y (100.0f) // ブロックのサイズ
 #define HALF (0.5f)				 // 半分

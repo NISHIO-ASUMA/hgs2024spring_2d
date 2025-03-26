@@ -21,6 +21,7 @@
 #include "ranking.h"
 #include "fade.h"
 #include "edit.h"
+#include "sound.h"
 
 //******************************************
 // グローバル変数宣言
@@ -351,8 +352,8 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 		return E_FAIL;
 	}
 
-	//サウンド初期化
-	// InitSound(hWnd);
+	// サウンド初期化
+	InitSound(hWnd);
 
 	//モードの設定
 	SetMode(g_mode);
@@ -380,8 +381,8 @@ void Uninit(void)
 	//フェードの終了
 	UninitFade();
 
-	////サウンドの終了
-	//UninitSound();
+	//サウンドの終了
+	UninitSound();
 
 	// デバッグ表示用のフォントの破棄
 	if (g_pFont != NULL)
@@ -709,6 +710,7 @@ void DrawEditkey(void)
 	RECT rect5 = { 0,120,SCREEN_WIDTH,SCREEN_HEIGHT };
 	RECT rect6 = { 0,140,SCREEN_WIDTH,SCREEN_HEIGHT };
 	RECT rect7 = { 0,160,SCREEN_WIDTH,SCREEN_HEIGHT };
+	RECT rect9 = { 0,180,SCREEN_WIDTH,SCREEN_HEIGHT };
 	RECT rect10 = { 0,280,SCREEN_WIDTH,SCREEN_HEIGHT };
 
 	// 文字列
@@ -720,6 +722,7 @@ void DrawEditkey(void)
 	char aString6[256];
 	char aString7[256];
 	char aString8[256];
+	char aString9[256];
 	char aString10[256];
 
 	char aStFile[256];
@@ -760,6 +763,7 @@ void DrawEditkey(void)
 	wsprintf(&aString6[0], "ファイル書き出し [ F7キー ]\n");
 	wsprintf(&aString7[0], "配置の決定       [ Enterキー ]\n");
 	wsprintf(&aString8[0], "ファイルパス切り替え       [ F4キー ]\n");
+	wsprintf(&aString9[0], "再読み込み       [ F9キー ]\n");
 	wsprintf(&aString10[0], "ゲーム画面へ    [ F3キー ]\n");
 
 	// テキスト描画
@@ -771,6 +775,7 @@ void DrawEditkey(void)
 	g_pFont->DrawText(NULL, &aString6[0], -1, &rect6, DT_LEFT, D3DCOLOR_RGBA(255, 255, 255, 255));		// 書き出しキー
 	g_pFont->DrawText(NULL, &aString7[0], -1, &rect7, DT_LEFT, D3DCOLOR_RGBA(255, 255, 255, 255));		// 配置キー
 	g_pFont->DrawText(NULL, &aString8[0], -1, &rect8, DT_LEFT, D3DCOLOR_RGBA(255, 255, 255, 255));		// 配置キー
+	g_pFont->DrawText(NULL, &aString9[0], -1, &rect9, DT_LEFT, D3DCOLOR_RGBA(255, 255, 255, 255));		// 配置キー
 	g_pFont->DrawText(NULL, &aString10[0], -1, &rect10, DT_LEFT, D3DCOLOR_RGBA(255, 255, 255, 255));	// モード変更キー
 
 }

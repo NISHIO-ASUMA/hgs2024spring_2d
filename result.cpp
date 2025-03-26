@@ -9,17 +9,10 @@
 // インクルードファイル宣言
 //******************************************
 #include "result.h"
-//#include "fade.h"
-//#include "player.h"
-//#include "score.h"
-//#include "sound.h"
+#include "sound.h"
 #include "resultscore.h"
 #include "fade.h"
 #include "input.h"
-//#include "Timer.h"
-//#include "boss.h"
-//#include "item.h"
-//#include "exit.h"
 
 //******************************************
 // グローバル変数宣言
@@ -84,6 +77,9 @@ void InitResult(void)
 
 	// リザルトスコアの初期化
 	InitResultScore();
+
+	// 音楽再生
+	PlaySound(SOUND_LABEL_RESULTBGM);
 }
 //========================
 // リザルトの終了処理
@@ -91,7 +87,7 @@ void InitResult(void)
 void UninitResult(void)
 {
 	// 音楽を停止
-	// StopSound();
+	StopSound();
 
 	// リザルトスコアの終了
 	UninitResultScore();

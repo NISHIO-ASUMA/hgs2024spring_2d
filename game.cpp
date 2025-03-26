@@ -23,7 +23,11 @@
 #include "bullet.h"
 #include "explosion.h"
 #include "item.h"
+<<<<<<< HEAD
 #include "bulletnum.h"
+=======
+#include "sound.h"
+>>>>>>> f0c5aff38f1d17b672e6c4cc3da0ced1c69ddbcd
 
 //***********************************************
 // マクロ定義
@@ -67,13 +71,14 @@ void InitGame(void)
 
 	InitParticle();			//パーティクル
 
-	PlaySound(SOUND_LABEL_GAME);
 #endif
 
 	g_gameState = GAMESTATE_NORMAL;	// 通常状態に設定
 	g_nCounterGameState = 0;		// ゲーム状態
 	g_bPause = false;				// ポーズ解除
 	g_nCntWaveTimeCount = 0;		// クールタイム
+
+	PlaySound(SOUND_LABEL_GAMEBGM);
 
 }
 //===================
@@ -82,6 +87,8 @@ void InitGame(void)
 void UninitGame(void)
 {
 	SaveScore();			// スコアを保存
+
+	StopSound();			// 音楽停止
 
 	UninitBlock();			// ブロックの終了
 

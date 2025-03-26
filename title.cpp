@@ -7,6 +7,7 @@
 #include "title.h"
 #include "input.h"
 #include "fade.h"
+#include "sound.h"
 //#include "sound.h"
 
 //マクロ定義
@@ -168,13 +169,8 @@ void InitTitle(void)
 	//アンロック
 	g_pVtxBuffTitle->Unlock();
 
-
-
-	////サウンドの再生
-	//PlaySound(SOUND_LABEL_BGM);
-
-	////サウンドの停止
-	//StopSound(SOUND_LABEL_RANK);
+	//サウンドの再生
+	PlaySound(SOUND_LABEL_TITLEBGM);
 
 }
 //==================
@@ -182,8 +178,8 @@ void InitTitle(void)
 //==================
 void UninitTitle(void)
 {
-	////サウンドの停止
-	//StopSound(SOUND_LABEL_BGM);
+	//サウンドの停止
+	StopSound();
 
 	//==================
 	//タイトルの背景
@@ -280,7 +276,7 @@ void UpdateTitle(void)
 		{
 			alpha = 0.0f;
 
-			//PlaySound(SOUND_LABEL_ENTERSE);
+			PlaySound(SOUND_LABEL_SE_ENTER);
 
 			//Enterキーが押された
 			for (int nCntTitle = 0; nCntTitle < NUM_TITLE; nCntTitle++)

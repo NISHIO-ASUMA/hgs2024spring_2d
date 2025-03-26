@@ -9,13 +9,10 @@
 // インクルードファイル宣言
 //*************************************
 #include "ranking.h"
-//#include "input.h"
-//#include "fade.h"
 #include <stdio.h>
-//#include "score.h"
 #include "rankscore.h"
 #include "ranksetdata.h"
-//#include "sound.h"
+#include "sound.h"
 
 //================================
 // ランキングの初期化処理
@@ -30,7 +27,7 @@ void InitRanking(void)
 
 	SetRankingTexture();	// ランキングのテクスチャ処理
 
-	// PlaySound(SOUND_LABEL_RANKING);
+	PlaySound(SOUND_LABEL_RANKINGBGM);	// 音楽再生
 
 }
 //================================
@@ -39,7 +36,7 @@ void InitRanking(void)
 void UninitRanking(void)
 {
 	// 音楽を停止
-	//StopSound();
+	StopSound();
 
 	UninitRankingData();	 // 順位の終了処理
 

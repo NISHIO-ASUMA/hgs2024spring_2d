@@ -13,6 +13,7 @@
 #include "bullet.h"
 #include "explosion.h"
 #include "player.h"
+#include "score.h"
 // #include "player.h"
 
 //**************************
@@ -670,6 +671,35 @@ void HitBlock(int nCntBlock, int nDamage)
 				80.0f, BULLETTYPE_BLOCK);
 
 			g_aBlock[nCntBlock].bUse = false;
+
+			switch (g_aBlock[nCntBlock].nType)
+			{
+			case  BLOCKTYPE_NORMAL:		// 通常
+				// スコアを加算
+				AddScore(1000);
+				break;
+
+			case BLOCKTYPE_VERTICAL:	// 縦に弾が出るブロック
+				// スコアを加算
+				AddScore(3000);
+				break;
+
+
+			case BLOCKTYPE_HORIZONTAL:	// 横に弾が出るブロック
+				// スコアを加算
+				AddScore(3000);
+				break;
+
+			case BLOCKTYPE_BULLETBLOCK:	// 残弾数増加のブロック
+
+				// TODO : ここにプレイヤーの弾の残弾数を増やす関数呼ぶ
+
+				break;
+
+			default:
+				break;
+			}
+
 		}
 
 		g_nCntblock--; // デクリメント
