@@ -33,6 +33,7 @@
 GAMESTATE g_gameState = GAMESTATE_NONE;		// ゲーム状態
 int g_nCounterGameState = 0;				// 状態管理カウンター
 bool g_bPause = false;						// ポーズ中かどうか
+int g_nCntWaveTimeCount = 0;				// 読み込みウェーブカウント
 
 //=====================
 // ゲームの初期化処理
@@ -49,7 +50,9 @@ void InitGame(void)
 
 	InitPlayer();			// プレイヤーの初期化
 
-	InitExplosion();		//爆発の初期化
+	InitExplosion();		// 爆発の初期化
+
+	InitScore();			// スコアの初期化
 
 	LoadBlockText();		// 配置したブロック情報の読み込み
 
@@ -62,7 +65,6 @@ void InitGame(void)
 	InitEnemy();			//敵
 
 
-	InitScore();			//スコア
 
 	InitItem();				//アイテム
 
@@ -79,9 +81,10 @@ void InitGame(void)
 	PlaySound(SOUND_LABEL_GAME);
 #endif
 
-	g_gameState = GAMESTATE_NORMAL;//通常状態に設定
-	g_nCounterGameState = 0;
-	g_bPause = false;//ポーズ解除
+	g_gameState = GAMESTATE_NORMAL;	// 通常状態に設定
+	g_nCounterGameState = 0;		// ゲーム状態
+	g_bPause = false;				// ポーズ解除
+	g_nCntWaveTimeCount = 0;		// クールタイム
 
 }
 //===================
@@ -103,6 +106,8 @@ void UninitGame(void)
 
 	UninitExplosion();		// 爆発終了処理
 
+	UninitScore();			// スコアの終了
+
 #if 0
 	StopSound();
 
@@ -115,7 +120,6 @@ void UninitGame(void)
 	UninitEnemy();			//敵の終了
 
 
-	UninitScore();			//スコア終了
 
 	UninitItem();			//アイテム
 
@@ -183,21 +187,27 @@ void UpdateGame(void)
 	//// プレイヤーの取得
 	//Player* pPlayer = GetPlayer();
 
-	//// 敵の取得
-	//int nNum = GetNumEnemy();
-
-	if (GetTimeEnd() == true && g_gameState != GAMESTATE_NONE)
+	if ((GetTimeEnd() == true || GetFinish() == true) && g_gameState != GAMESTATE_NONE)
 	{
-
 		g_gameState = GAMESTATE_END;  //終了状態
 
 		//PlaySound(SOUND_LABLE_EXIT);
 	}
 
 	if (GetBlock() <= 0)
-	{
-		// ステージのブロックを全部消したら
-		LoadBlockText();
+	{// ステージのブロックを全部消したら
+
+		// カウントを加算
+		g_nCntWaveTimeCount++;
+
+		if (g_nCntWaveTimeCount >= 90)
+		{// カウントが90より上なら
+			// 新規ウェーブを読み込む
+			LoadBlockText();
+
+			// カウントを初期化
+			g_nCntWaveTimeCount = 0;
+		}
 	}
 
 	switch(g_gameState)
@@ -207,7 +217,7 @@ void UpdateGame(void)
 
 	case GAMESTATE_END:
   		g_nCounterGameState++;
-		if (g_nCounterGameState >= 30)
+		if (g_nCounterGameState >= 60)
 		{
 			//カウンターを初期化
 			g_nCounterGameState = 0;
@@ -281,6 +291,8 @@ void DrawGame(void)
 
 	DrawExplosion();		// 爆発の描画
 
+	// DrawScore();			// スコアの描画
+
 #if 0
 	//背景
 	DrawBackground();
@@ -297,8 +309,6 @@ void DrawGame(void)
 	//敵
 	DrawEnemy();
 
-	//スコア
-	//DrawScore();
 
 	//エフェクト
 	DrawEffect();
