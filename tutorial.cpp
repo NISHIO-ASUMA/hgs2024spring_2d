@@ -9,12 +9,9 @@
 // インクルードファイル宣言
 //******************************************
 #include "tutorial.h"
-//#include "player.h"
 #include "game.h"
 #include "fade.h"
-//#include "effect.h"
-//#include "sound.h"
-//#include "particle.h"
+#include "sound.h"
 #include "input.h"
 
 //******************************************
@@ -58,8 +55,6 @@ int g_nCntMove;				// 移動量のカウント
 //==============================
 void InitTutorial(void)
 {
-	// InitTutorial2();		//2個目のチュートリアルの初期化
-
 	// デバイスへのポインタ
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();		
 
@@ -182,36 +177,15 @@ void InitTutorial(void)
 	// アンロック
 	g_pVtxBuffTutorial->Unlock();
 
-	// SetTutorial(TUTORIAL_ENTER,			D3DXVECTOR3(1080.0f, 50.0f, 0.0f));			//チュートリアル2
-	//SetTutorial(TUTORIAL_KEY_W,			D3DXVECTOR3(300.0f,	170.0f, 0.0f));			//チュートリアル3(w)
-	//SetTutorial(TUTORIAL_KEY_A,			D3DXVECTOR3(250.0f, 220.0f, 0.0f));			//チュートリアル4(a)
-	//SetTutorial(TUTORIAL_KEY_S,			D3DXVECTOR3(300.0f, 220.0f, 0.0f));			//チュートリアル5(s)
-	//SetTutorial(TUTORIAL_KEY_D,			D3DXVECTOR3(350.0f, 220.0f, 0.0f));			//チュートリアル6(d)
-	//SetTutorial(TUTORIAL_KEY_SPACE,		D3DXVECTOR3(300.0f, 330.0f, 0.0f));			//チュートリアル7(スペース)
-
-	//SetTutorial(TUTORIAL_BUTTON_B,		D3DXVECTOR3(1115.0f, 340.0f, 0.0f));		//チュートリアル8
-	//SetTutorial(TUTORIAL_BUTTON_UP,     D3DXVECTOR3(1030.0f, 170.0f, 0.0f));		//チュートリアル9
-	//SetTutorial(TUTORIAL_BUTTON_DOWN,   D3DXVECTOR3(1030.0f, 220.0f, 0.0f));		//チュートリアル10
-	//SetTutorial(TUTORIAL_BUTTON_RIGHT,  D3DXVECTOR3(1081.0f, 200.0f, 0.0f));		//チュートリアル11
-	//SetTutorial(TUTORIAL_BUTTON_LEFT,   D3DXVECTOR3(980.0f, 200.0f, 0.0f));			//チュートリアル12
-	//SetTutorial(TUTORIAL_KEY_P,			D3DXVECTOR3(300.0f,	 470.0f, 0.0f));		//チュートリアル12
-	//SetTutorial(TUTORIAL_BUTTON_ST,		D3DXVECTOR3(1120.0f, 460.0f, 0.0f));		//チュートリアル12
-	//SetTutorial(TUTORIAL_KEY_E,			D3DXVECTOR3(355.0f,	 630.0f, 0.0f));		//チュートリアル13
-	//SetTutorial(TUTORIAL_KEY_Q,			D3DXVECTOR3(215.0f,	 630.0f, 0.0f));		//チュートリアル14
-	//SetTutorial(TUTORIAL_BUTTON_RB,		D3DXVECTOR3(1200.0f, 625.0f, 0.0f));		//チュートリアル15
-	//SetTutorial(TUTORIAL_BUTTON_LB,		D3DXVECTOR3(1040.0f, 625.0f, 0.0f));		//チュートリアル16
-	//SetTutorial(TUTORIAL_LSTICK,		D3DXVECTOR3(1190.0f, 200.0f, 0.0f));		//チュートリアル16
-
-	// SetTutorial2();			//2個目のチュートリアル
-
-	// PlaySound(SOUND_LABEL_TUTORIAL);
+	// 音楽再生
+	PlaySound(SOUND_LABEL_TUTOBGM);
 }
 //===========================
 // チュートリアルの終了処理
 //===========================
 void UninitTutorial(void)
 {
-	// StopSound();
+	StopSound();
 
 //============================
 // チュートリアルの各種の終了

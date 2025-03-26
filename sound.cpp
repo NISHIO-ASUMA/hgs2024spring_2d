@@ -24,20 +24,13 @@ DWORD g_aSizeAudio[SOUND_LABEL_MAX] = {};					// オーディオデータサイズ
 // サウンドの情報
 SOUNDINFO g_aSoundInfo[SOUND_LABEL_MAX] =
 {
-	{"data/BGM/100.wav", -1},		  // BGM1
-	{"data/SE/se1.wav", 0},			  // SE1
-	{"data/SE/enter.wav", 0},		  // SE2
-	{"data/BGM/gamebgm.wav", -1},	  // ゲームBGM
-	{"data/SE/BulletHit.wav", 0},	  // SE3
-	{"data/SE/enter1.wav", 0},		  // SE4
-	{"data/BGM/title.wav", -1},	  // タイトル
-	{"data/BGM/tutorial.wav", -1},	  // チュートリアル
-	{"data/SE/item000.wav", 0},		  // アイテム
-	{"data/SE/explosion.wav", 0},	  // 爆発
-	{"data/BGM/ranking.wav", -1},	  // ランキング
-	{"data/SE/result.wav", 0},		  // ゲームクリア
-	{"data/SE/hit.wav", 0},			  // 敵にあたる
-	{"data/SE/pauseSE.wav", 0},		  // ポーズ
+	{"data/SE/enter.wav", 0},				// 決定キー
+	{"data/BGM/title.wav", -1},				// タイトル
+	{"data/BGM/tutorial.wav", -1},			// チュートリアル
+	{"data/BGM/gamebgm.wav", -1},			// ゲーム
+	{"data/BGM/result.wav", -1},			// リザルト
+	{"data/BGM/ranking.wav", -1},			// ランキング
+
 };
 
 //=============================================================================
