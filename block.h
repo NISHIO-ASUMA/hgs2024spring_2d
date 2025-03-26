@@ -27,6 +27,8 @@ typedef enum
 {
 	BLOCKTYPE_GROUND = 0,			//  仮1
 	BLOCKTYPE_WALL,					//  仮2
+	BLOCKTYPE_VERTICAL,				// 縦消しブロック
+	BLOCKTYPE_HORIZONTAL,			// 横消しブロック
 	BLOCKTYPE_MAX
 }BLOCKTYPE;
 
@@ -42,6 +44,7 @@ typedef struct
 	float fHeight;				// 高さ
 	int nType;					// 種類
 	int nLife;					// 体力
+	bool bHitBlock;				// 当たったかどうか
 	int nCntBlockstateCount;    // ブロックの状態管理カウンター
 	D3DXVECTOR3 bOldpos;		// 前回の位置
 }Block;
